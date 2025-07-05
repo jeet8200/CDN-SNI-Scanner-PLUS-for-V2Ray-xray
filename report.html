@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CDN Scanner Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; cursor: pointer; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .good { color: green; }
+        .medium { color: orange; }
+        .bad { color: red; }
+    </style>
+</head>
+<body>
+    <h1>CDN Scanner Report</h1>
+    <p>Generated: 2025-07-05 11:28:48</p>
+    <p>Total valid pairs: 124</p>
+    
+    <table id="resultsTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">IP</th>
+                <th onclick="sortTable(1)">SNI</th>
+                <th onclick="sortTable(2)">CDN</th>
+                <th onclick="sortTable(3)">HTTPS</th>
+                <th onclick="sortTable(4)">HTTP</th>
+                <th onclick="sortTable(5)">Ping (ms)</th>
+                <th onclick="sortTable(6)">Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>45.159.217.96</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="good">66.0</td>
+                <td>2025-07-05T10:11:12.934645</td>
+            </tr>
+            <tr>
+                <td>185.163.3.5</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="good">82.0</td>
+                <td>2025-07-05T11:16:05.223810</td>
+            </tr>
+            <tr>
+                <td>185.163.3.4</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="good">84.0</td>
+                <td>2025-07-05T11:16:08.699604</td>
+            </tr>
+            <tr>
+                <td>92.223.123.47</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="good">93.0</td>
+                <td>2025-07-05T11:15:58.384723</td>
+            </tr>
+            <tr>
+                <td>92.223.123.50</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="good">96.0</td>
+                <td>2025-07-05T11:16:17.646124</td>
+            </tr>
+            <tr>
+                <td>5.188.121.162</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="good">97.0</td>
+                <td>2025-07-05T11:15:58.326104</td>
+            </tr>
+            <tr>
+                <td>5.188.121.166</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="good">98.0</td>
+                <td>2025-07-05T11:16:02.587516</td>
+            </tr>
+            <tr>
+                <td>5.188.121.138</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="good">98.0</td>
+                <td>2025-07-05T11:16:15.473550</td>
+            </tr>
+            <tr>
+                <td>5.188.121.185</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">101.0</td>
+                <td>2025-07-05T11:16:06.016590</td>
+            </tr>
+            <tr>
+                <td>92.223.123.48</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">102.0</td>
+                <td>2025-07-05T11:16:05.244374</td>
+            </tr>
+            <tr>
+                <td>5.188.121.184</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">102.0</td>
+                <td>2025-07-05T11:16:08.273799</td>
+            </tr>
+            <tr>
+                <td>92.223.43.14</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">104.0</td>
+                <td>2025-07-05T11:16:07.924102</td>
+            </tr>
+            <tr>
+                <td>90.84.153.131</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">117.0</td>
+                <td>2025-07-05T11:16:17.365198</td>
+            </tr>
+            <tr>
+                <td>151.101.129.6</td>
+                <td>fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">120.0</td>
+                <td>2025-07-05T10:34:24.454024</td>
+            </tr>
+            <tr>
+                <td>151.101.129.6</td>
+                <td>fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">121.0</td>
+                <td>2025-07-05T10:10:00.308186</td>
+            </tr>
+            <tr>
+                <td>92.223.124.9</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">122.0</td>
+                <td>2025-07-05T11:16:14.946247</td>
+            </tr>
+            <tr>
+                <td>104.16.226.138</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">124.0</td>
+                <td>2025-07-05T10:11:11.256550</td>
+            </tr>
+            <tr>
+                <td>104.19.253.137</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">124.0</td>
+                <td>2025-07-05T10:11:15.843074</td>
+            </tr>
+            <tr>
+                <td>104.18.3.54</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">126.0</td>
+                <td>2025-07-05T10:11:04.625539</td>
+            </tr>
+            <tr>
+                <td>92.223.124.16</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">126.0</td>
+                <td>2025-07-05T11:16:07.360989</td>
+            </tr>
+            <tr>
+                <td>91.149.176.70</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">127.0</td>
+                <td>2025-07-05T11:16:13.494211</td>
+            </tr>
+            <tr>
+                <td>90.84.153.98</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">127.0</td>
+                <td>2025-07-05T11:16:17.974334</td>
+            </tr>
+            <tr>
+                <td>151.101.193.6</td>
+                <td>fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">128.0</td>
+                <td>2025-07-05T10:10:00.320813</td>
+            </tr>
+            <tr>
+                <td>93.123.17.186</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">128.0</td>
+                <td>2025-07-05T11:16:10.967055</td>
+            </tr>
+            <tr>
+                <td>104.24.73.174</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">129.0</td>
+                <td>2025-07-05T10:11:07.593449</td>
+            </tr>
+            <tr>
+                <td>172.67.16.59</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">129.0</td>
+                <td>2025-07-05T10:11:10.366881</td>
+            </tr>
+            <tr>
+                <td>104.25.49.175</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">129.0</td>
+                <td>2025-07-05T10:11:10.399895</td>
+            </tr>
+            <tr>
+                <td>104.27.94.114</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">129.0</td>
+                <td>2025-07-05T10:11:10.432850</td>
+            </tr>
+            <tr>
+                <td>172.67.36.235</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">129.0</td>
+                <td>2025-07-05T10:11:10.790416</td>
+            </tr>
+            <tr>
+                <td>92.223.124.8</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">129.0</td>
+                <td>2025-07-05T11:16:14.968346</td>
+            </tr>
+            <tr>
+                <td>104.16.6.236</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">130.0</td>
+                <td>2025-07-05T10:11:07.500792</td>
+            </tr>
+            <tr>
+                <td>151.101.193.6</td>
+                <td>fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">130.0</td>
+                <td>2025-07-05T10:34:24.464013</td>
+            </tr>
+            <tr>
+                <td>80.15.252.45</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">130.0</td>
+                <td>2025-07-05T11:16:09.843420</td>
+            </tr>
+            <tr>
+                <td>37.17.119.211</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">130.0</td>
+                <td>2025-07-05T11:16:11.950573</td>
+            </tr>
+            <tr>
+                <td>104.25.3.184</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">131.0</td>
+                <td>2025-07-05T10:11:05.136641</td>
+            </tr>
+            <tr>
+                <td>104.18.10.251</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">131.0</td>
+                <td>2025-07-05T10:11:07.892950</td>
+            </tr>
+            <tr>
+                <td>104.22.18.97</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">131.0</td>
+                <td>2025-07-05T10:11:09.162032</td>
+            </tr>
+            <tr>
+                <td>162.159.252.12</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">131.0</td>
+                <td>2025-07-05T10:11:14.308002</td>
+            </tr>
+            <tr>
+                <td>80.15.252.43</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">131.0</td>
+                <td>2025-07-05T11:16:06.923911</td>
+            </tr>
+            <tr>
+                <td>92.223.124.56</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">131.0</td>
+                <td>2025-07-05T11:16:13.068916</td>
+            </tr>
+            <tr>
+                <td>104.25.68.19</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">132.0</td>
+                <td>2025-07-05T10:11:04.434194</td>
+            </tr>
+            <tr>
+                <td>104.23.130.216</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">132.0</td>
+                <td>2025-07-05T10:11:07.489318</td>
+            </tr>
+            <tr>
+                <td>104.18.87.182</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">132.0</td>
+                <td>2025-07-05T10:11:07.906754</td>
+            </tr>
+            <tr>
+                <td>104.18.19.166</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">132.0</td>
+                <td>2025-07-05T10:11:08.293534</td>
+            </tr>
+            <tr>
+                <td>104.17.16.19</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">132.0</td>
+                <td>2025-07-05T10:11:11.681483</td>
+            </tr>
+            <tr>
+                <td>141.101.122.131</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">132.0</td>
+                <td>2025-07-05T10:11:12.055316</td>
+            </tr>
+            <tr>
+                <td>104.24.150.230</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">132.0</td>
+                <td>2025-07-05T10:11:14.277973</td>
+            </tr>
+            <tr>
+                <td>104.18.73.80</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">132.0</td>
+                <td>2025-07-05T10:11:14.740098</td>
+            </tr>
+            <tr>
+                <td>172.67.244.169</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">133.0</td>
+                <td>2025-07-05T10:11:04.436617</td>
+            </tr>
+            <tr>
+                <td>104.25.42.165</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">133.0</td>
+                <td>2025-07-05T10:11:04.858315</td>
+            </tr>
+            <tr>
+                <td>104.27.119.12</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">133.0</td>
+                <td>2025-07-05T10:11:08.077572</td>
+            </tr>
+            <tr>
+                <td>104.20.11.49</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">133.0</td>
+                <td>2025-07-05T10:11:12.041774</td>
+            </tr>
+            <tr>
+                <td>104.25.69.235</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">133.0</td>
+                <td>2025-07-05T10:11:17.461116</td>
+            </tr>
+            <tr>
+                <td>93.123.17.142</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">133.0</td>
+                <td>2025-07-05T11:15:59.355846</td>
+            </tr>
+            <tr>
+                <td>90.84.153.161</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">133.0</td>
+                <td>2025-07-05T11:16:14.045696</td>
+            </tr>
+            <tr>
+                <td>151.101.1.6</td>
+                <td>fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">134.0</td>
+                <td>2025-07-05T10:10:03.794197</td>
+            </tr>
+            <tr>
+                <td>104.22.30.120</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">134.0</td>
+                <td>2025-07-05T10:11:04.431475</td>
+            </tr>
+            <tr>
+                <td>104.23.110.223</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">134.0</td>
+                <td>2025-07-05T10:11:13.842640</td>
+            </tr>
+            <tr>
+                <td>104.24.48.84</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">134.0</td>
+                <td>2025-07-05T10:11:14.294842</td>
+            </tr>
+            <tr>
+                <td>93.123.17.145</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">134.0</td>
+                <td>2025-07-05T11:15:58.945530</td>
+            </tr>
+            <tr>
+                <td>5.101.220.9</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">134.0</td>
+                <td>2025-07-05T11:16:01.452863</td>
+            </tr>
+            <tr>
+                <td>104.19.254.168</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">135.0</td>
+                <td>2025-07-05T10:11:04.435754</td>
+            </tr>
+            <tr>
+                <td>93.123.17.158</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">136.0</td>
+                <td>2025-07-05T11:16:14.247455</td>
+            </tr>
+            <tr>
+                <td>93.123.11.19</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">136.0</td>
+                <td>2025-07-05T11:16:17.918469</td>
+            </tr>
+            <tr>
+                <td>185.244.209.5</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">138.0</td>
+                <td>2025-07-05T11:16:24.214384</td>
+            </tr>
+            <tr>
+                <td>104.19.181.91</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">139.0</td>
+                <td>2025-07-05T10:11:16.023472</td>
+            </tr>
+            <tr>
+                <td>93.123.17.148</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">139.0</td>
+                <td>2025-07-05T11:15:58.555025</td>
+            </tr>
+            <tr>
+                <td>90.84.153.99</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">139.0</td>
+                <td>2025-07-05T11:16:02.201563</td>
+            </tr>
+            <tr>
+                <td>93.123.11.14</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">139.0</td>
+                <td>2025-07-05T11:16:10.576705</td>
+            </tr>
+            <tr>
+                <td>217.195.193.4</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">141.0</td>
+                <td>2025-07-05T11:15:58.383147</td>
+            </tr>
+            <tr>
+                <td>93.123.11.23</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">144.0</td>
+                <td>2025-07-05T11:16:02.996881</td>
+            </tr>
+            <tr>
+                <td>172.67.48.27</td>
+                <td>www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">145.0</td>
+                <td>2025-07-05T10:11:04.440590</td>
+            </tr>
+            <tr>
+                <td>45.82.101.4</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">148.0</td>
+                <td>2025-07-05T11:15:58.611824</td>
+            </tr>
+            <tr>
+                <td>93.123.11.10</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">148.0</td>
+                <td>2025-07-05T11:16:16.465106</td>
+            </tr>
+            <tr>
+                <td>217.76.64.195</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">155.0</td>
+                <td>2025-07-05T11:16:14.691063</td>
+            </tr>
+            <tr>
+                <td>80.15.235.27</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">158.0</td>
+                <td>2025-07-05T11:16:14.461667</td>
+            </tr>
+            <tr>
+                <td>79.133.108.5</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">164.0</td>
+                <td>2025-07-05T11:16:06.080486</td>
+            </tr>
+            <tr>
+                <td>80.15.243.1</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">165.0</td>
+                <td>2025-07-05T11:16:08.607905</td>
+            </tr>
+            <tr>
+                <td>193.57.89.5</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">169.0</td>
+                <td>2025-07-05T11:16:10.458936</td>
+            </tr>
+            <tr>
+                <td>80.15.248.13</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">173.0</td>
+                <td>2025-07-05T11:16:00.955904</td>
+            </tr>
+            <tr>
+                <td>62.209.27.232</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">184.0</td>
+                <td>2025-07-05T11:16:02.117715</td>
+            </tr>
+            <tr>
+                <td>94.43.206.202</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">190.0</td>
+                <td>2025-07-05T11:16:11.473370</td>
+            </tr>
+            <tr>
+                <td>92.223.118.205</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">200.0</td>
+                <td>2025-07-05T11:16:13.026937</td>
+            </tr>
+            <tr>
+                <td>92.223.118.202</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">202.0</td>
+                <td>2025-07-05T11:16:03.006863</td>
+            </tr>
+            <tr>
+                <td>92.223.116.225</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">211.0</td>
+                <td>2025-07-05T11:16:12.217227</td>
+            </tr>
+            <tr>
+                <td>92.223.118.29</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">212.0</td>
+                <td>2025-07-05T11:15:59.520188</td>
+            </tr>
+            <tr>
+                <td>92.223.118.21</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">214.0</td>
+                <td>2025-07-05T11:16:03.612303</td>
+            </tr>
+            <tr>
+                <td>92.223.116.244</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">214.0</td>
+                <td>2025-07-05T11:16:20.099358</td>
+            </tr>
+            <tr>
+                <td>92.223.116.239</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">216.0</td>
+                <td>2025-07-05T11:16:15.873901</td>
+            </tr>
+            <tr>
+                <td>92.223.116.209</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">218.0</td>
+                <td>2025-07-05T11:16:12.068081</td>
+            </tr>
+            <tr>
+                <td>92.223.116.227</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">219.0</td>
+                <td>2025-07-05T11:16:19.355558</td>
+            </tr>
+            <tr>
+                <td>193.242.96.5</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">228.0</td>
+                <td>2025-07-05T11:16:17.377162</td>
+            </tr>
+            <tr>
+                <td>92.38.159.4</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">239.0</td>
+                <td>2025-07-05T11:16:10.922813</td>
+            </tr>
+            <tr>
+                <td>185.101.136.12</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">240.0</td>
+                <td>2025-07-05T11:16:02.601952</td>
+            </tr>
+            <tr>
+                <td>150.107.126.5</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">241.0</td>
+                <td>2025-07-05T11:15:59.525258</td>
+            </tr>
+            <tr>
+                <td>80.15.231.1</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">246.0</td>
+                <td>2025-07-05T11:16:08.649618</td>
+            </tr>
+            <tr>
+                <td>92.223.107.55</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">254.0</td>
+                <td>2025-07-05T11:16:08.558802</td>
+            </tr>
+            <tr>
+                <td>80.93.221.4</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">255.0</td>
+                <td>2025-07-05T11:16:10.044464</td>
+            </tr>
+            <tr>
+                <td>93.115.241.5</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">270.0</td>
+                <td>2025-07-05T11:16:16.639887</td>
+            </tr>
+            <tr>
+                <td>80.93.215.12</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">273.0</td>
+                <td>2025-07-05T11:15:59.097756</td>
+            </tr>
+            <tr>
+                <td>200.10.177.54</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">274.0</td>
+                <td>2025-07-05T11:16:13.491602</td>
+            </tr>
+            <tr>
+                <td>62.112.223.4</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">277.0</td>
+                <td>2025-07-05T11:16:07.560466</td>
+            </tr>
+            <tr>
+                <td>80.93.215.10</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">278.0</td>
+                <td>2025-07-05T11:15:59.083640</td>
+            </tr>
+            <tr>
+                <td>92.223.120.14</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">281.0</td>
+                <td>2025-07-05T11:15:59.092358</td>
+            </tr>
+            <tr>
+                <td>80.240.124.7</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">281.0</td>
+                <td>2025-07-05T11:16:08.405367</td>
+            </tr>
+            <tr>
+                <td>80.93.215.9</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">281.0</td>
+                <td>2025-07-05T11:16:15.117178</td>
+            </tr>
+            <tr>
+                <td>78.111.103.4</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">284.0</td>
+                <td>2025-07-05T11:16:17.358664</td>
+            </tr>
+            <tr>
+                <td>92.223.120.15</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">285.0</td>
+                <td>2025-07-05T11:15:59.809089</td>
+            </tr>
+            <tr>
+                <td>92.223.120.12</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">286.0</td>
+                <td>2025-07-05T11:16:22.894550</td>
+            </tr>
+            <tr>
+                <td>190.95.248.34</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">294.0</td>
+                <td>2025-07-05T11:15:59.103932</td>
+            </tr>
+            <tr>
+                <td>80.15.251.11</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">295.0</td>
+                <td>2025-07-05T11:15:59.107210</td>
+            </tr>
+            <tr>
+                <td>213.156.151.6</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="medium">299.0</td>
+                <td>2025-07-05T11:16:18.637968</td>
+            </tr>
+            <tr>
+                <td>92.223.12.22</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="bad">305.0</td>
+                <td>2025-07-05T11:15:59.914790</td>
+            </tr>
+            <tr>
+                <td>92.223.12.17</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="bad">312.0</td>
+                <td>2025-07-05T11:16:07.486182</td>
+            </tr>
+            <tr>
+                <td>92.223.12.12</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="bad">316.0</td>
+                <td>2025-07-05T11:16:12.389010</td>
+            </tr>
+            <tr>
+                <td>92.223.12.10</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="bad">318.0</td>
+                <td>2025-07-05T11:16:05.494102</td>
+            </tr>
+            <tr>
+                <td>87.120.164.6</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="bad">343.0</td>
+                <td>2025-07-05T11:16:11.168180</td>
+            </tr>
+            <tr>
+                <td>87.120.164.4</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="bad">350.0</td>
+                <td>2025-07-05T11:16:05.051837</td>
+            </tr>
+            <tr>
+                <td>5.252.26.11</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="bad">398.0</td>
+                <td>2025-07-05T11:16:19.310330</td>
+            </tr>
+            <tr>
+                <td>92.38.168.5</td>
+                <td>gcore.com</td>
+                <td>gcore</td>
+                <td class="bad">✗</td>
+                <td class="bad">✗</td>
+                <td class="">N/A</td>
+                <td>2025-07-05T08:28:57.217665</td>
+            </tr>
+            <tr>
+                <td>151.101.229.100</td>
+                <td>*.fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="bad">✗</td>
+                <td class="">N/A</td>
+                <td>2025-07-05T08:59:38.418690</td>
+            </tr>
+            <tr>
+                <td>151.101.78.104</td>
+                <td>*.fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="bad">✗</td>
+                <td class="">N/A</td>
+                <td>2025-07-05T09:00:11.700605</td>
+            </tr>
+            <tr>
+                <td>151.101.154.12</td>
+                <td>*.fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="bad">✗</td>
+                <td class="">N/A</td>
+                <td>2025-07-05T09:00:39.760648</td>
+            </tr>
+            <tr>
+                <td>151.101.230.92</td>
+                <td>*.fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="bad">✗</td>
+                <td class="">N/A</td>
+                <td>2025-07-05T09:00:41.949589</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <script>
+        function sortTable(column) {
+            const table = document.getElementById("resultsTable");
+            const rows = Array.from(table.rows).slice(1);
+            const header = table.rows[0].cells[column];
+            const direction = header.getAttribute("data-direction") || "asc";
+            
+            rows.sort((a, b) => {
+                const aVal = a.cells[column].textContent;
+                const bVal = b.cells[column].textContent;
+                
+                if (!isNaN(aVal) && !isNaN(bVal)) {
+                    return direction === "asc" ? aVal - bVal : bVal - aVal;
+                }
+                return direction === "asc" 
+                    ? aVal.localeCompare(bVal)
+                    : bVal.localeCompare(aVal);
+            });
+            
+            // Rebuild table
+            rows.forEach(row => table.tBodies[0].appendChild(row));
+            header.setAttribute("data-direction", direction === "asc" ? "desc" : "asc");
+        }
+    </script>
+</body>
+</html>
