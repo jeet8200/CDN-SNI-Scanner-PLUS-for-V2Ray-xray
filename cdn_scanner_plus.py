@@ -18,6 +18,11 @@ import argparse
 import subprocess
 import platform
 import re
+import tarfile
+import gzip
+import shutil
+from timeit import default_timer as timer
+import csv
 
 # Disable SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -169,8 +174,9 @@ class CDNScannerPlus:
         print(Fore.YELLOW + "[7]" + Style.RESET_ALL + " Deep CDN Test")
         print(Fore.YELLOW + "[8]" + Style.RESET_ALL + " Update CDN IP ranges")
         print(Fore.YELLOW + "[9]" + Style.RESET_ALL + " Generate HTML report")
-        print(Fore.YELLOW + "[10]" + Style.RESET_ALL + " Configuration")
-        print(Fore.YELLOW + "[11]" + Style.RESET_ALL + " Exit")
+        print(Fore.YELLOW + "[10]" + Style.RESET_ALL + " Export to CSV/Excel")
+        print(Fore.YELLOW + "[11]" + Style.RESET_ALL + " Configuration")
+        print(Fore.YELLOW + "[12]" + Style.RESET_ALL + " Exit")
         print("\n")
 
     def update_cdn_ranges(self) -> None:
@@ -331,6 +337,8 @@ class CDNScannerPlus:
                                 "https_works": result.get('https_works', False),
                                 "http_works": result.get('http_works', False),
                                 "ping": result.get('ping', None),
+                                "ssl_handshake_time": result.get('ssl_handshake_time', None),
+                                "http_response_time": result.get('http_response_time', None),
                                 "timestamp": datetime.now().isoformat()
                             }
                             
@@ -343,7 +351,12 @@ class CDNScannerPlus:
                             status = "+".join(status_parts) if status_parts else "None"
                             
                             ping_display = f"{pair['ping']}ms" if pair['ping'] is not None else "N/A"
+                            ssl_time_display = f"{pair['ssl_handshake_time']:.1f}ms" if pair['ssl_handshake_time'] is not None else "N/A"
+                            http_time_display = f"{pair['http_response_time']:.1f}ms" if pair['http_response_time'] is not None else "N/A"
+                            
                             print(Fore.GREEN + f"[+] Valid: {domain} @ {ip} ({cdn_name}) - Protocols: {status} - Ping: {ping_display}" + Style.RESET_ALL)
+                            print(Fore.CYAN + f"    SSL Handshake: {ssl_time_display} - HTTP Response: {http_time_display}" + Style.RESET_ALL)
+                            
                             valid_pairs.append(pair)
                             if output_file:
                                 self.save_result(pair, output_file)
@@ -456,7 +469,7 @@ class CDNScannerPlus:
         return False
 
     def test_sni_pair(self, ip: str, sni: str, timeout: int = 5) -> Optional[Dict]:
-        """Test if IP accepts the SNI and return ping info if successful"""
+        """Test if IP accepts the SNI with detailed performance metrics"""
         self.total_tests += 1
         time.sleep(self.rate_limit_delay)
         
@@ -465,12 +478,15 @@ class CDNScannerPlus:
             'sni': sni,
             'https_works': False,
             'http_works': False,
-            'ping': None
+            'ping': None,
+            'ssl_handshake_time': None,
+            'http_response_time': None
         }
         
-        # Test HTTPS first
+        # Test HTTPS with timing
         ssl_success = False
         try:
+            start_time = timer()
             sock = socket.create_connection((ip, 443), timeout=timeout)
             context = ssl.create_default_context()
             context.check_hostname = False
@@ -479,19 +495,25 @@ class CDNScannerPlus:
             with context.wrap_socket(sock, server_hostname=sni) as ssl_sock:
                 cert = ssl_sock.getpeercert()
                 if cert:
-                    if self.verbose_mode:
-                        print(Fore.CYAN + f"[*] SSL cert found for {sni} @ {ip}" + Style.RESET_ALL)
                     ssl_success = True
                     result['https_works'] = True
-        except:
-            pass
+            result['ssl_handshake_time'] = (timer() - start_time) * 1000  # Convert to ms
+        except Exception as e:
+            if self.debug_mode:
+                print(Fore.YELLOW + f"[DEBUG] SSL test failed for {sni} @ {ip}: {e}" + Style.RESET_ALL)
         
-        # Test HTTP (port 80)
-        http_success = self.test_http(ip, sni, timeout)
-        result['http_works'] = http_success
+        # Test HTTP with timing
+        try:
+            start_time = timer()
+            http_success = self.test_http(ip, sni, timeout)
+            result['http_response_time'] = (timer() - start_time) * 1000  # Convert to ms
+            result['http_works'] = http_success
+        except Exception as e:
+            if self.debug_mode:
+                print(Fore.YELLOW + f"[DEBUG] HTTP test failed for {sni} @ {ip}: {e}" + Style.RESET_ALL)
         
-        if ssl_success or http_success:
-            # Only ping if the connection was successful
+        # Only ping if the connection was successful
+        if ssl_success or result['http_works']:
             ping_time = self.get_ping(ip)
             result['ping'] = ping_time
             return result
@@ -522,6 +544,8 @@ class CDNScannerPlus:
                     f.write(f"HTTPS Works: {'Yes' if result.get('https_works', False) else 'No'}\n")
                     f.write(f"HTTP Works: {'Yes' if result.get('http_works', False) else 'No'}\n")
                     f.write(f"Ping: {result.get('ping', 'N/A')}ms\n")
+                    f.write(f"SSL Handshake Time: {result.get('ssl_handshake_time', 'N/A')}ms\n")
+                    f.write(f"HTTP Response Time: {result.get('http_response_time', 'N/A')}ms\n")
                     f.write(f"Timestamp: {result.get('timestamp', 'N/A')}\n")
                     f.write("-" * 40 + "\n")
         except Exception as e:
@@ -555,7 +579,13 @@ class CDNScannerPlus:
                     protocol_str = "+".join(protocols) if protocols else "None"
                     
                     ping_display = f"{pair.get('ping', 'N/A')}ms"
-                    print(f"{i}. {pair.get('sni', 'N/A')} @ {pair.get('ip', 'N/A')} ({pair.get('cdn', 'N/A')}) - {protocol_str} - Ping: {ping_display}")
+                    ssl_time = f"{pair.get('ssl_handshake_time', 'N/A')}ms"
+                    http_time = f"{pair.get('http_response_time', 'N/A')}ms"
+                    
+                    print(f"{i}. {pair.get('sni', 'N/A')} @ {pair.get('ip', 'N/A')} ({pair.get('cdn', 'N/A')})")
+                    print(f"   Protocols: {protocol_str} - Ping: {ping_display}")
+                    print(f"   SSL Time: {ssl_time} - HTTP Time: {http_time}")
+                    print()
                 
                 print(Fore.GREEN + f"\nTotal valid pairs: {len(results)}" + Style.RESET_ALL)
                 
@@ -637,6 +667,8 @@ class CDNScannerPlus:
                             "https_works": result.get('https_works', False),
                             "http_works": result.get('http_works', False),
                             "ping": result.get('ping', None),
+                            "ssl_handshake_time": result.get('ssl_handshake_time', None),
+                            "http_response_time": result.get('http_response_time', None),
                             "timestamp": datetime.now().isoformat()
                         }
                         
@@ -649,7 +681,12 @@ class CDNScannerPlus:
                         status = "+".join(status_parts) if status_parts else "None"
                         
                         ping_display = f"{pair['ping']}ms" if pair['ping'] is not None else "N/A"
+                        ssl_time_display = f"{pair['ssl_handshake_time']:.1f}ms" if pair['ssl_handshake_time'] is not None else "N/A"
+                        http_time_display = f"{pair['http_response_time']:.1f}ms" if pair['http_response_time'] is not None else "N/A"
+                        
                         print(Fore.GREEN + f"[+] Valid pair found: {sni} @ {ip} ({cdn_name}) - Protocols: {status} - Ping: {ping_display}" + Style.RESET_ALL)
+                        print(Fore.CYAN + f"    SSL Handshake: {ssl_time_display} - HTTP Response: {http_time_display}" + Style.RESET_ALL)
+                        
                         valid_pairs.append(pair)
                         
                         if output_file:
@@ -758,7 +795,13 @@ class CDNScannerPlus:
                         protocol_str = "+".join(protocols) if protocols else "None"
                         
                         ping_display = f"{pair.get('ping', 'N/A')}ms"
-                        print(f"  - {pair.get('ip', 'N/A')} ({pair.get('cdn', 'N/A')}) - {protocol_str} - Ping: {ping_display}")
+                        ssl_time = f"{pair.get('ssl_handshake_time', 'N/A')}ms"
+                        http_time = f"{pair.get('http_response_time', 'N/A')}ms"
+                        
+                        print(f"  - {pair.get('ip', 'N/A')} ({pair.get('cdn', 'N/A')})")
+                        print(f"     Protocols: {protocol_str} - Ping: {ping_display}")
+                        print(f"     SSL Time: {ssl_time} - HTTP Time: {http_time}")
+                        print()
                     all_results.extend(valid_pairs)
                 else:
                     print(Fore.RED + f"[!] No valid pairs found for {domain}" + Style.RESET_ALL)
@@ -817,6 +860,8 @@ class CDNScannerPlus:
                         "https_works": result.get('https_works', False),
                         "http_works": result.get('http_works', False),
                         "ping": result.get('ping', None),
+                        "ssl_handshake_time": result.get('ssl_handshake_time', None),
+                        "http_response_time": result.get('http_response_time', None),
                         "timestamp": datetime.now().isoformat()
                     }
                     
@@ -828,7 +873,13 @@ class CDNScannerPlus:
                     protocol_str = "+".join(protocols) if protocols else "None"
                     
                     ping_display = f"{result['ping']}ms" if result['ping'] is not None else "N/A"
-                    print(Fore.GREEN + f"[+] Valid {cdn_name}: {domain} @ {ip} - Protocols: {protocol_str} - Ping: {ping_display}" + Style.RESET_ALL)
+                    ssl_time = f"{result['ssl_handshake_time']:.1f}ms" if result['ssl_handshake_time'] is not None else "N/A"
+                    http_time = f"{result['http_response_time']:.1f}ms" if result['http_response_time'] is not None else "N/A"
+                    
+                    print(Fore.GREEN + f"[+] Valid {cdn_name}: {domain} @ {ip}" + Style.RESET_ALL)
+                    print(Fore.CYAN + f"    Protocols: {protocol_str} - Ping: {ping_display}" + Style.RESET_ALL)
+                    print(Fore.CYAN + f"    SSL Time: {ssl_time} - HTTP Time: {http_time}" + Style.RESET_ALL)
+                    
                     all_results.append(pair)
                 else:
                     print(Fore.RED + f"[-] Failed: {domain} @ {ip}" + Style.RESET_ALL)
@@ -887,13 +938,15 @@ class CDNScannerPlus:
                 <th onclick="sortTable(3)">HTTPS</th>
                 <th onclick="sortTable(4)">HTTP</th>
                 <th onclick="sortTable(5)">Ping (ms)</th>
-                <th onclick="sortTable(6)">Timestamp</th>
+                <th onclick="sortTable(6)">SSL Time (ms)</th>
+                <th onclick="sortTable(7)">HTTP Time (ms)</th>
+                <th onclick="sortTable(8)">Timestamp</th>
             </tr>
         </thead>
         <tbody>"""
             
             for result in sorted_results:
-                # Safely get values with defaults
+                # Safely get values with defaults and handle None values
                 https_works = result.get('https_works', False)
                 http_works = result.get('http_works', False)
                 ip = result.get('ip', 'N/A')
@@ -904,18 +957,18 @@ class CDNScannerPlus:
                 https_class = "good" if https_works else "bad"
                 http_class = "good" if http_works else "bad"
                 
+                # Handle None values for performance metrics
                 ping = result.get('ping', 'N/A')
+                ssl_time = result.get('ssl_handshake_time', 'N/A')
+                http_time = result.get('http_response_time', 'N/A')
+                
+                # Format numeric values only if they're not None or 'N/A'
                 if isinstance(ping, (int, float)):
-                    if ping < 100:
-                        ping_class = "good"
-                    elif ping < 300:
-                        ping_class = "medium"
-                    else:
-                        ping_class = "bad"
-                    ping_display = f"{ping:.1f}"
-                else:
-                    ping_class = ""
-                    ping_display = ping
+                    ping = f"{ping:.1f}"
+                if isinstance(ssl_time, (int, float)):
+                    ssl_time = f"{ssl_time:.1f}"
+                if isinstance(http_time, (int, float)):
+                    http_time = f"{http_time:.1f}"
                 
                 html += f"""
             <tr>
@@ -924,7 +977,9 @@ class CDNScannerPlus:
                 <td>{cdn}</td>
                 <td class="{https_class}">{"✓" if https_works else "✗"}</td>
                 <td class="{http_class}">{"✓" if http_works else "✗"}</td>
-                <td class="{ping_class}">{ping_display}</td>
+                <td>{ping}</td>
+                <td>{ssl_time}</td>
+                <td>{http_time}</td>
                 <td>{timestamp}</td>
             </tr>"""
             
@@ -967,6 +1022,76 @@ class CDNScannerPlus:
         except Exception as e:
             print(Fore.RED + f"[!] Error generating HTML report: {e}" + Style.RESET_ALL)
             logging.error(f"Error generating HTML report: {e}")
+
+    def export_to_csv(self, results: List[Dict], filename: str) -> None:
+        """Export results to CSV file"""
+        try:
+            with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
+                fieldnames = [
+                    'ip', 'sni', 'cdn', 'https_works', 'http_works', 'ping',
+                    'ssl_handshake_time', 'http_response_time',
+                    'timestamp'
+                ]
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                writer.writeheader()
+                
+                for result in results:
+                    row = {
+                        'ip': result.get('ip', ''),
+                        'sni': result.get('sni', ''),
+                        'cdn': result.get('cdn', ''),
+                        'https_works': 'Yes' if result.get('https_works') else 'No',
+                        'http_works': 'Yes' if result.get('http_works') else 'No',
+                        'ping': result.get('ping', ''),
+                        'ssl_handshake_time': result.get('ssl_handshake_time', ''),
+                        'http_response_time': result.get('http_response_time', ''),
+                        'timestamp': result.get('timestamp', '')
+                    }
+                    writer.writerow(row)
+            
+            print(Fore.GREEN + f"[+] Results exported to CSV: {filename}" + Style.RESET_ALL)
+        except Exception as e:
+            print(Fore.RED + f"[!] Error exporting to CSV: {e}" + Style.RESET_ALL)
+
+    def export_to_excel(self, results: List[Dict], filename: str) -> None:
+        """Export results to Excel file"""
+        try:
+            from openpyxl import Workbook
+            
+            wb = Workbook()
+            ws = wb.active
+            ws.title = "CDN Scan Results"
+            
+            # Write headers
+            headers = [
+                'IP', 'SNI', 'CDN', 'HTTPS Works', 'HTTP Works', 'Ping (ms)',
+                'SSL Handshake (ms)', 'HTTP Response (ms)',
+                'Timestamp'
+            ]
+            ws.append(headers)
+            
+            # Write data
+            for result in results:
+                row = [
+                    result.get('ip', ''),
+                    result.get('sni', ''),
+                    result.get('cdn', ''),
+                    'Yes' if result.get('https_works') else 'No',
+                    'Yes' if result.get('http_works') else 'No',
+                    result.get('ping', ''),
+                    result.get('ssl_handshake_time', ''),
+                    result.get('http_response_time', ''),
+                    result.get('timestamp', '')
+                ]
+                ws.append(row)
+            
+            # Save the file
+            wb.save(filename)
+            print(Fore.GREEN + f"[+] Results exported to Excel: {filename}" + Style.RESET_ALL)
+        except ImportError:
+            print(Fore.RED + "[!] openpyxl package not installed. Run: pip install openpyxl" + Style.RESET_ALL)
+        except Exception as e:
+            print(Fore.RED + f"[!] Error exporting to Excel: {e}" + Style.RESET_ALL)
 
     def edit_configuration(self) -> None:
         """Allow user to edit configuration settings"""
@@ -1074,7 +1199,7 @@ class CDNScannerPlus:
         while True:
             try:
                 self.print_menu()
-                choice = input("Select an option (1-11): ").strip()
+                choice = input("Select an option (1-12): ").strip()
                 
                 if choice == '1':
                     self.single_domain_scan()
@@ -1106,8 +1231,37 @@ class CDNScannerPlus:
                         print(Fore.RED + "[!] No results file found" + Style.RESET_ALL)
                     input("\nPress Enter to return to menu...")
                 elif choice == '10':
-                    self.edit_configuration()
+                    results_file = os.path.join(self.output_dir, "valid_pairs.json")
+                    if os.path.exists(results_file):
+                        with open(results_file, 'r') as f:
+                            results = [json.loads(line) for line in f if line.strip()]
+                        
+                        print("\nExport Options:")
+                        print("1. Export to CSV")
+                        print("2. Export to Excel")
+                        print("3. Export to both")
+                        
+                        export_choice = input("Select export format (1-3): ").strip()
+                        
+                        if export_choice == '1':
+                            csv_file = os.path.join(self.output_dir, "cdn_results.csv")
+                            self.export_to_csv(results, csv_file)
+                        elif export_choice == '2':
+                            excel_file = os.path.join(self.output_dir, "cdn_results.xlsx")
+                            self.export_to_excel(results, excel_file)
+                        elif export_choice == '3':
+                            csv_file = os.path.join(self.output_dir, "cdn_results.csv")
+                            excel_file = os.path.join(self.output_dir, "cdn_results.xlsx")
+                            self.export_to_csv(results, csv_file)
+                            self.export_to_excel(results, excel_file)
+                        else:
+                            print(Fore.RED + "[!] Invalid choice" + Style.RESET_ALL)
+                    else:
+                        print(Fore.RED + "[!] No results file found" + Style.RESET_ALL)
+                    input("\nPress Enter to return to menu...")
                 elif choice == '11':
+                    self.edit_configuration()
+                elif choice == '12':
                     print(Fore.CYAN + "\n[+] Exiting program..." + Style.RESET_ALL)
                     break
                 else:
