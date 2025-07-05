@@ -15,6 +15,9 @@ import logging
 from typing import List, Dict, Tuple, Optional, Union
 import configparser
 import argparse
+import subprocess
+import platform
+import re
 
 # Disable SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -34,9 +37,24 @@ class CDNScannerPlus:
         self.cdn_test_domains = {
             'cloudflare': ['www.cloudflare.com', 'cloudflare.com'],
             'fastly': ['www.fastly.com', 'fastly.com'],
-            'gcore': self.gcore_test_domains,
-            'akamai': ['www.akamai.com', 'akamai.com'],
-            'cloudfront': ['aws.amazon.com', 'd1.awsstatic.com']
+            'gcore': self.gcore_test_domains
+        }
+
+        # Initialize CDN ranges optimized for Iran bypass
+        self.cdn_ranges = {
+            'cloudflare': [
+                '104.16.0.0/13', '172.64.0.0/13', '162.158.0.0/15', 
+                '108.162.192.0/18', '173.245.48.0/20', '141.101.64.0/18',
+                '190.93.240.0/20', '188.114.96.0/20'
+            ],
+            'gcore': [
+                '158.160.0.0/16', '92.223.84.0/24', '185.209.160.0/24',
+                '45.133.144.0/24', '45.135.240.0/22', '45.159.216.0/22'
+            ],
+            'fastly': [
+                '151.101.0.0/16', '199.232.0.0/16', '2a04:4e40::/32',
+                '23.235.32.0/20', '43.249.72.0/22'
+            ]
         }
 
         # Initialize other attributes
@@ -50,8 +68,8 @@ class CDNScannerPlus:
         self.session = requests.Session()
         self.session.verify = False
         self.config_file = config_file
-        self.cdn_ranges = {}
         self.dns_servers = []
+        self.output_dir = 'results'
         
         # Load configuration and setup
         self.load_config()
@@ -70,15 +88,6 @@ class CDNScannerPlus:
             'output_dir': 'results'
         }
         
-        # Default CDN ranges
-        config['CDN_RANGES'] = {
-            'cloudflare': '104.16.0.0/13,172.64.0.0/13,162.158.0.0/15,108.162.192.0/18',
-            'fastly': '151.101.0.0/16,199.232.0.0/16,2a04:4e40::/32',
-            'gcore': '158.160.0.0/16,92.223.84.0/24,185.209.160.0/24,45.133.144.0/24,45.135.240.0/22',
-            'akamai': '23.0.0.0/12,95.100.0.0/15,184.24.0.0/13',
-            'cloudfront': '13.32.0.0/15,13.224.0.0/14'
-        }
-
         # Try to read or create config file
         try:
             if os.path.exists(self.config_file):
@@ -101,10 +110,6 @@ class CDNScannerPlus:
             
             # Create output directory if it doesn't exist
             os.makedirs(self.output_dir, exist_ok=True)
-            
-            # Load CDN ranges
-            self.cdn_ranges = {cdn: [r.strip() for r in ranges.split(',')] 
-                             for cdn, ranges in config['CDN_RANGES'].items()}
             
             # Load ranges from files if they exist (overriding config)
             for cdn in self.cdn_ranges:
@@ -143,13 +148,18 @@ class CDNScannerPlus:
  | |   | | | |  \| | \___ \| | |  _|  \| | | |  
  | |___| |_| | |\  |  ___) | | |_| | |\  | | |  
   \____|____/|_| \_| |____/___\____|_| \_| |_|  
-        CDN SNI Scanner PLUS - ENHANCED VERSION
+        CDN SNI Scanner PLUS - IRAN OPTIMIZED
         """ + Style.RESET_ALL)
-        print(Fore.YELLOW + "Multi-CDN Support | IPv6 Ready | Advanced Configuration" + Style.RESET_ALL)
+        print(Fore.YELLOW + "VLESS+WS/Xray Support | GFW Bypass | Enhanced Reporting" + Style.RESET_ALL)
 
     def print_menu(self) -> None:
         """Display the main menu"""
         self.print_banner()
+        debug_status = f"{Fore.GREEN}●{Style.RESET_ALL}" if self.debug_mode else f"{Fore.RED}○{Style.RESET_ALL}"
+        verbose_status = f"{Fore.GREEN}●{Style.RESET_ALL}" if self.verbose_mode else f"{Fore.RED}○{Style.RESET_ALL}"
+        
+        print(f"{debug_status} Debug Mode | {verbose_status} Verbose Mode\n")
+        
         print(Fore.YELLOW + "[1]" + Style.RESET_ALL + " Scan single domain")
         print(Fore.YELLOW + "[2]" + Style.RESET_ALL + " Scan random IPs")
         print(Fore.YELLOW + "[3]" + Style.RESET_ALL + " Scan from file")
@@ -157,11 +167,106 @@ class CDNScannerPlus:
         print(Fore.YELLOW + "[5]" + Style.RESET_ALL + " Toggle debug")
         print(Fore.YELLOW + "[6]" + Style.RESET_ALL + " Test known CDNs")
         print(Fore.YELLOW + "[7]" + Style.RESET_ALL + " Deep CDN Test")
-        print(Fore.YELLOW + "[8]" + Style.RESET_ALL + " Configuration")
-        print(Fore.YELLOW + "[9]" + Style.RESET_ALL + " Exit")
+        print(Fore.YELLOW + "[8]" + Style.RESET_ALL + " Update CDN IP ranges")
+        print(Fore.YELLOW + "[9]" + Style.RESET_ALL + " Generate HTML report")
+        print(Fore.YELLOW + "[10]" + Style.RESET_ALL + " Configuration")
+        print(Fore.YELLOW + "[11]" + Style.RESET_ALL + " Exit")
         print("\n")
 
-    def run_single_scan(self) -> None:
+    def update_cdn_ranges(self) -> None:
+        """Automatically update CDN IP ranges from online sources with fallbacks"""
+        cdn_sources = {
+            'cloudflare': {
+                'url': 'https://www.cloudflare.com/ips-v4',
+                'fallback': self.cdn_ranges.get('cloudflare', [])
+            },
+            'gcore': {
+                'url': 'https://api.gcore.com/cdn/public-ip-list',
+                'fallback': [
+                    '158.160.0.0/16', '92.223.84.0/24', '185.209.160.0/24',
+                    '45.133.144.0/24', '45.135.240.0/22', '45.159.216.0/22'
+                ],
+                'alternative_url': 'https://cdn.gcorelabs.com/ip-list.txt'
+            },
+            'fastly': {
+                'url': 'https://api.fastly.com/public-ip-list',
+                'fallback': [
+                    '151.101.0.0/16', '199.232.0.0/16', '2a04:4e40::/32',
+                    '23.235.32.0/20', '43.249.72.0/22'
+                ],
+                'alternative_url': 'https://ip-ranges.fastly.com/'
+            }
+        }
+        
+        print(Fore.YELLOW + "\n[*] Updating CDN IP ranges..." + Style.RESET_ALL)
+        
+        for cdn, sources in cdn_sources.items():
+            ranges = []
+            success = False
+            
+            # Try primary URL first
+            try:
+                print(Fore.CYAN + f"[*] Trying to fetch {cdn} ranges from primary source..." + Style.RESET_ALL)
+                response = self.session.get(sources['url'], timeout=15)
+                response.raise_for_status()
+                
+                if cdn == 'cloudflare':
+                    ranges = [line.strip() for line in response.text.split('\n') if line.strip()]
+                elif cdn == 'gcore':
+                    data = response.json()
+                    ranges = data.get('addresses', []) + data.get('prefixes', [])
+                elif cdn == 'fastly':
+                    data = response.json()
+                    ranges = data.get('addresses', [])
+                
+                success = True
+                print(Fore.GREEN + f"[+] Successfully updated {cdn} ranges from primary source" + Style.RESET_ALL)
+                
+            except Exception as e:
+                print(Fore.YELLOW + f"[!] Primary source failed for {cdn}: {e}" + Style.RESET_ALL)
+                
+                # Try alternative URL if available
+                if 'alternative_url' in sources:
+                    try:
+                        print(Fore.CYAN + f"[*] Trying alternative source for {cdn}..." + Style.RESET_ALL)
+                        alt_response = self.session.get(sources['alternative_url'], timeout=15)
+                        alt_response.raise_for_status()
+                        
+                        if cdn == 'gcore':
+                            ranges = [line.strip() for line in alt_response.text.split('\n') if line.strip() and not line.startswith('#')]
+                        elif cdn == 'fastly':
+                            ranges = [line.strip() for line in alt_response.text.split('\n') if line.strip() and not line.startswith('#')]
+                        
+                        success = True
+                        print(Fore.GREEN + f"[+] Successfully updated {cdn} ranges from alternative source" + Style.RESET_ALL)
+                        
+                    except Exception as alt_e:
+                        print(Fore.YELLOW + f"[!] Alternative source also failed for {cdn}: {alt_e}" + Style.RESET_ALL)
+            
+            # If all attempts failed, use fallback ranges
+            if not success:
+                print(Fore.YELLOW + f"[!] Using fallback ranges for {cdn}" + Style.RESET_ALL)
+                ranges = sources['fallback']
+            
+            # Save to file
+            filename = f"{cdn}.txt"
+            try:
+                with open(filename, 'w') as f:
+                    f.write('\n'.join(ranges))
+                
+                # Update in-memory ranges
+                self.cdn_ranges[cdn] = ranges
+                
+                print(Fore.GREEN + f"[+] Updated {cdn} ranges ({len(ranges)} entries)" + Style.RESET_ALL)
+                
+            except Exception as e:
+                print(Fore.RED + f"[!] Error saving {cdn} ranges: {e}" + Style.RESET_ALL)
+        
+        # Save updated config
+        self.save_config()
+        input("\nPress Enter to return to menu...")
+
+    def single_domain_scan(self) -> None:
         """Handle single domain scanning"""
         self.print_banner()
         print(Fore.CYAN + "Single Domain Scan\n" + Style.RESET_ALL)
@@ -217,14 +322,28 @@ class CDNScannerPlus:
                 for future in concurrent.futures.as_completed(futures):
                     ip, domain, cdn_name = futures[future]
                     try:
-                        if future.result():
+                        result = future.result()
+                        if result:
                             pair = {
                                 "ip": ip,
                                 "sni": domain,
                                 "cdn": cdn_name,
+                                "https_works": result.get('https_works', False),
+                                "http_works": result.get('http_works', False),
+                                "ping": result.get('ping', None),
                                 "timestamp": datetime.now().isoformat()
                             }
-                            print(Fore.GREEN + f"[+] Valid: {domain} @ {ip} ({cdn_name})" + Style.RESET_ALL)
+                            
+                            # Build status message
+                            status_parts = []
+                            if pair['https_works']:
+                                status_parts.append("HTTPS")
+                            if pair['http_works']:
+                                status_parts.append("HTTP")
+                            status = "+".join(status_parts) if status_parts else "None"
+                            
+                            ping_display = f"{pair['ping']}ms" if pair['ping'] is not None else "N/A"
+                            print(Fore.GREEN + f"[+] Valid: {domain} @ {ip} ({cdn_name}) - Protocols: {status} - Ping: {ping_display}" + Style.RESET_ALL)
                             valid_pairs.append(pair)
                             if output_file:
                                 self.save_result(pair, output_file)
@@ -279,12 +398,78 @@ class CDNScannerPlus:
                 print(Fore.RED + f"[DEBUG] Invalid IP address: {ip}" + Style.RESET_ALL)
             return False
 
-    def test_sni_pair(self, ip: str, sni: str, timeout: int = 5) -> bool:
-        """Test if IP accepts the SNI"""
+    def get_ping(self, ip: str, count: int = 3) -> Optional[float]:
+        """
+        Get average ping time to an IP address
+        Returns average ping in milliseconds or None if failed
+        """
+        try:
+            # Ping command differs between Windows and Unix-like systems
+            param = '-n' if platform.system().lower() == 'windows' else '-c'
+            command = ['ping', param, str(count), ip]
+            
+            output = subprocess.run(
+                command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                timeout=10
+            ).stdout
+            
+            # Parse ping output for average time
+            if platform.system().lower() == 'windows':
+                match = re.search(r'Average = (\d+)ms', output)
+            else:
+                match = re.search(r'min/avg/max/\w+ = [\d.]+/([\d.]+)/', output)
+            
+            if match:
+                return float(match.group(1))
+            return None
+        except:
+            return None
+
+    def test_http(self, ip: str, hostname: str, timeout: int = 5) -> bool:
+        """Test if IP responds to HTTP (port 80) with given Host header"""
+        try:
+            # Create a socket connection
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(timeout)
+            sock.connect((ip, 80))
+            
+            # Send HTTP request
+            request = f"GET / HTTP/1.1\r\nHost: {hostname}\r\nConnection: close\r\n\r\n"
+            sock.sendall(request.encode())
+            
+            # Get response (just the first part is enough)
+            response = sock.recv(1024).decode()
+            
+            # Check if we got a valid HTTP response
+            if "HTTP/" in response and any(str(code) in response for code in [200, 301, 302, 403, 404]):
+                return True
+        except:
+            return False
+        finally:
+            try:
+                sock.close()
+            except:
+                pass
+        return False
+
+    def test_sni_pair(self, ip: str, sni: str, timeout: int = 5) -> Optional[Dict]:
+        """Test if IP accepts the SNI and return ping info if successful"""
         self.total_tests += 1
         time.sleep(self.rate_limit_delay)
         
-        # SSL/TLS test
+        result = {
+            'ip': ip,
+            'sni': sni,
+            'https_works': False,
+            'http_works': False,
+            'ping': None
+        }
+        
+        # Test HTTPS first
+        ssl_success = False
         try:
             sock = socket.create_connection((ip, 443), timeout=timeout)
             context = ssl.create_default_context()
@@ -296,32 +481,21 @@ class CDNScannerPlus:
                 if cert:
                     if self.verbose_mode:
                         print(Fore.CYAN + f"[*] SSL cert found for {sni} @ {ip}" + Style.RESET_ALL)
-                    return True
-        except Exception as e:
-            logging.debug(f"SSL failed for {sni} @ {ip}: {e}")
-            if self.debug_mode:
-                print(Fore.RED + f"[DEBUG] SSL failed for {sni} @ {ip}: {type(e).__name__}" + Style.RESET_ALL)
+                    ssl_success = True
+                    result['https_works'] = True
+        except:
+            pass
         
-        # HTTP test
-        try:
-            response = self.session.get(
-                f"https://{ip}",
-                headers={'Host': sni},
-                timeout=timeout,
-                allow_redirects=False,
-                verify=False
-            )
-            
-            if response.status_code in (200, 301, 302, 403, 404):
-                if self.verbose_mode:
-                    print(Fore.CYAN + f"[*] HTTP {response.status_code} for {sni} @ {ip}" + Style.RESET_ALL)
-                return True
-        except Exception as e:
-            logging.debug(f"HTTP failed for {sni} @ {ip}: {e}")
-            if self.debug_mode:
-                print(Fore.RED + f"[DEBUG] HTTP failed for {sni} @ {ip}: {type(e).__name__}" + Style.RESET_ALL)
+        # Test HTTP (port 80)
+        http_success = self.test_http(ip, sni, timeout)
+        result['http_works'] = http_success
         
-        return False
+        if ssl_success or http_success:
+            # Only ping if the connection was successful
+            ping_time = self.get_ping(ip)
+            result['ping'] = ping_time
+            return result
+        return None
 
     def save_result(self, pair: Dict, output_file: str) -> None:
         """Save a valid pair to output file"""
@@ -332,14 +506,23 @@ class CDNScannerPlus:
             print(Fore.RED + f"[!] Failed to save results: {e}" + Style.RESET_ALL)
 
     def save_to_txt(self, results: List[Dict], filename: str) -> None:
-        """Save results to TXT file"""
+        """Save results to TXT file with ping info"""
         try:
+            # Sort by ping time (lowest first)
+            sorted_results = sorted(
+                results,
+                key=lambda x: float('inf') if x.get('ping') is None else x['ping']
+            )
+            
             with open(filename, 'w') as f:
-                for result in results:
-                    f.write(f"IP: {result['ip']}\n")
-                    f.write(f"SNI: {result['sni']}\n")
-                    f.write(f"CDN: {result['cdn']}\n")
-                    f.write(f"Timestamp: {result['timestamp']}\n")
+                for result in sorted_results:
+                    f.write(f"IP: {result.get('ip', 'N/A')}\n")
+                    f.write(f"SNI: {result.get('sni', 'N/A')}\n")
+                    f.write(f"CDN: {result.get('cdn', 'N/A')}\n")
+                    f.write(f"HTTPS Works: {'Yes' if result.get('https_works', False) else 'No'}\n")
+                    f.write(f"HTTP Works: {'Yes' if result.get('http_works', False) else 'No'}\n")
+                    f.write(f"Ping: {result.get('ping', 'N/A')}ms\n")
+                    f.write(f"Timestamp: {result.get('timestamp', 'N/A')}\n")
                     f.write("-" * 40 + "\n")
         except Exception as e:
             print(Fore.RED + f"[!] Error saving TXT file: {e}" + Style.RESET_ALL)
@@ -364,7 +547,15 @@ class CDNScannerPlus:
             else:
                 print(Fore.CYAN + "\nSaved Valid SNI + IP Pairs:\n" + Style.RESET_ALL)
                 for i, pair in enumerate(results, 1):
-                    print(f"{i}. {pair['sni']} @ {pair['ip']} ({pair['cdn']}) - {pair['timestamp']}")
+                    protocols = []
+                    if pair.get('https_works', False):
+                        protocols.append("HTTPS")
+                    if pair.get('http_works', False):
+                        protocols.append("HTTP")
+                    protocol_str = "+".join(protocols) if protocols else "None"
+                    
+                    ping_display = f"{pair.get('ping', 'N/A')}ms"
+                    print(f"{i}. {pair.get('sni', 'N/A')} @ {pair.get('ip', 'N/A')} ({pair.get('cdn', 'N/A')}) - {protocol_str} - Ping: {ping_display}")
                 
                 print(Fore.GREEN + f"\nTotal valid pairs: {len(results)}" + Style.RESET_ALL)
                 
@@ -388,7 +579,7 @@ class CDNScannerPlus:
             print(f"{i}. {cdn} ({len(self.cdn_ranges[cdn])} ranges)")
         
         try:
-            choice = int(input("Enter choice (1-5): ")) - 1
+            choice = int(input("Enter choice (1-3): ")) - 1
             cdn_name = list(self.cdn_ranges.keys())[choice]
         except:
             print(Fore.RED + "[!] Invalid choice" + Style.RESET_ALL)
@@ -437,9 +628,28 @@ class CDNScannerPlus:
             for i, future in enumerate(concurrent.futures.as_completed(futures), 1):
                 ip = futures[future]
                 try:
-                    if future.result():
-                        pair = {"ip": ip, "sni": sni, "cdn": cdn_name, "timestamp": datetime.now().isoformat()}
-                        print(Fore.GREEN + f"[+] Valid pair found: {sni} @ {ip} ({cdn_name})" + Style.RESET_ALL)
+                    result = future.result()
+                    if result:
+                        pair = {
+                            "ip": ip,
+                            "sni": sni,
+                            "cdn": cdn_name,
+                            "https_works": result.get('https_works', False),
+                            "http_works": result.get('http_works', False),
+                            "ping": result.get('ping', None),
+                            "timestamp": datetime.now().isoformat()
+                        }
+                        
+                        # Build status message
+                        status_parts = []
+                        if pair['https_works']:
+                            status_parts.append("HTTPS")
+                        if pair['http_works']:
+                            status_parts.append("HTTP")
+                        status = "+".join(status_parts) if status_parts else "None"
+                        
+                        ping_display = f"{pair['ping']}ms" if pair['ping'] is not None else "N/A"
+                        print(Fore.GREEN + f"[+] Valid pair found: {sni} @ {ip} ({cdn_name}) - Protocols: {status} - Ping: {ping_display}" + Style.RESET_ALL)
                         valid_pairs.append(pair)
                         
                         if output_file:
@@ -540,7 +750,15 @@ class CDNScannerPlus:
                 if valid_pairs:
                     print(Fore.GREEN + f"[+] Found {len(valid_pairs)} valid pairs for {domain}" + Style.RESET_ALL)
                     for pair in valid_pairs:
-                        print(f"  - {pair['ip']} ({pair['cdn']})")
+                        protocols = []
+                        if pair.get('https_works', False):
+                            protocols.append("HTTPS")
+                        if pair.get('http_works', False):
+                            protocols.append("HTTP")
+                        protocol_str = "+".join(protocols) if protocols else "None"
+                        
+                        ping_display = f"{pair.get('ping', 'N/A')}ms"
+                        print(f"  - {pair.get('ip', 'N/A')} ({pair.get('cdn', 'N/A')}) - {protocol_str} - Ping: {ping_display}")
                     all_results.extend(valid_pairs)
                 else:
                     print(Fore.RED + f"[!] No valid pairs found for {domain}" + Style.RESET_ALL)
@@ -572,7 +790,7 @@ class CDNScannerPlus:
             print(f"{i}. {cdn}")
         
         try:
-            choice = int(input("Enter choice (1-5): ")) - 1
+            choice = int(input("Enter choice (1-3): ")) - 1
             cdn_name = list(self.cdn_test_domains.keys())[choice]
             test_domains = self.cdn_test_domains[cdn_name]
         except:
@@ -590,14 +808,27 @@ class CDNScannerPlus:
             print(Fore.CYAN + f"[*] Resolved IPs: {ips}" + Style.RESET_ALL)
             
             for ip in ips:
-                if self.test_sni_pair(ip, domain):
+                result = self.test_sni_pair(ip, domain)
+                if result:
                     pair = {
                         "ip": ip,
                         "sni": domain,
                         "cdn": cdn_name,
+                        "https_works": result.get('https_works', False),
+                        "http_works": result.get('http_works', False),
+                        "ping": result.get('ping', None),
                         "timestamp": datetime.now().isoformat()
                     }
-                    print(Fore.GREEN + f"[+] Valid {cdn_name}: {domain} @ {ip}" + Style.RESET_ALL)
+                    
+                    protocols = []
+                    if result['https_works']:
+                        protocols.append("HTTPS")
+                    if result['http_works']:
+                        protocols.append("HTTP")
+                    protocol_str = "+".join(protocols) if protocols else "None"
+                    
+                    ping_display = f"{result['ping']}ms" if result['ping'] is not None else "N/A"
+                    print(Fore.GREEN + f"[+] Valid {cdn_name}: {domain} @ {ip} - Protocols: {protocol_str} - Ping: {ping_display}" + Style.RESET_ALL)
                     all_results.append(pair)
                 else:
                     print(Fore.RED + f"[-] Failed: {domain} @ {ip}" + Style.RESET_ALL)
@@ -615,6 +846,127 @@ class CDNScannerPlus:
             print(Fore.RED + "\n[!] No valid pairs found" + Style.RESET_ALL)
         
         input("\nPress Enter to return to menu...")
+
+    def generate_html_report(self, results: List[Dict], filename: str) -> None:
+        """Generate a comprehensive HTML report with sorting and filtering"""
+        try:
+            # Sort by ping time (lowest first)
+            sorted_results = sorted(
+                results,
+                key=lambda x: float('inf') if x.get('ping') is None else x['ping']
+            )
+            
+            # Create HTML content with UTF-8 encoding
+            html = f"""<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CDN Scanner Report</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; margin: 20px; }}
+        table {{ border-collapse: collapse; width: 100%; }}
+        th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
+        th {{ background-color: #f2f2f2; cursor: pointer; }}
+        tr:nth-child(even) {{ background-color: #f9f9f9; }}
+        .good {{ color: green; }}
+        .medium {{ color: orange; }}
+        .bad {{ color: red; }}
+    </style>
+</head>
+<body>
+    <h1>CDN Scanner Report</h1>
+    <p>Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
+    <p>Total valid pairs: {len(sorted_results)}</p>
+    
+    <table id="resultsTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">IP</th>
+                <th onclick="sortTable(1)">SNI</th>
+                <th onclick="sortTable(2)">CDN</th>
+                <th onclick="sortTable(3)">HTTPS</th>
+                <th onclick="sortTable(4)">HTTP</th>
+                <th onclick="sortTable(5)">Ping (ms)</th>
+                <th onclick="sortTable(6)">Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>"""
+            
+            for result in sorted_results:
+                # Safely get values with defaults
+                https_works = result.get('https_works', False)
+                http_works = result.get('http_works', False)
+                ip = result.get('ip', 'N/A')
+                sni = result.get('sni', 'N/A')
+                cdn = result.get('cdn', 'N/A')
+                timestamp = result.get('timestamp', 'N/A')
+                
+                https_class = "good" if https_works else "bad"
+                http_class = "good" if http_works else "bad"
+                
+                ping = result.get('ping', 'N/A')
+                if isinstance(ping, (int, float)):
+                    if ping < 100:
+                        ping_class = "good"
+                    elif ping < 300:
+                        ping_class = "medium"
+                    else:
+                        ping_class = "bad"
+                    ping_display = f"{ping:.1f}"
+                else:
+                    ping_class = ""
+                    ping_display = ping
+                
+                html += f"""
+            <tr>
+                <td>{ip}</td>
+                <td>{sni}</td>
+                <td>{cdn}</td>
+                <td class="{https_class}">{"✓" if https_works else "✗"}</td>
+                <td class="{http_class}">{"✓" if http_works else "✗"}</td>
+                <td class="{ping_class}">{ping_display}</td>
+                <td>{timestamp}</td>
+            </tr>"""
+            
+            html += """
+        </tbody>
+    </table>
+    
+    <script>
+        function sortTable(column) {
+            const table = document.getElementById("resultsTable");
+            const rows = Array.from(table.rows).slice(1);
+            const header = table.rows[0].cells[column];
+            const direction = header.getAttribute("data-direction") || "asc";
+            
+            rows.sort((a, b) => {
+                const aVal = a.cells[column].textContent;
+                const bVal = b.cells[column].textContent;
+                
+                if (!isNaN(aVal) && !isNaN(bVal)) {
+                    return direction === "asc" ? aVal - bVal : bVal - aVal;
+                }
+                return direction === "asc" 
+                    ? aVal.localeCompare(bVal)
+                    : bVal.localeCompare(aVal);
+            });
+            
+            // Rebuild table
+            rows.forEach(row => table.tBodies[0].appendChild(row));
+            header.setAttribute("data-direction", direction === "asc" ? "desc" : "asc");
+        }
+    </script>
+</body>
+</html>"""
+            
+            # Write with explicit UTF-8 encoding
+            with open(filename, 'w', encoding='utf-8') as f:
+                f.write(html)
+                
+            print(Fore.GREEN + f"[+] HTML report saved to {filename}" + Style.RESET_ALL)
+        except Exception as e:
+            print(Fore.RED + f"[!] Error generating HTML report: {e}" + Style.RESET_ALL)
+            logging.error(f"Error generating HTML report: {e}")
 
     def edit_configuration(self) -> None:
         """Allow user to edit configuration settings"""
@@ -703,7 +1055,7 @@ class CDNScannerPlus:
 
     def main(self) -> None:
         """Main program loop with argument parsing"""
-        parser = argparse.ArgumentParser(description='CDN SNI Scanner PLUS')
+        parser = argparse.ArgumentParser(description='CDN SNI Scanner PLUS - Iran Optimized')
         parser.add_argument('-d', '--debug', action='store_true', help='Enable debug mode')
         parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose output')
         parser.add_argument('-c', '--config', help='Specify alternative config file')
@@ -722,10 +1074,10 @@ class CDNScannerPlus:
         while True:
             try:
                 self.print_menu()
-                choice = input("Select an option (1-9): ").strip()
+                choice = input("Select an option (1-11): ").strip()
                 
                 if choice == '1':
-                    self.run_single_scan()
+                    self.single_domain_scan()
                 elif choice == '2':
                     self.scan_random_ips()
                 elif choice == '3':
@@ -742,8 +1094,20 @@ class CDNScannerPlus:
                 elif choice == '7':
                     self.test_specific_cdn()
                 elif choice == '8':
-                    self.edit_configuration()
+                    self.update_cdn_ranges()
                 elif choice == '9':
+                    results_file = os.path.join(self.output_dir, "valid_pairs.json")
+                    if os.path.exists(results_file):
+                        with open(results_file, 'r') as f:
+                            results = [json.loads(line) for line in f if line.strip()]
+                        html_file = os.path.join(self.output_dir, "report.html")
+                        self.generate_html_report(results, html_file)
+                    else:
+                        print(Fore.RED + "[!] No results file found" + Style.RESET_ALL)
+                    input("\nPress Enter to return to menu...")
+                elif choice == '10':
+                    self.edit_configuration()
+                elif choice == '11':
                     print(Fore.CYAN + "\n[+] Exiting program..." + Style.RESET_ALL)
                     break
                 else:
