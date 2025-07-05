@@ -34,13 +34,16 @@ class CDNScannerPlus:
         }
         self.load_cdn_ranges()
         
-        # Known working Gcore domains for testing
+        # Enhanced Gcore test domains
         self.gcore_test_domains = [
+            'gcore.com',
             'www.gcore.com',
-            'gcore.lu',
-            'cdn.gcorelabs.com',
+            'images.gcore.com',
+            'static.gcore.com',
             'api.gcore.com',
-            'support.gcore.com'
+            'cdn.gcdn.co',
+            'cdn.gcorelabs.com',
+            'demo-cdn.gcore.com'
         ]
 
     def load_cdn_ranges(self):
@@ -51,11 +54,10 @@ class CDNScannerPlus:
                 with open(filename, 'r') as f:
                     self.cdn_ranges[cdn] = [line.strip() for line in f if line.strip()]
             else:
-                # Default ranges if files don't exist
                 self.cdn_ranges[cdn] = self.get_default_ranges(cdn)
     
     def get_default_ranges(self, cdn):
-        """Return default IP ranges for each CDN (optimized for Iran)"""
+        """Return default IP ranges"""
         defaults = {
             'cloudflare': [
                 '104.16.0.0/13', '172.64.0.0/13', '162.158.0.0/15', '108.162.192.0/18'
@@ -64,17 +66,16 @@ class CDNScannerPlus:
                 '151.101.0.0/16', '199.232.0.0/16', '2a04:4e40::/32'
             ],
             'gcore': [
-                '158.160.0.0/16', '92.223.84.0/24', '185.209.160.0/24'
+                '158.160.0.0/16', '92.223.84.0/24', '185.209.160.0/24',
+                '45.133.144.0/24', '45.135.240.0/22'
             ]
         }
         return defaults.get(cdn, [])
 
     def clear_screen(self):
-        """Clear the console screen"""
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def print_banner(self):
-        """Display program banner"""
         self.clear_screen()
         print(Fore.CYAN + r"""
    ____ ____  _   _   ____ ___ ____ _   _ _____ 
@@ -82,24 +83,22 @@ class CDNScannerPlus:
  | |   | | | |  \| | \___ \| | |  _|  \| | | |  
  | |___| |_| | |\  |  ___) | | |_| | |\  | | |  
   \____|____/|_| \_| |____/___\____|_| \_| |_|  
-        CDN SNI Scanner PLUS for V2Ray v3.1
+        CDN SNI Scanner PLUS - FINAL VERSION
         """ + Style.RESET_ALL)
-        print(Fore.YELLOW + "Optimized for Iran - Gcore/Fastly/Cloudflare" + Style.RESET_ALL)
+        print(Fore.YELLOW + "All Methods Included | Full Error Handling" + Style.RESET_ALL)
 
     def print_menu(self):
-        """Display main menu"""
         self.print_banner()
         print(Fore.YELLOW + "[1]" + Style.RESET_ALL + " Scan single domain")
-        print(Fore.YELLOW + "[2]" + Style.RESET_ALL + " Scan random IPs from CDN ranges")
-        print(Fore.YELLOW + "[3]" + Style.RESET_ALL + " View saved results")
-        print(Fore.YELLOW + "[4]" + Style.RESET_ALL + " Toggle debug mode (Current: " + 
-              (Fore.GREEN + "ON" if self.debug_mode else Fore.RED + "OFF") + Style.RESET_ALL + ")")
-        print(Fore.YELLOW + "[5]" + Style.RESET_ALL + " Test with known CDN domains (Gcore included)")
-        print(Fore.YELLOW + "[6]" + Style.RESET_ALL + " Exit")
+        print(Fore.YELLOW + "[2]" + Style.RESET_ALL + " Scan random IPs")
+        print(Fore.YELLOW + "[3]" + Style.RESET_ALL + " View results")
+        print(Fore.YELLOW + "[4]" + Style.RESET_ALL + " Toggle debug")
+        print(Fore.YELLOW + "[5]" + Style.RESET_ALL + " Test known CDNs")
+        print(Fore.YELLOW + "[6]" + Style.RESET_ALL + " Deep Gcore Test")
+        print(Fore.YELLOW + "[7]" + Style.RESET_ALL + " Exit")
         print("\n")
 
     def is_ip_in_cdn_ranges(self, ip, cdn_name):
-        """Check if IP belongs to CDN ranges"""
         try:
             ip_obj = ip_address(ip)
             for network in self.cdn_ranges.get(cdn_name.lower(), []):
@@ -115,9 +114,7 @@ class CDNScannerPlus:
             return False
 
     def resolve_domain(self, domain):
-        """Resolve domain to IP addresses with multiple DNS servers"""
         dns_servers = ['1.1.1.1', '8.8.8.8', '9.9.9.9', '208.67.222.222']
-        
         ips = set()
         for dns_server in dns_servers:
             try:
@@ -130,47 +127,42 @@ class CDNScannerPlus:
             except Exception as e:
                 if self.debug_mode:
                     print(Fore.RED + f"[DEBUG] DNS resolution failed with {dns_server} for {domain}: {type(e).__name__}" + Style.RESET_ALL)
-        
         return list(ips)
 
     def test_sni_pair(self, ip, sni, timeout=5):
-        """Test if SNI + IP pair works with TLS"""
         self.total_tests += 1
-        
-        # Method 1: Direct SSL socket test
         try:
+            # SSL test
             sock = socket.create_connection((ip, 443), timeout=timeout)
             context = ssl.create_default_context()
             context.check_hostname = False
             context.verify_mode = ssl.CERT_NONE
             
             with context.wrap_socket(sock, server_hostname=sni) as ssl_sock:
-                cert = ssl_sock.getpeercert()
-                if cert:
-                    if self.debug_mode:
-                        print(Fore.GREEN + f"[DEBUG] SSL Success: {sni} @ {ip}" + Style.RESET_ALL)
+                if ssl_sock.getpeercert():
                     return True
         except Exception as e:
             if self.debug_mode:
-                print(Fore.RED + f"[DEBUG] SSL Failed for {sni} @ {ip}: {type(e).__name__}" + Style.RESET_ALL)
+                print(Fore.RED + f"[DEBUG] SSL failed for {sni} @ {ip}: {type(e).__name__}" + Style.RESET_ALL)
         
-        # Method 2: HTTP request test
+        # HTTP test
         try:
-            url = f"https://{ip}"
-            headers = {'Host': sni}
-            response = self.session.get(url, headers=headers, timeout=timeout, allow_redirects=False)
+            response = self.session.get(
+                f"https://{ip}",
+                headers={'Host': sni},
+                timeout=timeout,
+                allow_redirects=False,
+                verify=False
+            )
             if response.status_code in (200, 301, 302, 403):
-                if self.debug_mode:
-                    print(Fore.GREEN + f"[DEBUG] HTTP Success: {sni} @ {ip} (Status: {response.status_code})" + Style.RESET_ALL)
                 return True
         except Exception as e:
             if self.debug_mode:
-                print(Fore.RED + f"[DEBUG] HTTP Failed for {sni} @ {ip}: {type(e).__name__}" + Style.RESET_ALL)
+                print(Fore.RED + f"[DEBUG] HTTP failed for {sni} @ {ip}: {type(e).__name__}" + Style.RESET_ALL)
         
         return False
 
     def scan_domain(self, domain, output_file=None):
-        """Scan a domain for valid SNI + IP pairs"""
         self.scanned_domains += 1
         print(Fore.GREEN + f"\n[*] Scanning {domain}" + Style.RESET_ALL)
         
@@ -187,7 +179,7 @@ class CDNScannerPlus:
                     print(Fore.CYAN + f"[DEBUG] No {cdn_name} IPs found for {domain}" + Style.RESET_ALL)
                 continue
             
-            print(Fore.CYAN + f"[*] Found {len(cdn_ips)} {cdn_name} IPs for {domain}" + Style.RESET_ALL)
+            print(Fore.CYAN + f"[*] Found {len(cdn_ips)} {cdn_name} IPs" + Style.RESET_ALL)
             
             with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
                 futures = {executor.submit(self.test_sni_pair, ip, domain): (ip, domain, cdn_name) for ip in cdn_ips}
@@ -196,21 +188,159 @@ class CDNScannerPlus:
                     ip, domain, cdn_name = futures[future]
                     try:
                         if future.result():
-                            pair = {"ip": ip, "sni": domain, "cdn": cdn_name, "timestamp": datetime.now().isoformat()}
-                            print(Fore.GREEN + f"[+] Valid pair found: {domain} @ {ip} ({cdn_name})" + Style.RESET_ALL)
+                            pair = {
+                                "ip": ip,
+                                "sni": domain,
+                                "cdn": cdn_name,
+                                "timestamp": datetime.now().isoformat()
+                            }
+                            print(Fore.GREEN + f"[+] Valid: {domain} @ {ip} ({cdn_name})" + Style.RESET_ALL)
                             valid_pairs.append(pair)
-                            
                             if output_file:
                                 self.save_result(pair, output_file)
                     except Exception as e:
                         print(Fore.RED + f"[!] Error testing {domain} @ {ip}: {type(e).__name__}" + Style.RESET_ALL)
-
         return valid_pairs
 
-    def generate_random_ips(self, cidr, count):
-        """Generate random IPs from a CIDR range"""
-        network = IPv4Network(cidr)
-        return [str(network[random.randint(0, network.num_addresses - 1)]) for _ in range(count)]
+    def test_known_cdns(self):
+        """Test with known CDN domains including Gcore"""
+        test_domains = [
+            ('www.cloudflare.com', 'cloudflare'),
+            ('www.fastly.com', 'fastly'),
+            *[(domain, 'gcore') for domain in self.gcore_test_domains]
+        ]
+        
+        print(Fore.CYAN + "\n[*] Testing with known CDN domains..." + Style.RESET_ALL)
+        self.start_time = time.time()
+        
+        all_results = []
+        for domain, expected_cdn in test_domains:
+            print(Fore.YELLOW + f"\n[*] Testing {domain} (expected: {expected_cdn})" + Style.RESET_ALL)
+            valid_pairs = self.scan_domain(domain)
+            
+            if valid_pairs:
+                print(Fore.GREEN + f"[+] Found {len(valid_pairs)} valid pairs for {domain}" + Style.RESET_ALL)
+                for pair in valid_pairs:
+                    print(f"  - {pair['ip']} ({pair['cdn']})")
+                all_results.extend(valid_pairs)
+            else:
+                print(Fore.RED + f"[!] No valid pairs found for {domain}" + Style.RESET_ALL)
+        
+        # Save results
+        if all_results:
+            output_json = "known_cdn_results.json"
+            output_txt = "known_cdn_results.txt"
+            
+            with open(output_json, 'w') as f:
+                json.dump(all_results, f, indent=2)
+            
+            self.save_to_txt(all_results, output_txt)
+            
+            print(Fore.GREEN + f"\n[+] JSON results saved to {output_json}" + Style.RESET_ALL)
+            print(Fore.GREEN + f"[+] TXT results saved to {output_txt}" + Style.RESET_ALL)
+        
+        elapsed = time.time() - self.start_time
+        print(Fore.CYAN + f"\n[*] Test completed in {elapsed:.2f} seconds" + Style.RESET_ALL)
+        input("\nPress Enter to return to menu...")
+
+    def test_gcore_specific(self):
+        """Enhanced Gcore testing method"""
+        self.print_banner()
+        print(Fore.CYAN + "\n[*] Running Deep Gcore Test..." + Style.RESET_ALL)
+        
+        test_domains = [
+            ('cdn.gcdn.co', 'gcore'),
+            ('images.gcore.com', 'gcore'),
+            ('static.gcore.com', 'gcore'),
+            ('api.gcore.com', 'gcore')
+        ]
+        
+        all_results = []
+        for domain, expected_cdn in test_domains:
+            print(Fore.YELLOW + f"\n[*] Testing: {domain}" + Style.RESET_ALL)
+            ips = self.resolve_domain(domain)
+            print(Fore.CYAN + f"[*] Resolved IPs: {ips}" + Style.RESET_ALL)
+            
+            for ip in ips:
+                if self.test_sni_pair(ip, domain):
+                    pair = {
+                        "ip": ip,
+                        "sni": domain,
+                        "cdn": expected_cdn,
+                        "timestamp": datetime.now().isoformat()
+                    }
+                    print(Fore.GREEN + f"[+] Valid Gcore: {domain} @ {ip}" + Style.RESET_ALL)
+                    all_results.append(pair)
+                else:
+                    print(Fore.RED + f"[-] Failed: {domain} @ {ip}" + Style.RESET_ALL)
+        
+        # Save results
+        if all_results:
+            output_json = "gcore_results.json"
+            output_txt = "gcore_results.txt"
+            
+            with open(output_json, 'w') as f:
+                json.dump(all_results, f, indent=2)
+            
+            self.save_to_txt(all_results, output_txt)
+            
+            print(Fore.GREEN + f"\n[+] JSON results saved to {output_json}" + Style.RESET_ALL)
+            print(Fore.GREEN + f"[+] TXT results saved to {output_txt}" + Style.RESET_ALL)
+        else:
+            print(Fore.RED + "\n[!] No valid Gcore pairs found" + Style.RESET_ALL)
+        
+        input("\nPress Enter to return to menu...")
+
+    def save_result(self, pair, output_file):
+        """Save a valid pair to output file (JSON)"""
+        try:
+            with open(output_file, 'a') as f:
+                f.write(json.dumps(pair) + "\n")
+        except IOError as e:
+            print(Fore.RED + f"[!] Failed to save results: {e}" + Style.RESET_ALL)
+
+    def save_to_txt(self, results, filename):
+        """Save results to a TXT file"""
+        try:
+            with open(filename, 'w') as f:
+                for result in results:
+                    f.write(f"IP: {result['ip']}\n")
+                    f.write(f"SNI: {result['sni']}\n")
+                    f.write(f"CDN: {result['cdn']}\n")
+                    f.write(f"Timestamp: {result['timestamp']}\n")
+                    f.write("-" * 40 + "\n")
+        except Exception as e:
+            print(Fore.RED + f"[!] Error saving TXT file: {e}" + Style.RESET_ALL)
+
+    def view_results(self, results_file='valid_pairs.json'):
+        """Display saved results"""
+        self.print_banner()
+        if not os.path.exists(results_file):
+            print(Fore.RED + "[!] No results file found" + Style.RESET_ALL)
+            input("\nPress Enter to return to menu...")
+            return
+
+        try:
+            with open(results_file, 'r') as f:
+                results = [json.loads(line) for line in f if line.strip()]
+            
+            if not results:
+                print(Fore.YELLOW + "[!] No valid pairs found in results file" + Style.RESET_ALL)
+            else:
+                print(Fore.CYAN + "\nSaved Valid SNI + IP Pairs:\n" + Style.RESET_ALL)
+                for i, pair in enumerate(results, 1):
+                    print(f"{i}. {pair['sni']} @ {pair['ip']} ({pair['cdn']}) - {pair['timestamp']}")
+                
+                print(Fore.GREEN + f"\nTotal valid pairs: {len(results)}" + Style.RESET_ALL)
+                
+                # Offer to save as TXT
+                if input("\nSave as TXT file? (y/n): ").lower() == 'y':
+                    txt_file = results_file.replace('.json', '.txt')
+                    self.save_to_txt(results, txt_file)
+        except Exception as e:
+            print(Fore.RED + f"[!] Error reading results: {e}" + Style.RESET_ALL)
+        
+        input("\nPress Enter to return to menu...")
 
     def scan_random_ips(self):
         """Scan random IPs from CDN ranges"""
@@ -249,7 +379,7 @@ class CDNScannerPlus:
         
         print(Fore.YELLOW + f"\n[*] Generating {ip_count} random IPs from {cdn_name} ranges..." + Style.RESET_ALL)
         
-        # Generate random IPs
+        # Generate random IPs from all ranges
         all_ips = []
         for cidr in self.cdn_ranges[cdn_name]:
             try:
@@ -287,7 +417,7 @@ class CDNScannerPlus:
                     elapsed = time.time() - self.start_time
                     print(Fore.CYAN + f"[*] Progress: {i}/{len(test_ips)} IPs tested | Found: {len(valid_pairs)} | Elapsed: {elapsed:.1f}s" + Style.RESET_ALL)
         
-        # Save results to TXT
+        # Save to TXT
         if valid_pairs:
             self.save_to_txt(valid_pairs, output_txt)
         
@@ -298,98 +428,10 @@ class CDNScannerPlus:
         print(Fore.GREEN + f"[+] TXT results saved to {output_txt}" + Style.RESET_ALL)
         input("\nPress Enter to return to menu...")
 
-    def save_result(self, pair, output_file):
-        """Save a valid pair to output file (JSON)"""
-        try:
-            with open(output_file, 'a') as f:
-                f.write(json.dumps(pair) + "\n")
-        except IOError as e:
-            print(Fore.RED + f"[!] Failed to save results: {e}" + Style.RESET_ALL)
-
-    def save_to_txt(self, results, filename):
-        """Save results to a TXT file"""
-        try:
-            with open(filename, 'w') as f:
-                for result in results:
-                    f.write(f"IP: {result['ip']}\n")
-                    f.write(f"SNI: {result['sni']}\n")
-                    f.write(f"CDN: {result['cdn']}\n")
-                    f.write(f"Timestamp: {result['timestamp']}\n")
-                    f.write("-" * 40 + "\n")
-            print(Fore.GREEN + f"[+] TXT results saved to {filename}" + Style.RESET_ALL)
-        except Exception as e:
-            print(Fore.RED + f"[!] Error saving TXT file: {e}" + Style.RESET_ALL)
-
-    def view_results(self, results_file='valid_pairs.json'):
-        """Display saved results"""
-        self.print_banner()
-        if not os.path.exists(results_file):
-            print(Fore.RED + "[!] No results file found" + Style.RESET_ALL)
-            input("\nPress Enter to return to menu...")
-            return
-
-        try:
-            with open(results_file, 'r') as f:
-                results = [json.loads(line) for line in f if line.strip()]
-            
-            if not results:
-                print(Fore.YELLOW + "[!] No valid pairs found in results file" + Style.RESET_ALL)
-            else:
-                print(Fore.CYAN + "\nSaved Valid SNI + IP Pairs:\n" + Style.RESET_ALL)
-                for i, pair in enumerate(results, 1):
-                    print(f"{i}. {pair['sni']} @ {pair['ip']} ({pair['cdn']}) - {pair['timestamp']}")
-                
-                print(Fore.GREEN + f"\nTotal valid pairs: {len(results)}" + Style.RESET_ALL)
-                
-                # Offer to save as TXT
-                if input("\nSave as TXT file? (y/n): ").lower() == 'y':
-                    txt_file = results_file.replace('.json', '.txt')
-                    self.save_to_txt(results, txt_file)
-        except Exception as e:
-            print(Fore.RED + f"[!] Error reading results: {e}" + Style.RESET_ALL)
-        
-        input("\nPress Enter to return to menu...")
-
-    def test_known_cdns(self):
-        """Test with known CDN domains including Gcore-specific domains"""
-        test_domains = [
-            ('www.cloudflare.com', 'cloudflare'),
-            ('www.fastly.com', 'fastly'),
-            *[(domain, 'gcore') for domain in self.gcore_test_domains]
-        ]
-        
-        print(Fore.CYAN + "\n[*] Testing with known CDN domains..." + Style.RESET_ALL)
-        self.start_time = time.time()
-        
-        all_results = []
-        for domain, expected_cdn in test_domains:
-            print(Fore.YELLOW + f"\n[*] Testing {domain} (expected: {expected_cdn})" + Style.RESET_ALL)
-            valid_pairs = self.scan_domain(domain)
-            
-            if valid_pairs:
-                print(Fore.GREEN + f"[+] Found {len(valid_pairs)} valid pairs for {domain}" + Style.RESET_ALL)
-                for pair in valid_pairs:
-                    print(f"  - {pair['ip']} ({pair['cdn']})")
-                all_results.extend(valid_pairs)
-            else:
-                print(Fore.RED + f"[!] No valid pairs found for {domain}" + Style.RESET_ALL)
-        
-        # Save results to both JSON and TXT
-        if all_results:
-            output_json = "known_cdn_results.json"
-            output_txt = "known_cdn_results.txt"
-            
-            with open(output_json, 'w') as f:
-                json.dump(all_results, f, indent=2)
-            
-            self.save_to_txt(all_results, output_txt)
-            
-            print(Fore.GREEN + f"\n[+] JSON results saved to {output_json}" + Style.RESET_ALL)
-            print(Fore.GREEN + f"[+] TXT results saved to {output_txt}" + Style.RESET_ALL)
-        
-        elapsed = time.time() - self.start_time
-        print(Fore.CYAN + f"\n[*] Test completed in {elapsed:.2f} seconds" + Style.RESET_ALL)
-        input("\nPress Enter to return to menu...")
+    def generate_random_ips(self, cidr, count):
+        """Generate random IPs from a CIDR range"""
+        network = IPv4Network(cidr)
+        return [str(network[random.randint(0, network.num_addresses - 1)]) for _ in range(count)]
 
     def run_single_scan(self):
         """Handle single domain scanning"""
@@ -477,7 +519,7 @@ class CDNScannerPlus:
         while True:
             try:
                 self.print_menu()
-                choice = input("Select an option (1-6): ").strip()
+                choice = input("Select an option (1-7): ").strip()
                 
                 if choice == '1':
                     self.run_single_scan()
@@ -487,11 +529,13 @@ class CDNScannerPlus:
                     self.view_results()
                 elif choice == '4':
                     self.debug_mode = not self.debug_mode
-                    print(Fore.YELLOW + f"\nDebug mode is now {'ON' if self.debug_mode else 'OFF'}" + Style.RESET_ALL)
+                    print(Fore.YELLOW + f"\nDebug mode: {'ON' if self.debug_mode else 'OFF'}" + Style.RESET_ALL)
                     time.sleep(1)
                 elif choice == '5':
                     self.test_known_cdns()
                 elif choice == '6':
+                    self.test_gcore_specific()
+                elif choice == '7':
                     print(Fore.CYAN + "\n[+] Exiting program..." + Style.RESET_ALL)
                     break
                 else:
@@ -502,7 +546,7 @@ class CDNScannerPlus:
                 break
             except Exception as e:
                 print(Fore.RED + f"[!] Unexpected error: {e}" + Style.RESET_ALL)
-                time.sleep(3)
+                time.sleep(2)
 
 if __name__ == '__main__':
     try:
