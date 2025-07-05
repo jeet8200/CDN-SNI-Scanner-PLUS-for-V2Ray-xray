@@ -1,130 +1,121 @@
 # CDN SNI Scanner PLUS
 
+A simple and powerful Python tool to scan and identify valid **CDN IP + SNI (Server Name Indication)** pairs for Cloudflare, Fastly, Gcore, Akamai, and CloudFront.
+
 ![Python](https://img.shields.io/badge/python-3.7%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-A powerful Python tool to scan and identify valid **CDN IP + SNI (Server Name Indication)** pairs for Cloudflare, Fastly, Gcore, Akamai, and CloudFront.
+---
 
 ## Features
 
-- ✅ Multi-CDN support (Cloudflare, Fastly, Gcore, Akamai, CloudFront)
-- ✅ IPv4/IPv6 compatibility
-- ✅ Batch scanning from files
-- ✅ Random IP scanning from CDN ranges
-- ✅ JSON and TXT output
-- ✅ Configurable rate limiting
-- ✅ Debug and verbose modes
+- Multi-CDN support: Cloudflare, Fastly, Gcore, Akamai, CloudFront
+- Supports both IPv4 & IPv6
+- Batch scan domains from a file
+- Random IP scan from CDN ranges
+- JSON & TXT output
+- Configurable rate limiting
+- Debug & verbose modes
+
+---
 
 ## Installation
 
-### 1. Install Python 3.7+
+1. **Install Python 3.7+**
 
-- **Windows**: Download from [python.org](https://www.python.org/downloads/)
-  - Check "Add Python to PATH" during installation
-- **Linux/macOS**:
-  ```bash
-  # Debian/Ubuntu
-  sudo apt update && sudo apt install python3 python3-pip
-  
-  # macOS (Homebrew)
-  brew install python
+   - **Windows:** Download from [python.org](https://www.python.org/downloads/)  
+     (Check "Add Python to PATH" during install)
+   - **Linux/macOS:**
+     ```bash
+     # Debian/Ubuntu
+     sudo apt update && sudo apt install python3 python3-pip
+     # macOS (Homebrew)
+     brew install python
+     ```
 
-2. Clone the Repository
-bash
+2. **Clone the Repository**
+    ```bash
+    git clone https://github.com/jeet8200/CDN-SNI-Scanner-PLUS-for-V2Ray-xray.git
+    cd CDN-SNI-Scanner-PLUS-for-V2Ray-xray
+    ```
 
-git clone https://github.com/jeet8200/CDN-SNI-Scanner-PLUS-for-V2Ray-xray/
-cd cdn-sni-scanner-plus
+3. **Install Dependencies**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-3. Install Dependencies
-bash
+---
 
-pip install -r requirements.txt
-
-Usage
+## Usage
 
 Run the scanner:
-bash
-
+```bash
 python cdn_scanner_plus.py
+```
 
-Menu Options
+**Menu Options:**
 
-Option	Description
+| Option | Description                      |
+|--------|----------------------------------|
+|   1    | Scan single domain               |
+|   2    | Scan random IPs from CDN ranges  |
+|   3    | Scan domains from file           |
+|   4    | View saved results               |
+|   5    | Toggle debug mode                |
+|   6    | Test known CDNs                  |
+|   7    | Deep test specific CDN           |
+|   8    | Edit configuration               |
+|   9    | Exit                             |
 
-1	Scan single domain
+---
 
-2	Scan random IPs from CDN ranges
+## Examples
 
-3	Scan domains from file
-
-4	View saved results
-
-5	Toggle debug mode
-
-6	Test known CDNs
-
-7	Deep test specific CDN
-
-8	Edit configuration
-
-9	Exit
-
-Examples
-
-    Scan a single domain:
-    text
-
+**Scan a single domain:**
+```text
 > python cdn_scanner_plus.py
 > Select option 1
 > Enter domain: example.com
+```
 
-Batch scan from file:
-Create domains.txt with one domain per line, then select option 3.
+**Batch scan from file:**
+- Put domains in `domains.txt` (one per line)
+- Choose option 3 in the menu
 
-Test Cloudflare IPs:
-text
+**Test random Cloudflare IPs:**
+```text
+> Select option 2
+> Choose Cloudflare
+> Enter number of IPs: 100
+> Enter SNI: example.com
+```
 
-    > Select option 2
-    > Choose Cloudflare
-    > Enter 100 IPs to test
-    > Enter SNI: example.com
+---
 
-Configuration
+## Configuration
 
-Edit config.ini to:
+- Edit `config.ini` to change DNS servers, rate limits, or add custom CDN IP ranges.
 
-    Change DNS servers
+---
 
-    Adjust rate limits
+## Output
 
-    Add custom CDN IP ranges
+- Results saved in `results/valid_pairs.json` (JSON) and `results/valid_pairs.txt` (TXT)
 
-Output
+---
 
-Results are saved in:
+## Troubleshooting
 
-    results/valid_pairs.json (structured data)
+- **"Python not found"**: Make sure Python is in your PATH or use `python3`
+- **SSL errors**: Normal — tool ignores SSL verification
+- **Slow scans**: Lower `rate_limit_delay` in `config.ini`
 
-    results/valid_pairs.txt (readable format)
+---
 
-Troubleshooting
+## License
 
-    "Python not found": Ensure Python is in PATH or use python3
+MIT License — Free for personal and commercial use.
 
-    SSL errors: Expected - tool ignores verification for compatibility
+---
 
-    Slow scans: Decrease rate_limit_delay in config
-
-License
-
-MIT License - Free for personal and commercial use.
-
-⭐ Star this repo if you find it useful! ⭐
-text
-
-
-
-
-### Or Download Directly:
-```bash
-curl -o README.md https://raw.githubusercontent.com/yourusername/cdn-sni-scanner-plus/main/README.md
+⭐ **Star this repo if you find it useful!** ⭐
