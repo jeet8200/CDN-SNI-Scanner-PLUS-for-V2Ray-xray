@@ -624,7 +624,7 @@ class CDNScannerPlus:
             ip_count = 100
         
         # Get SNI hostname
-        sni = input("Enter SNI hostname to test (e.g., example.com): ").strip()
+        sni = input("Enter SNI hostname to test (e.g., gcore.com,www.speedtest.net for cloudflare,fastly.net or com ): ").strip()
         if not sni:
             print(Fore.RED + "[!] SNI hostname required" + Style.RESET_ALL)
             time.sleep(2)
