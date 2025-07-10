@@ -9,7 +9,7 @@ A simple and powerful Python tool to scan and identify valid **CDN IP + SNI (Ser
 
 ## Features
 
-- Multi-CDN support: Cloudflare, Fastly, Gcore, Akamai, CloudFront
+- Multi-CDN support: Cloudflare, Fastly, Gcore
 - Supports both IPv4 & IPv6
 - Batch scan domains from a file
 - Random IP scan from CDN ranges
