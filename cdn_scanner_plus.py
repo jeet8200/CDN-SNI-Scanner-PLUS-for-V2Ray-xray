@@ -204,7 +204,7 @@ class CDNScannerPlus:
             }
         }
         
-        print(Fore.YELLOW + "\n[*] Updating CDN IP ranges..." + Style.RESET_ALL)
+        print(Fore.YELLOW + "\n[*] Updating CDN IP ranges...USE VPN IF UR INTERNET IS FUCKED UP for this part" + Style.RESET_ALL)
         
         for cdn, sources in cdn_sources.items():
             ranges = []
