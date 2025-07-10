@@ -52,7 +52,7 @@ Run the scanner:
 ```bash
 python cdn_scanner_plus.py
 ```
-
+for updateing ip lists its better to use vpn but for rest of the way vpn off is smart choice
 **Menu Options:**
 
 | Option | Description                      |
