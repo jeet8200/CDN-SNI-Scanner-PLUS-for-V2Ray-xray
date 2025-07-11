@@ -42,7 +42,10 @@ A simple and powerful Python tool to scan and identify valid **CDN IP + SNI (Ser
 3. **Install Dependencies**
     ```bash
     pip install -r requirements.txt
+    #manualy
+    pip install colorama dnspython urllib3 requests openpyxl
     ```
+   
 
 ---
 
