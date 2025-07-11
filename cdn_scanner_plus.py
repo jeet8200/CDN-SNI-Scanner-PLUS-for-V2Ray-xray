@@ -975,8 +975,8 @@ class CDNScannerPlus:
                 <td>{ip}</td>
                 <td>{sni}</td>
                 <td>{cdn}</td>
-                <td class="{https_class}">{"✓" if https_works else "✗"}</td>
-                <td class="{http_class}">{"✓" if http_works else "✗"}</td>
+                <td class="{https_class}">{"Yes" if https_works else "No"}</td>
+                <td class="{http_class}">{"Yes" if http_works else "No"}</td>
                 <td>{ping}</td>
                 <td>{ssl_time}</td>
                 <td>{http_time}</td>
