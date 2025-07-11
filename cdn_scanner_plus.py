@@ -153,7 +153,7 @@ class CDNScannerPlus:
  | |   | | | |  \| | \___ \| | |  _|  \| | | |  
  | |___| |_| | |\  |  ___) | | |_| | |\  | | |  
   \____|____/|_| \_| |____/___\____|_| \_| |_|  
-        CDN SNI Scanner PLUS - IRAN OPTIMIZED
+        CDN SNI Scanner PLUS - IRAN OPTIMIZED By Jeet
         """ + Style.RESET_ALL)
         print(Fore.YELLOW + "VLESS+WS/Xray Support | GFW Bypass | Enhanced Reporting" + Style.RESET_ALL)
 
@@ -1180,7 +1180,7 @@ class CDNScannerPlus:
 
     def main(self) -> None:
         """Main program loop with argument parsing"""
-        parser = argparse.ArgumentParser(description='CDN SNI Scanner PLUS - Iran Optimized')
+        parser = argparse.ArgumentParser(description='CDN SNI Scanner PLUS - Iran Optimized By Jeet')
         parser.add_argument('-d', '--debug', action='store_true', help='Enable debug mode')
         parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose output')
         parser.add_argument('-c', '--config', help='Specify alternative config file')
