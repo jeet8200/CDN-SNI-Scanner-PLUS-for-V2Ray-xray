@@ -912,7 +912,7 @@ class CDNScannerPlus:
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>CDN Scanner Report</title>
+    <title>CDN Scanner Report By Jeet </title>
     <style>
         body {{ font-family: Arial, sans-serif; margin: 20px; }}
         table {{ border-collapse: collapse; width: 100%; }}
@@ -925,7 +925,7 @@ class CDNScannerPlus:
     </style>
 </head>
 <body>
-    <h1>CDN Scanner Report</h1>
+    <h1>CDN Scanner Report By Jeet</h1>
     <p>Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
     <p>Total valid pairs: {len(sorted_results)}</p>
     
