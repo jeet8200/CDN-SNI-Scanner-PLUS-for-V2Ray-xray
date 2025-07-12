@@ -44,14 +44,12 @@ Features
     ```
 
 3. **Install Dependencies**
-    ```bash
-    pip install -r requirements.txt
+  
     #manualy
-    pip install colorama dnspython urllib3 requests openpyxl
-    ```
-   
-
----
+   ```
+   pip install colorama dnspython urllib3 requests openpyxl
+    
+   ---
 
 ## Usage
 
