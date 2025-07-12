@@ -176,8 +176,111 @@ class CDNScannerPlus:
         print(Fore.YELLOW + "[9]" + Style.RESET_ALL + " Generate HTML report")
         print(Fore.YELLOW + "[10]" + Style.RESET_ALL + " Export to CSV/Excel")
         print(Fore.YELLOW + "[11]" + Style.RESET_ALL + " Configuration")
-        print(Fore.YELLOW + "[12]" + Style.RESET_ALL + " Exit")
+        print(Fore.YELLOW + "[12]" + Style.RESET_ALL + " Test Xray/V2Ray compatibility")
+        print(Fore.YELLOW + "[13]" + Style.RESET_ALL + " Exit")
         print("\n")
+
+    def test_xray_connection(self, ip: str, sni: str, timeout: int = 5) -> bool:
+        """Test if IP works with Xray/V2Ray by sending a test request"""
+        try:
+            # Create a simple Xray-like TLS request
+            context = ssl.create_default_context()
+            context.check_hostname = False
+            context.verify_mode = ssl.CERT_NONE
+            
+            sock = socket.create_connection((ip, 443), timeout=timeout)
+            with context.wrap_socket(sock, server_hostname=sni) as ssl_sock:
+                # Send a fake HTTP request that Xray might use
+                request = (
+                    f"GET / HTTP/1.1\r\n"
+                    f"Host: {sni}\r\n"
+                    f"User-Agent: Xray/V2Ray\r\n"
+                    f"Connection: keep-alive\r\n\r\n"
+                )
+                ssl_sock.send(request.encode())
+                
+                # Check for response (Xray/V2Ray servers usually respond to this)
+                response = ssl_sock.recv(1024)
+                return b"HTTP/" in response or b"403" in response or b"404" in response
+        except Exception as e:
+            if self.debug_mode:
+                print(Fore.YELLOW + f"[Xray Test Failed] {ip} - {e}" + Style.RESET_ALL)
+            return False
+
+    def xray_test_menu(self):
+        """Test found IPs with Xray/V2Ray compatibility checks"""
+        self.print_banner()
+        print(Fore.CYAN + "Xray/V2Ray Compatibility Test\n" + Style.RESET_ALL)
+        
+        results_file = os.path.join(self.output_dir, "valid_pairs.json")
+        if not os.path.exists(results_file):
+            print(Fore.RED + "[!] No results file found. Run a scan first." + Style.RESET_ALL)
+            input("\nPress Enter to return to menu...")
+            return
+        
+        try:
+            with open(results_file, 'r') as f:
+                results = [json.loads(line) for line in f if line.strip()]
+        except Exception as e:
+            print(Fore.RED + f"[!] Error reading results: {e}" + Style.RESET_ALL)
+            input("\nPress Enter to return to menu...")
+            return
+        
+        if not results:
+            print(Fore.YELLOW + "[!] No valid pairs found in results" + Style.RESET_ALL)
+            input("\nPress Enter to return to menu...")
+            return
+        
+        print(Fore.GREEN + f"\n[*] Found {len(results)} IPs to test for Xray compatibility" + Style.RESET_ALL)
+        
+        xray_working = []
+        tested = 0
+        
+        for result in results:
+            ip = result.get('ip')
+            sni = result.get('sni')
+            
+            if not ip or not sni:
+                continue
+            
+            print(Fore.CYAN + f"\n[*] Testing Xray compatibility: {sni} @ {ip}" + Style.RESET_ALL)
+            
+            if self.test_xray_connection(ip, sni):
+                print(Fore.GREEN + f"[+] Xray WORKING: {sni} @ {ip}" + Style.RESET_ALL)
+                result['xray_works'] = True
+                xray_working.append(result)
+            else:
+                print(Fore.RED + f"[-] Xray FAILED: {sni} @ {ip}" + Style.RESET_ALL)
+                result['xray_works'] = False
+            
+            tested += 1
+            print(Fore.YELLOW + f"[*] Progress: {tested}/{len(results)} tested | Working: {len(xray_working)}" + Style.RESET_ALL)
+        
+        if xray_working:
+            # Save Xray-working IPs separately
+            xray_file = os.path.join(self.output_dir, "xray_working.json")
+            xray_txt = os.path.join(self.output_dir, "xray_working.txt")
+            
+            with open(xray_file, 'w') as f:
+                json.dump(xray_working, f, indent=2)
+            
+            # Save simplified version for easy copy-paste
+            with open(xray_txt, 'w') as f:
+                for item in xray_working:
+                    f.write(f"{item['ip']} | {item['sni']} | Ping: {item.get('ping', 'N/A')}ms | CDN: {item.get('cdn', 'N/A')}\n")
+            
+            print(Fore.GREEN + f"\n[+] Found {len(xray_working)} Xray-compatible IPs!" + Style.RESET_ALL)
+            print(Fore.GREEN + f"[+] Saved to: {xray_file}" + Style.RESET_ALL)
+            print(Fore.GREEN + f"[+] Simplified list: {xray_txt}" + Style.RESET_ALL)
+            
+            # Update the original results file with Xray compatibility info
+            with open(results_file, 'w') as f:
+                for result in results:
+                    f.write(json.dumps(result) + "\n")
+        else:
+            print(Fore.RED + "\n[!] No Xray-compatible IPs found" + Style.RESET_ALL)
+        
+        input("\nPress Enter to return to menu...")
 
     def update_cdn_ranges(self) -> None:
         """Automatically update CDN IP ranges from online sources with fallbacks"""
@@ -585,6 +688,9 @@ class CDNScannerPlus:
                     print(f"{i}. {pair.get('sni', 'N/A')} @ {pair.get('ip', 'N/A')} ({pair.get('cdn', 'N/A')})")
                     print(f"   Protocols: {protocol_str} - Ping: {ping_display}")
                     print(f"   SSL Time: {ssl_time} - HTTP Time: {http_time}")
+                    if 'xray_works' in pair:
+                        xray_status = Fore.GREEN + "WORKING" if pair['xray_works'] else Fore.RED + "FAILED"
+                        print(f"   Xray Status: {xray_status}{Style.RESET_ALL}")
                     print()
                 
                 print(Fore.GREEN + f"\nTotal valid pairs: {len(results)}" + Style.RESET_ALL)
@@ -937,10 +1043,11 @@ class CDNScannerPlus:
                 <th onclick="sortTable(2)">CDN</th>
                 <th onclick="sortTable(3)">HTTPS</th>
                 <th onclick="sortTable(4)">HTTP</th>
-                <th onclick="sortTable(5)">Ping (ms)</th>
-                <th onclick="sortTable(6)">SSL Time (ms)</th>
-                <th onclick="sortTable(7)">HTTP Time (ms)</th>
-                <th onclick="sortTable(8)">Timestamp</th>
+                <th onclick="sortTable(5)">Xray</th>
+                <th onclick="sortTable(6)">Ping (ms)</th>
+                <th onclick="sortTable(7)">SSL Time (ms)</th>
+                <th onclick="sortTable(8)">HTTP Time (ms)</th>
+                <th onclick="sortTable(9)">Timestamp</th>
             </tr>
         </thead>
         <tbody>"""
@@ -949,6 +1056,7 @@ class CDNScannerPlus:
                 # Safely get values with defaults and handle None values
                 https_works = result.get('https_works', False)
                 http_works = result.get('http_works', False)
+                xray_works = result.get('xray_works', False)
                 ip = result.get('ip', 'N/A')
                 sni = result.get('sni', 'N/A')
                 cdn = result.get('cdn', 'N/A')
@@ -956,6 +1064,7 @@ class CDNScannerPlus:
                 
                 https_class = "good" if https_works else "bad"
                 http_class = "good" if http_works else "bad"
+                xray_class = "good" if xray_works else "bad"
                 
                 # Handle None values for performance metrics
                 ping = result.get('ping', 'N/A')
@@ -977,6 +1086,7 @@ class CDNScannerPlus:
                 <td>{cdn}</td>
                 <td class="{https_class}">{"✓" if https_works else "✗"}</td>
                 <td class="{http_class}">{"✓" if http_works else "✗"}</td>
+                <td class="{xray_class}">{"✓" if xray_works else "✗"}</td>
                 <td>{ping}</td>
                 <td>{ssl_time}</td>
                 <td>{http_time}</td>
@@ -1028,8 +1138,8 @@ class CDNScannerPlus:
         try:
             with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
                 fieldnames = [
-                    'ip', 'sni', 'cdn', 'https_works', 'http_works', 'ping',
-                    'ssl_handshake_time', 'http_response_time',
+                    'ip', 'sni', 'cdn', 'https_works', 'http_works', 'xray_works',
+                    'ping', 'ssl_handshake_time', 'http_response_time',
                     'timestamp'
                 ]
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -1042,6 +1152,7 @@ class CDNScannerPlus:
                         'cdn': result.get('cdn', ''),
                         'https_works': 'Yes' if result.get('https_works') else 'No',
                         'http_works': 'Yes' if result.get('http_works') else 'No',
+                        'xray_works': 'Yes' if result.get('xray_works') else 'No',
                         'ping': result.get('ping', ''),
                         'ssl_handshake_time': result.get('ssl_handshake_time', ''),
                         'http_response_time': result.get('http_response_time', ''),
@@ -1064,8 +1175,8 @@ class CDNScannerPlus:
             
             # Write headers
             headers = [
-                'IP', 'SNI', 'CDN', 'HTTPS Works', 'HTTP Works', 'Ping (ms)',
-                'SSL Handshake (ms)', 'HTTP Response (ms)',
+                'IP', 'SNI', 'CDN', 'HTTPS Works', 'HTTP Works', 'Xray Works',
+                'Ping (ms)', 'SSL Handshake (ms)', 'HTTP Response (ms)',
                 'Timestamp'
             ]
             ws.append(headers)
@@ -1078,6 +1189,7 @@ class CDNScannerPlus:
                     result.get('cdn', ''),
                     'Yes' if result.get('https_works') else 'No',
                     'Yes' if result.get('http_works') else 'No',
+                    'Yes' if result.get('xray_works') else 'No',
                     result.get('ping', ''),
                     result.get('ssl_handshake_time', ''),
                     result.get('http_response_time', ''),
@@ -1199,7 +1311,7 @@ class CDNScannerPlus:
         while True:
             try:
                 self.print_menu()
-                choice = input("Select an option (1-12): ").strip()
+                choice = input("Select an option (1-13): ").strip()
                 
                 if choice == '1':
                     self.single_domain_scan()
@@ -1262,6 +1374,8 @@ class CDNScannerPlus:
                 elif choice == '11':
                     self.edit_configuration()
                 elif choice == '12':
+                    self.xray_test_menu()
+                elif choice == '13':
                     print(Fore.CYAN + "\n[+] Exiting program..." + Style.RESET_ALL)
                     break
                 else:
