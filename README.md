@@ -49,8 +49,7 @@ Features
    ```
    pip install colorama dnspython urllib3 requests openpyxl
     
-   ---
-
+  
 ## Usage
 
 Run the scanner:
