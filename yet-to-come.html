@@ -1,0 +1,3779 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CDN Scanner Report By Jeet</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; cursor: pointer; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .good { color: green; }
+        .medium { color: orange; }
+        .bad { color: red; }
+    </style>
+</head>
+<body>
+    <h1>CDN Scanner Report By Jeet</h1>
+    <p>Generated: 2025-07-12 20:38:40</p>
+    <p>Total valid pairs: 282</p>
+    
+    <table id="resultsTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">IP</th>
+                <th onclick="sortTable(1)">SNI</th>
+                <th onclick="sortTable(2)">CDN</th>
+                <th onclick="sortTable(3)">HTTPS</th>
+                <th onclick="sortTable(4)">HTTP</th>
+                <th onclick="sortTable(5)">Xray</th>
+                <th onclick="sortTable(6)">Ping (ms)</th>
+                <th onclick="sortTable(7)">SSL Time (ms)</th>
+                <th onclick="sortTable(8)">HTTP Time (ms)</th>
+                <th onclick="sortTable(9)">Server</th>
+                <th onclick="sortTable(10)">Reverse DNS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">45.82.100.4</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>67.0</td>
+                <td>85.2</td>
+                <td>140.6</td>
+                <td>nginx</td>
+                <td>ucom-hw-edge-canary-gc82.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">5.101.68.8</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>113.0</td>
+                <td>142.3</td>
+                <td>238.3</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">91.243.83.5</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>117.0</td>
+                <td>127.8</td>
+                <td>244.6</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">5.101.68.5</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>120.0</td>
+                <td>143.5</td>
+                <td>232.5</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">5.188.121.161</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>121.0</td>
+                <td>182.3</td>
+                <td>263.0</td>
+                <td>nginx</td>
+                <td>m9p-up-gc47.fe.ecnl.ru</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">146.75.118.10</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>121.0</td>
+                <td>308.9</td>
+                <td>255.3</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">199.232.108.101</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>121.0</td>
+                <td>136.1</td>
+                <td>263.9</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">167.82.64.93</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>123.0</td>
+                <td>142.1</td>
+                <td>251.5</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">140.248.177.15</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>123.0</td>
+                <td>143.5</td>
+                <td>265.1</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">167.82.38.64</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>124.0</td>
+                <td>144.5</td>
+                <td>283.6</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">140.248.189.210</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>124.0</td>
+                <td>142.8</td>
+                <td>378.3</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">199.232.116.32</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>124.0</td>
+                <td>145.1</td>
+                <td>258.5</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.123.47</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>126.0</td>
+                <td>195.7</td>
+                <td>212.9</td>
+                <td>nginx</td>
+                <td>m9-up-gc36.fe.ecnl.ru</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">167.82.48.77</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td>126.0</td>
+                <td>None</td>
+                <td>254.0</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">140.248.146.156</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>127.0</td>
+                <td>143.5</td>
+                <td>258.9</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">199.232.194.82</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>127.0</td>
+                <td>139.8</td>
+                <td>305.5</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">167.82.50.117</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>127.0</td>
+                <td>141.1</td>
+                <td>264.7</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.123.45</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>128.0</td>
+                <td>145.1</td>
+                <td>226.3</td>
+                <td>nginx</td>
+                <td>m9-up-gc26.fe.ecnl.ru</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">167.82.30.14</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>128.0</td>
+                <td>200.9</td>
+                <td>1280.9</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">199.232.143.28</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>131.0</td>
+                <td>147.1</td>
+                <td>303.1</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">151.101.193.2</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>131.0</td>
+                <td>151.9</td>
+                <td>313.9</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">5.8.43.5</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>133.0</td>
+                <td>158.7</td>
+                <td>273.9</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">5.188.121.181</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>134.0</td>
+                <td>161.3</td>
+                <td>388.2</td>
+                <td>nginx</td>
+                <td>m9p-up-gc62.fe.ecnl.ru</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">146.75.123.11</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>136.0</td>
+                <td>None</td>
+                <td>268.3</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">167.82.30.122</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>136.0</td>
+                <td>273.3</td>
+                <td>284.0</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">194.44.246.206</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>138.0</td>
+                <td>165.6</td>
+                <td>297.8</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">5.188.121.185</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>139.0</td>
+                <td>167.9</td>
+                <td>277.1</td>
+                <td>nginx</td>
+                <td>m9p-up-gc66.fe.ecnl.ru</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.123.41</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>142.0</td>
+                <td>165.0</td>
+                <td>299.5</td>
+                <td>nginx</td>
+                <td>m9-up-gc12.fe.ecnl.ru</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.240.113.6</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>145.0</td>
+                <td>176.4</td>
+                <td>372.2</td>
+                <td>nginx</td>
+                <td>sto5-hw-edge-gc12.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">5.188.121.191</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>146.0</td>
+                <td>196.1</td>
+                <td>320.9</td>
+                <td>nginx</td>
+                <td>m9p-up-gc13.fe.ecnl.ru</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">217.76.64.195</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>149.0</td>
+                <td>184.2</td>
+                <td>310.6</td>
+                <td>nginx</td>
+                <td>217.76.64.195.altel.kz</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.240.113.11</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>151.0</td>
+                <td>173.7</td>
+                <td>321.8</td>
+                <td>nginx</td>
+                <td>sto5-hw-edge-gc17.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">109.61.41.11</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>152.0</td>
+                <td>200.4</td>
+                <td>354.7</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.124.55</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>153.0</td>
+                <td>272.1</td>
+                <td>338.8</td>
+                <td>nginx</td>
+                <td>fr5-hw-edge-gc75.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">198.41.193.187</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>154.0</td>
+                <td>202.1</td>
+                <td>362.7</td>
+                <td>cloudflare</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.40.10</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>154.0</td>
+                <td>287.9</td>
+                <td>319.4</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">198.41.193.38</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>155.0</td>
+                <td>186.4</td>
+                <td>370.2</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">194.158.198.7</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>156.0</td>
+                <td>232.0</td>
+                <td>336.1</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">37.156.224.15</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>157.0</td>
+                <td>239.5</td>
+                <td>356.9</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">188.114.99.207</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>158.0</td>
+                <td>185.8</td>
+                <td>391.5</td>
+                <td>cloudflare</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">162.159.36.104</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>158.0</td>
+                <td>213.0</td>
+                <td>329.3</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.40.12</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>159.0</td>
+                <td>244.9</td>
+                <td>351.8</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.124.8</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>160.0</td>
+                <td>150.5</td>
+                <td>314.4</td>
+                <td>nginx</td>
+                <td>fr5-hw-edge-gc42.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">188.114.99.202</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>160.0</td>
+                <td>193.5</td>
+                <td>315.6</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.27.122.93</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>160.0</td>
+                <td>187.1</td>
+                <td>408.5</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">146.75.122.119</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>160.0</td>
+                <td>189.0</td>
+                <td>368.6</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.27.13.39</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>161.0</td>
+                <td>193.9</td>
+                <td>351.8</td>
+                <td>cloudflare</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.21.226.144</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>161.0</td>
+                <td>200.9</td>
+                <td>393.3</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.240.113.13</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>162.0</td>
+                <td>171.4</td>
+                <td>327.6</td>
+                <td>nginx</td>
+                <td>sto5-hw-edge-gc19.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.24.63.126</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>162.0</td>
+                <td>194.8</td>
+                <td>403.3</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">141.101.120.172</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>164.0</td>
+                <td>170.8</td>
+                <td>358.9</td>
+                <td>cloudflare</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.40.18</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>164.0</td>
+                <td>139.8</td>
+                <td>303.9</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">188.114.97.0</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>164.0</td>
+                <td>193.6</td>
+                <td>378.1</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.21.90.226</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>164.0</td>
+                <td>191.1</td>
+                <td>385.5</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">198.41.203.33</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>164.0</td>
+                <td>187.3</td>
+                <td>355.9</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">103.21.244.156</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>164.0</td>
+                <td>193.5</td>
+                <td>356.7</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.25.170.199</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>164.0</td>
+                <td>189.0</td>
+                <td>396.5</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">162.159.35.152</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>164.0</td>
+                <td>197.2</td>
+                <td>346.6</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.17.111.53</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>165.0</td>
+                <td>246.1</td>
+                <td>356.0</td>
+                <td>cloudflare</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">5.101.220.10</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>165.0</td>
+                <td>200.7</td>
+                <td>383.1</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.19.142.57</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>165.0</td>
+                <td>214.4</td>
+                <td>379.4</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">173.245.58.55</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>166.0</td>
+                <td>191.4</td>
+                <td>368.8</td>
+                <td>None</td>
+                <td>adel.ns.cloudflare.com</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.15.252.41</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>167.0</td>
+                <td>192.9</td>
+                <td>319.7</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.40.8</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>167.0</td>
+                <td>191.2</td>
+                <td>349.6</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">108.162.195.44</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>167.0</td>
+                <td>199.2</td>
+                <td>390.3</td>
+                <td>None</td>
+                <td>johnathan.ns.cloudflare.com</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">162.159.245.244</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>167.0</td>
+                <td>193.2</td>
+                <td>385.9</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">109.107.159.121</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>168.0</td>
+                <td>193.2</td>
+                <td>5003.0</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">217.195.193.4</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>168.0</td>
+                <td>202.3</td>
+                <td>364.0</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.16.96.208</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>168.0</td>
+                <td>162.9</td>
+                <td>386.9</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">194.158.198.3</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>169.0</td>
+                <td>153.6</td>
+                <td>333.8</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.124.10</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>169.0</td>
+                <td>174.1</td>
+                <td>439.5</td>
+                <td>nginx</td>
+                <td>fr5-hw-edge-gc44.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">103.21.244.102</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>169.0</td>
+                <td>193.9</td>
+                <td>388.1</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">141.101.113.73</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>169.0</td>
+                <td>190.6</td>
+                <td>376.4</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">146.75.73.128</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>169.0</td>
+                <td>408.0</td>
+                <td>370.0</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.25.249.24</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>170.0</td>
+                <td>190.2</td>
+                <td>364.6</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">141.101.113.67</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>170.0</td>
+                <td>151.5</td>
+                <td>382.9</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">173.245.49.244</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>170.0</td>
+                <td>191.8</td>
+                <td>403.5</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.114.56.34</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>171.0</td>
+                <td>186.8</td>
+                <td>5050.2</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">172.67.185.131</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>171.0</td>
+                <td>199.9</td>
+                <td>357.3</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">199.232.42.18</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>171.0</td>
+                <td>194.3</td>
+                <td>371.3</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.124.43</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>172.0</td>
+                <td>157.9</td>
+                <td>339.8</td>
+                <td>nginx</td>
+                <td>fr5-hw-edge-gc51.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.19.215.102</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>172.0</td>
+                <td>197.2</td>
+                <td>334.5</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.22.54.173</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>172.0</td>
+                <td>177.6</td>
+                <td>381.6</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.20.24.80</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>172.0</td>
+                <td>170.7</td>
+                <td>382.3</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.124.52</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>173.0</td>
+                <td>196.2</td>
+                <td>349.5</td>
+                <td>nginx</td>
+                <td>fr5-hw-edge-gc60.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.123.17.177</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>173.0</td>
+                <td>204.8</td>
+                <td>399.4</td>
+                <td>nginx</td>
+                <td>am3-hw-edge-gc106.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.40.14</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>173.0</td>
+                <td>178.9</td>
+                <td>325.1</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.123.17.178</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>173.0</td>
+                <td>171.0</td>
+                <td>333.6</td>
+                <td>nginx</td>
+                <td>am3-hw-edge-gc107.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.22.15.21</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>173.0</td>
+                <td>213.7</td>
+                <td>406.4</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.124.32</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>174.0</td>
+                <td>197.6</td>
+                <td>377.3</td>
+                <td>nginx</td>
+                <td>fr5-hw-edge-gc33.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">162.159.14.24</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>174.0</td>
+                <td>186.0</td>
+                <td>370.8</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">162.159.143.113</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>174.0</td>
+                <td>198.7</td>
+                <td>397.4</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">188.114.96.133</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>174.0</td>
+                <td>197.0</td>
+                <td>368.8</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">37.17.119.210</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>175.0</td>
+                <td>191.3</td>
+                <td>376.8</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">45.82.160.62</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>175.0</td>
+                <td>155.0</td>
+                <td>5001.7</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.19.44.78</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>175.0</td>
+                <td>226.4</td>
+                <td>395.8</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.27.12.15</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>175.0</td>
+                <td>231.4</td>
+                <td>388.0</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">172.67.43.125</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>175.0</td>
+                <td>186.8</td>
+                <td>390.9</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">173.245.59.213</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>175.0</td>
+                <td>197.7</td>
+                <td>361.7</td>
+                <td>None</td>
+                <td>nick.ns.cloudflare.com</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.22.1.228</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>175.0</td>
+                <td>185.2</td>
+                <td>390.5</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.123.17.169</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>176.0</td>
+                <td>280.6</td>
+                <td>381.9</td>
+                <td>nginx</td>
+                <td>am3-hw-edge-gc67.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.123.11.12</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>176.0</td>
+                <td>201.6</td>
+                <td>373.8</td>
+                <td>nginx</td>
+                <td>thn2-hw-edge-gc12.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">162.159.5.177</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>176.0</td>
+                <td>186.1</td>
+                <td>366.3</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.123.17.195</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>177.0</td>
+                <td>205.6</td>
+                <td>399.8</td>
+                <td>nginx</td>
+                <td>am3-hw-edge-gc132.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">94.176.183.14</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>177.0</td>
+                <td>291.1</td>
+                <td>431.2</td>
+                <td>nginx</td>
+                <td>pa5-hw-live-edge-gc14.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.123.17.143</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>178.0</td>
+                <td>188.2</td>
+                <td>370.4</td>
+                <td>nginx</td>
+                <td>am3-hw-edge-gc73.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.124.48</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>178.0</td>
+                <td>192.2</td>
+                <td>389.7</td>
+                <td>nginx</td>
+                <td>fr5-hw-edge-gc56.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">90.84.153.225</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>178.0</td>
+                <td>196.3</td>
+                <td>373.9</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">109.107.159.108</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>178.0</td>
+                <td>197.1</td>
+                <td>5012.1</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.93.217.22</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>178.0</td>
+                <td>320.8</td>
+                <td>5004.2</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.17.155.44</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>178.0</td>
+                <td>202.9</td>
+                <td>436.8</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.124.30</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>179.0</td>
+                <td>206.9</td>
+                <td>343.8</td>
+                <td>nginx</td>
+                <td>fr5-hw-edge-gc31.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.123.17.149</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>179.0</td>
+                <td>198.2</td>
+                <td>377.6</td>
+                <td>nginx</td>
+                <td>am3-hw-edge-gc35.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.123.17.179</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>179.0</td>
+                <td>205.1</td>
+                <td>358.6</td>
+                <td>nginx</td>
+                <td>am3-hw-edge-gc109.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">141.101.114.158</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>179.0</td>
+                <td>159.6</td>
+                <td>367.9</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.25.27.91</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>179.0</td>
+                <td>201.4</td>
+                <td>408.2</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">151.101.204.218</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td>179.0</td>
+                <td>None</td>
+                <td>370.1</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">139.28.7.4</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>180.0</td>
+                <td>228.3</td>
+                <td>396.4</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.123.11.18</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>180.0</td>
+                <td>194.7</td>
+                <td>378.8</td>
+                <td>nginx</td>
+                <td>thn2-hw-edge-gc18.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">90.84.153.161</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>180.0</td>
+                <td>209.2</td>
+                <td>381.6</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.123.11.17</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>181.0</td>
+                <td>178.9</td>
+                <td>329.5</td>
+                <td>nginx</td>
+                <td>thn2-hw-edge-gc17.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">90.84.153.226</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>181.0</td>
+                <td>197.4</td>
+                <td>388.1</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">104.17.120.132</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.cloudflare.com</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>181.0</td>
+                <td>194.3</td>
+                <td>391.1</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.123.11.27</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>182.0</td>
+                <td>244.6</td>
+                <td>388.8</td>
+                <td>nginx</td>
+                <td>thn2-hw-edge-gc27.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.123.17.144</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>182.0</td>
+                <td>195.2</td>
+                <td>386.3</td>
+                <td>nginx</td>
+                <td>am3-hw-edge-gc30.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">79.133.108.16</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>183.0</td>
+                <td>221.4</td>
+                <td>364.7</td>
+                <td>nginx</td>
+                <td>gn-hw-edge-gc14.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.124.6</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>183.0</td>
+                <td>190.6</td>
+                <td>360.1</td>
+                <td>nginx</td>
+                <td>fr5-hw-edge-gc41.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">5.101.217.6</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>183.0</td>
+                <td>194.1</td>
+                <td>407.8</td>
+                <td>nginx</td>
+                <td>bix-hw-live-edge-canary-gc6.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">193.169.251.4</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>184.0</td>
+                <td>206.6</td>
+                <td>365.0</td>
+                <td>nginx</td>
+                <td>undefined.hostname.localhost</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.123.17.191</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>184.0</td>
+                <td>197.1</td>
+                <td>419.4</td>
+                <td>nginx</td>
+                <td>am3-hw-edge-gc120.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">90.84.153.193</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>184.0</td>
+                <td>190.5</td>
+                <td>364.9</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">185.112.81.19</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>185.0</td>
+                <td>208.0</td>
+                <td>399.5</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">62.112.222.229</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>185.0</td>
+                <td>236.2</td>
+                <td>5009.9</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">199.232.124.167</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>185.0</td>
+                <td>246.5</td>
+                <td>510.2</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">173.245.58.56</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.speedtest.net</td>
+                <td>cloudflare</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>187.0</td>
+                <td>184.3</td>
+                <td>387.4</td>
+                <td>cloudflare</td>
+                <td>adi.ns.cloudflare.com</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">90.84.153.65</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>187.0</td>
+                <td>201.4</td>
+                <td>395.1</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">79.133.108.15</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>187.0</td>
+                <td>221.7</td>
+                <td>417.9</td>
+                <td>nginx</td>
+                <td>gn-hw-edge-gc13.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">109.61.122.6</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>188.0</td>
+                <td>204.6</td>
+                <td>393.9</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">185.48.136.150</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>188.0</td>
+                <td>197.2</td>
+                <td>357.8</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.55.17</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>188.0</td>
+                <td>363.2</td>
+                <td>435.1</td>
+                <td>nginx</td>
+                <td>mrs2-hw-edge-gc17.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">45.82.101.7</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>189.0</td>
+                <td>228.2</td>
+                <td>431.3</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">199.232.53.233</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>189.0</td>
+                <td>205.4</td>
+                <td>374.1</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">167.82.70.30</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>190.0</td>
+                <td>139.8</td>
+                <td>396.4</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">193.169.251.10</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>191.0</td>
+                <td>202.6</td>
+                <td>397.9</td>
+                <td>nginx</td>
+                <td>undefined.hostname.localhost</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.15.252.17</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>191.0</td>
+                <td>200.9</td>
+                <td>368.7</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">90.84.153.98</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>191.0</td>
+                <td>195.1</td>
+                <td>387.4</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">62.112.222.143</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>193.0</td>
+                <td>207.2</td>
+                <td>5007.7</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">109.61.122.4</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>194.0</td>
+                <td>199.2</td>
+                <td>423.3</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">79.133.108.17</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>195.0</td>
+                <td>226.6</td>
+                <td>426.5</td>
+                <td>nginx</td>
+                <td>gn-hw-edge-gc15.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.15.252.47</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>195.0</td>
+                <td>203.1</td>
+                <td>370.3</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">109.107.159.78</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>195.0</td>
+                <td>204.1</td>
+                <td>5014.3</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">151.101.57.171</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>196.0</td>
+                <td>186.9</td>
+                <td>393.9</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">151.101.61.231</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>198.0</td>
+                <td>None</td>
+                <td>397.3</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">79.133.108.28</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>199.0</td>
+                <td>222.0</td>
+                <td>413.9</td>
+                <td>nginx</td>
+                <td>gn-hw-edge-gc33.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">193.169.251.13</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>199.0</td>
+                <td>201.7</td>
+                <td>396.9</td>
+                <td>nginx</td>
+                <td>undefined.hostname.localhost</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">95.85.69.8</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>200.0</td>
+                <td>228.4</td>
+                <td>438.7</td>
+                <td>nginx</td>
+                <td>bu2-hw-live-edge-gc8.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">140.248.130.140</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>200.0</td>
+                <td>153.1</td>
+                <td>255.0</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">79.133.108.13</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>201.0</td>
+                <td>221.9</td>
+                <td>403.1</td>
+                <td>nginx</td>
+                <td>gn-hw-edge-gc23.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">45.80.213.7</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>204.0</td>
+                <td>220.0</td>
+                <td>427.4</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">212.232.109.191</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>207.0</td>
+                <td>222.7</td>
+                <td>427.2</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">151.101.132.203</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>207.0</td>
+                <td>418.7</td>
+                <td>1457.5</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">195.14.146.81</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>209.0</td>
+                <td>227.9</td>
+                <td>427.0</td>
+                <td>nginx</td>
+                <td>195-146-81.ftth.cytanet.com.cy</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">193.57.89.5</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>210.0</td>
+                <td>343.0</td>
+                <td>407.6</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">45.80.213.8</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>211.0</td>
+                <td>249.5</td>
+                <td>437.4</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">146.75.1.79</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>211.0</td>
+                <td>2985.3</td>
+                <td>409.3</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">167.82.2.173</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>211.0</td>
+                <td>415.2</td>
+                <td>420.5</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">212.232.103.11</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>212.0</td>
+                <td>237.1</td>
+                <td>435.0</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">193.169.250.4</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>215.0</td>
+                <td>237.8</td>
+                <td>464.1</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.78.26</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>219.0</td>
+                <td>250.4</td>
+                <td>450.6</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.78.28</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>219.0</td>
+                <td>238.6</td>
+                <td>450.3</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.15.248.1</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>220.0</td>
+                <td>245.5</td>
+                <td>492.1</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.78.25</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>222.0</td>
+                <td>365.2</td>
+                <td>447.4</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.15.248.3</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>222.0</td>
+                <td>240.8</td>
+                <td>400.5</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">185.105.1.10</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>227.0</td>
+                <td>221.5</td>
+                <td>469.7</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.15.243.13</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>230.0</td>
+                <td>235.6</td>
+                <td>467.6</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">197.215.44.65</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>238.0</td>
+                <td>243.1</td>
+                <td>506.3</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.116.233</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>238.0</td>
+                <td>272.1</td>
+                <td>543.5</td>
+                <td>nginx</td>
+                <td>sg1-hw-edge-gc26.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">37.239.145.2</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>241.0</td>
+                <td>270.6</td>
+                <td>450.1</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">78.111.110.5</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>243.0</td>
+                <td>255.3</td>
+                <td>505.9</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.116.226</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>246.0</td>
+                <td>287.0</td>
+                <td>535.0</td>
+                <td>nginx</td>
+                <td>sg1-hw-edge-gc12.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.116.244</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>248.0</td>
+                <td>272.9</td>
+                <td>507.7</td>
+                <td>nginx</td>
+                <td>sg1-hw-edge-gc37.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">140.248.136.148</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>248.0</td>
+                <td>174.5</td>
+                <td>251.4</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.118.201</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>249.0</td>
+                <td>276.3</td>
+                <td>526.1</td>
+                <td>nginx</td>
+                <td>dc3-hw-edge-gc52.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.15.246.17</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>249.0</td>
+                <td>280.6</td>
+                <td>525.9</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">193.242.96.5</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>250.0</td>
+                <td>289.2</td>
+                <td>3888.4</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">91.243.81.20</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>250.0</td>
+                <td>329.8</td>
+                <td>5006.8</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.118.26</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>250.0</td>
+                <td>289.2</td>
+                <td>575.2</td>
+                <td>nginx</td>
+                <td>dc3-hw-edge-gc28.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.118.206</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>252.0</td>
+                <td>286.4</td>
+                <td>514.0</td>
+                <td>nginx</td>
+                <td>dc3-hw-edge-gc57.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.118.208</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>253.0</td>
+                <td>290.8</td>
+                <td>573.8</td>
+                <td>nginx</td>
+                <td>dc3-hw-edge-gc59.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">91.243.81.199</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>253.0</td>
+                <td>284.3</td>
+                <td>5013.7</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.118.200</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>255.0</td>
+                <td>280.9</td>
+                <td>523.9</td>
+                <td>nginx</td>
+                <td>dc3-hw-edge-gc51.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.116.228</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>257.0</td>
+                <td>267.6</td>
+                <td>557.5</td>
+                <td>nginx</td>
+                <td>sg1-hw-edge-gc14.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">94.129.12.210</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>258.0</td>
+                <td>291.7</td>
+                <td>540.6</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.116.201</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>259.0</td>
+                <td>304.7</td>
+                <td>555.9</td>
+                <td>nginx</td>
+                <td>sg1-hw-edge-gc47.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">95.85.93.155</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>261.0</td>
+                <td>315.8</td>
+                <td>5010.4</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.118.27</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>262.0</td>
+                <td>289.3</td>
+                <td>550.1</td>
+                <td>nginx</td>
+                <td>dc3-hw-edge-gc29.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.118.37</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>262.0</td>
+                <td>246.0</td>
+                <td>525.5</td>
+                <td>nginx</td>
+                <td>anx-hw-edge-gc11.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">95.85.93.236</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>264.0</td>
+                <td>290.2</td>
+                <td>5003.2</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">193.242.96.4</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>264.0</td>
+                <td>291.0</td>
+                <td>561.6</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.116.234</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>265.0</td>
+                <td>284.8</td>
+                <td>505.7</td>
+                <td>nginx</td>
+                <td>sg1-hw-edge-gc27.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.118.203</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>265.0</td>
+                <td>332.8</td>
+                <td>748.4</td>
+                <td>nginx</td>
+                <td>dc3-hw-edge-gc54.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.118.20</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>266.0</td>
+                <td>275.5</td>
+                <td>547.7</td>
+                <td>nginx</td>
+                <td>dc3-hw-edge-canary-gc41.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">82.213.5.50</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>266.0</td>
+                <td>249.8</td>
+                <td>517.2</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.116.212</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>266.0</td>
+                <td>269.0</td>
+                <td>571.5</td>
+                <td>nginx</td>
+                <td>sg1-hw-edge-gc212.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.116.231</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>269.0</td>
+                <td>278.9</td>
+                <td>552.0</td>
+                <td>nginx</td>
+                <td>sg1-hw-edge-gc24.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">94.128.12.238</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>269.0</td>
+                <td>357.8</td>
+                <td>699.0</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.76.21</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>270.0</td>
+                <td>319.5</td>
+                <td>1621.1</td>
+                <td>nginx</td>
+                <td>hk2-hw-edge-gc14.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.118.202</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>271.0</td>
+                <td>301.2</td>
+                <td>542.6</td>
+                <td>nginx</td>
+                <td>dc3-hw-edge-gc53.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.118.198</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>271.0</td>
+                <td>275.1</td>
+                <td>590.7</td>
+                <td>nginx</td>
+                <td>dc3-hw-edge-gc49.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">102.130.69.141</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>271.0</td>
+                <td>287.2</td>
+                <td>533.5</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.15.244.17</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>271.0</td>
+                <td>321.0</td>
+                <td>538.7</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">102.67.99.66</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>276.0</td>
+                <td>285.5</td>
+                <td>484.2</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.38.159.4</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>277.0</td>
+                <td>300.5</td>
+                <td>577.8</td>
+                <td>nginx</td>
+                <td>atl2-hw-edge-gc4.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">192.16.87.137</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>277.0</td>
+                <td>291.8</td>
+                <td>517.0</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">150.107.126.4</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>278.0</td>
+                <td>314.7</td>
+                <td>605.3</td>
+                <td>nginx</td>
+                <td>lgs-hw-edge-gc4.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">146.75.124.97</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>278.0</td>
+                <td>552.3</td>
+                <td>597.2</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.15.229.1</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>280.0</td>
+                <td>327.9</td>
+                <td>570.0</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">45.135.228.173</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>281.0</td>
+                <td>331.2</td>
+                <td>5004.7</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.76.26</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>284.0</td>
+                <td>316.8</td>
+                <td>1298.3</td>
+                <td>nginx</td>
+                <td>hk2-hw-edge-gc16.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">102.67.99.50</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>287.0</td>
+                <td>296.7</td>
+                <td>551.1</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.76.25</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>289.0</td>
+                <td>941.8</td>
+                <td>580.7</td>
+                <td>nginx</td>
+                <td>hk2-hw-edge-gc13.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">196.97.8.18</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>291.0</td>
+                <td>325.4</td>
+                <td>634.6</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.107.49</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>293.0</td>
+                <td>336.5</td>
+                <td>605.3</td>
+                <td>nginx</td>
+                <td>mi1-hw-edge-gc32.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">197.242.183.195</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>297.0</td>
+                <td>320.5</td>
+                <td>623.3</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">146.75.93.52</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>298.0</td>
+                <td>305.2</td>
+                <td>599.8</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.107.53</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>302.0</td>
+                <td>329.0</td>
+                <td>629.2</td>
+                <td>nginx</td>
+                <td>mi1-hw-edge-gc7.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.107.57</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>302.0</td>
+                <td>287.5</td>
+                <td>628.9</td>
+                <td>nginx</td>
+                <td>mi1-hw-edge-gc25.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.107.135</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>302.0</td>
+                <td>312.7</td>
+                <td>1303.8</td>
+                <td>nginx</td>
+                <td>mi1-hw-edge-gc58.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.107.58</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>303.0</td>
+                <td>313.7</td>
+                <td>620.1</td>
+                <td>nginx</td>
+                <td>mi1-hw-edge-gc26.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.107.52</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>303.0</td>
+                <td>330.0</td>
+                <td>610.3</td>
+                <td>nginx</td>
+                <td>mi1-hw-edge-gc35.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.107.36</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>304.0</td>
+                <td>323.8</td>
+                <td>864.0</td>
+                <td>nginx</td>
+                <td>mi1-hw-edge-gc4.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.107.38</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>306.0</td>
+                <td>316.1</td>
+                <td>617.1</td>
+                <td>nginx</td>
+                <td>mi1-hw-edge-gc5.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">5.8.92.6</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>306.0</td>
+                <td>350.2</td>
+                <td>605.7</td>
+                <td>nginx</td>
+                <td>mca-hw-edge-gc12.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.107.51</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>306.0</td>
+                <td>343.7</td>
+                <td>618.8</td>
+                <td>nginx</td>
+                <td>mi1-hw-edge-gc34.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.115.241.5</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>308.0</td>
+                <td>394.5</td>
+                <td>592.8</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">37.9.33.198</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>311.0</td>
+                <td>347.0</td>
+                <td>5037.3</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">151.101.157.188</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>311.0</td>
+                <td>308.8</td>
+                <td>626.8</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">168.232.103.194</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>312.0</td>
+                <td>292.2</td>
+                <td>615.3</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">199.232.155.121</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td>312.0</td>
+                <td>None</td>
+                <td>1692.0</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.120.14</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>313.0</td>
+                <td>341.8</td>
+                <td>629.2</td>
+                <td>nginx</td>
+                <td>sv5-hw-edge-gc27.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">213.156.144.7</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>315.0</td>
+                <td>329.1</td>
+                <td>630.4</td>
+                <td>nginx</td>
+                <td>sqr-hw-edge-gc7.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.15.250.9</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>316.0</td>
+                <td>339.2</td>
+                <td>675.1</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">199.232.145.160</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>317.0</td>
+                <td>363.3</td>
+                <td>668.2</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">200.10.177.54</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>323.0</td>
+                <td>413.3</td>
+                <td>634.1</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">151.101.172.97</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>331.0</td>
+                <td>711.7</td>
+                <td>697.0</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.15.251.21</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>333.0</td>
+                <td>360.8</td>
+                <td>695.6</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">80.93.215.5</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>334.0</td>
+                <td>349.0</td>
+                <td>665.6</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">167.82.108.47</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td>337.0</td>
+                <td>None</td>
+                <td>687.1</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">5.252.26.9</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>341.0</td>
+                <td>386.1</td>
+                <td>663.5</td>
+                <td>nginx</td>
+                <td>tidc-hw-edge-gc9.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">93.174.165.10</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>344.0</td>
+                <td>346.6</td>
+                <td>694.3</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">5.188.133.11</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>346.0</td>
+                <td>371.5</td>
+                <td>699.0</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">199.232.139.15</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>346.0</td>
+                <td>373.2</td>
+                <td>1458.8</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">197.225.145.26</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>350.0</td>
+                <td>384.9</td>
+                <td>692.4</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">202.129.236.162</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>352.0</td>
+                <td>399.5</td>
+                <td>740.6</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">151.101.105.146</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>353.0</td>
+                <td>725.7</td>
+                <td>725.4</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.12.9</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>356.0</td>
+                <td>397.2</td>
+                <td>705.9</td>
+                <td>nginx</td>
+                <td>sp3-hw-edge-gc27.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.12.18</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>360.0</td>
+                <td>3433.6</td>
+                <td>762.2</td>
+                <td>nginx</td>
+                <td>sp3-hw-edge-gc4.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.12.16</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>360.0</td>
+                <td>414.3</td>
+                <td>747.9</td>
+                <td>nginx</td>
+                <td>sp3-hw-edge-gc35.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.12.23</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>361.0</td>
+                <td>397.4</td>
+                <td>744.9</td>
+                <td>nginx</td>
+                <td>sp3-hw-edge-gc7.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">5.252.26.6</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>364.0</td>
+                <td>339.8</td>
+                <td>722.4</td>
+                <td>nginx</td>
+                <td>tidc-hw-edge-gc6.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.12.14</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>365.0</td>
+                <td>393.0</td>
+                <td>749.5</td>
+                <td>nginx</td>
+                <td>sp3-hw-edge-gc33.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">95.85.92.8</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>366.0</td>
+                <td>389.9</td>
+                <td>780.4</td>
+                <td>nginx</td>
+                <td>rj2-hw-edge-gc14.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.12.27</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>367.0</td>
+                <td>392.5</td>
+                <td>749.4</td>
+                <td>nginx</td>
+                <td>sp3-hw-edge-gc16.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">5.252.26.10</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>370.0</td>
+                <td>392.5</td>
+                <td>728.9</td>
+                <td>nginx</td>
+                <td>tidc-hw-edge-gc10.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">45.82.103.5</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>371.0</td>
+                <td>397.7</td>
+                <td>775.7</td>
+                <td>nginx</td>
+                <td>sdch-hw-edge-gc5.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">146.75.98.222</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>371.0</td>
+                <td>430.9</td>
+                <td>6091.5</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">151.101.250.110</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>372.0</td>
+                <td>757.0</td>
+                <td>775.8</td>
+                <td>Varnish</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">1.37.77.98</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>378.0</td>
+                <td>406.0</td>
+                <td>709.4</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.63.10</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>386.0</td>
+                <td>447.6</td>
+                <td>853.8</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">94.177.131.92</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>393.0</td>
+                <td>456.9</td>
+                <td>5014.9</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">31.184.207.9</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>398.0</td>
+                <td>444.6</td>
+                <td>835.9</td>
+                <td>nginx</td>
+                <td>os1-hw-edge-gc4.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">85.234.83.253</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>400.0</td>
+                <td>424.8</td>
+                <td>5000.9</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">92.223.63.6</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>411.0</td>
+                <td>430.2</td>
+                <td>868.4</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">31.184.207.7</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>417.0</td>
+                <td>453.6</td>
+                <td>833.4</td>
+                <td>nginx</td>
+                <td>os1-hw-edge-gc13.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">31.184.207.11</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>422.0</td>
+                <td>470.7</td>
+                <td>853.8</td>
+                <td>nginx</td>
+                <td>os1-hw-edge-gc6.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">109.61.127.167</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>427.0</td>
+                <td>453.6</td>
+                <td>5003.3</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">31.184.207.5</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>430.0</td>
+                <td>448.8</td>
+                <td>860.7</td>
+                <td>nginx</td>
+                <td>os1-hw-edge-gc11.fe.gc.onl</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">85.234.83.224</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>431.0</td>
+                <td>414.0</td>
+                <td>5011.2</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">82.117.226.240</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>432.0</td>
+                <td>471.3</td>
+                <td>5009.1</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">82.117.226.126</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="bad">✗</td>
+                <td class="good">✓</td>
+                <td>450.0</td>
+                <td>462.0</td>
+                <td>5027.3</td>
+                <td>openresty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">62.112.216.5</td>
+                <td class="copyable" onclick="copyToClipboard(this)">www.gcore.com</td>
+                <td>gcore</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>455.0</td>
+                <td>478.1</td>
+                <td>917.0</td>
+                <td>nginx</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable" onclick="copyToClipboard(this)">146.75.114.92</td>
+                <td class="copyable" onclick="copyToClipboard(this)">fastly.net</td>
+                <td>fastly</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td class="good">✓</td>
+                <td>None</td>
+                <td>432.4</td>
+                <td>1864.7</td>
+                <td>Cloudinary</td>
+                <td>None</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        // Professional click-to-copy for IP and Reverse DNS columns
+        document.querySelectorAll('td:nth-child(1), td:nth-child(11)').forEach(td => {
+            // Visual cues
+            td.style.cursor = 'pointer';
+            td.style.position = 'relative';
+            td.title = 'Click to copy';
+            
+            td.addEventListener('click', () => {
+                // Copy logic
+                navigator.clipboard.writeText(td.textContent.trim());
+                
+                // Create tooltip
+                const tooltip = document.createElement('div');
+                tooltip.className = 'copy-tooltip';
+                tooltip.textContent = 'Copied!';
+                
+                // Append and position
+                td.appendChild(tooltip);
+                
+                // Auto-remove after 1s
+                setTimeout(() => tooltip.remove(), 1000);
+            });
+        });
+        
+        function sortTable(column) {
+            const table = document.getElementById("resultsTable");
+            const rows = Array.from(table.rows).slice(1);
+            const header = table.rows[0].cells[column];
+            const direction = header.getAttribute("data-direction") || "asc";
+            
+            rows.sort((a, b) => {
+                const aVal = a.cells[column].textContent;
+                const bVal = b.cells[column].textContent;
+                
+                if (!isNaN(aVal) && !isNaN(bVal)) {
+                    return direction === "asc" ? aVal - bVal : bVal - aVal;
+                }
+                return direction === "asc" 
+                    ? aVal.localeCompare(bVal)
+                    : bVal.localeCompare(aVal);
+            });
+            
+            // Rebuild table
+            rows.forEach(row => table.tBodies[0].appendChild(row));
+            header.setAttribute("data-direction", direction === "asc" ? "desc" : "asc");
+        }
+    </script>
+    <style>
+        .copy-tooltip {
+            position: absolute;
+            bottom: calc(100% + 5px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: Arial, sans-serif;
+            white-space: nowrap;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            animation: fadeIn 0.15s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(5px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+    </style>
+</body>
+</html>
