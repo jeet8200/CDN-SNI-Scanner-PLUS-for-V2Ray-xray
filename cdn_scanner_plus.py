@@ -177,7 +177,7 @@ class CDNScannerPlus:
         print(Fore.YELLOW + "[10]" + Style.RESET_ALL + " Export to CSV/Excel")
         print(Fore.YELLOW + "[11]" + Style.RESET_ALL + " Configuration")
         print(Fore.YELLOW + "[12]" + Style.RESET_ALL + " Test Xray/V2Ray compatibility")
-        print(Fore.YELLOW + "[13]" + Style.RESET_ALL + " Exit")
+        print(Fore.YELLOW + "[0]" + Style.RESET_ALL + " Exit")
         print("\n")
 
     def test_xray_connection(self, ip: str, sni: str, timeout: int = 5) -> bool:
@@ -1375,7 +1375,7 @@ class CDNScannerPlus:
                     self.edit_configuration()
                 elif choice == '12':
                     self.xray_test_menu()
-                elif choice == '13':
+                elif choice == '0':
                     print(Fore.CYAN + "\n[+] Exiting program..." + Style.RESET_ALL)
                     break
                 else:
