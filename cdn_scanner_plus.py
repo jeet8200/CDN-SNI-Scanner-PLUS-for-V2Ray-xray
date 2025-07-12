@@ -18,8 +18,6 @@ import argparse
 import subprocess
 import platform
 import re
-import tarfile
-import gzip
 import shutil
 from timeit import default_timer as timer
 import csv
