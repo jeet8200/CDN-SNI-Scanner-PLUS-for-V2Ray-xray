@@ -1,0 +1,14 @@
+gcore.com
+www.gcore.com
+cdn.gcore.com
+images.gcore.com
+api.gcore.com
+www.cloudflare.com
+cloudflare.com
+blog.cloudflare.com
+speed.cloudflare.com
+www.fastly.com
+fastly.net
+status.fastly.com
+developer.fastly.com
+docs.fastly.com
