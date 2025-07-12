@@ -9,13 +9,17 @@ A simple and powerful Python tool to scan and identify valid **CDN IP + SNI (Ser
 
 ## Features
 
-- Multi-CDN support: Cloudflare, Fastly, Gcore
-- Supports both IPv4 & IPv6
-- Batch scan domains from a file
-- Random IP scan from CDN ranges
-- JSON & TXT output
-- Configurable rate limiting
-- Debug & verbose modes
+Features
+
+  -  Single Domain & Batch Scanning: Scan one domain or a list of domains for valid CDN IP/SNI pairs.
+  -  Random IP Scanning: Generate and test random IPs from CDN ranges.
+  -  Optimized CDN Ranges: Built-in ranges for Cloudflare, Gcore, Fastly (can be updated automatically).
+  -  Multi-Protocol Checks: Tests both HTTPS and HTTP connectivity.
+  -  Xray/V2Ray Compatibility Tests: Verifies found pairs for Xray/V2Ray support.
+  -  Performance Metrics: SSL handshake time, ping, HTTP response time.
+  -  Export Results: Save to JSON, TXT, CSV, Excel, and generate HTML reports.
+  -  Configurable: Edit DNS servers, output directory, debug/verbose modes, and more.
+  -  Interactive CLI Menu: Easy-to-use terminal interface.
 
 ---
 
@@ -56,20 +60,34 @@ Run the scanner:
 python cdn_scanner_plus.py
 ```
 for updateing ip lists its better to use vpn but for rest of the way vpn off is smart choice
+
 **Menu Options:**
 
-| Option | Description                      |
-|--------|----------------------------------|
-|   1    | Scan single domain               |
-|   2    | Scan random IPs from CDN ranges  |
-|   3    | Scan domains from file           |
-|   4    | View saved results               |
-|   5    | Toggle debug mode                |
-|   6    | Test known CDNs                  |
-|   7    | Deep test specific CDN           |
-|   8    | Edit configuration               |
-|   9    | Exit                             |
+[1]  Scan single domain
 
+[2] Scan random IPs
+
+[3] Scan from file
+
+[4] View results
+
+[5] Toggle debug
+
+[6] Test known CDNs
+
+[7] Deep CDN Test
+
+[8] Update CDN IP ranges
+
+[9] Generate HTML report
+
+[10] Export to CSV/Excel
+
+[11] Configuration
+
+[12] Test Xray/V2Ray compatibility
+
+[0] Exit
 ---
 
 ## Examples
