@@ -136,7 +136,7 @@ REST ARE self explanatory
 
 ## License
 
-MIT License — Free for personal and commercial use.
+MIT License — Free for personal Use
 
 ---
 
