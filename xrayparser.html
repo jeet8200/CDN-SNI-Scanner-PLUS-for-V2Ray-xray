@@ -68,15 +68,30 @@
         <div class="grid">
             <div class="field">
                 <label>UUID</label>
-                <input type="text" id="uuid">
+                <input type="text" id="uuid" oninput="liveUpdate()">
+            </div>
+            <div class="field">
+                <label>Prefix (Emoji/Text)</label>
+                <div style="display:flex; gap:5px;">
+                    <input type="text" id="prefix" placeholder="Type or Select" oninput="liveUpdate()">
+                    <select style="width:100px;" onchange="document.getElementById('prefix').value = this.value; liveUpdate();">
+                        <option value="">None</option>
+                        <option value="🚀">🚀 Fast</option>
+                        <option value="💎">💎 VIP</option>
+                        <option value="⚡">⚡ Speed</option>
+                        <option value="🛡️">🛡️ Secure</option>
+                        <option value="🔥">🔥 Hot</option>
+                        <option value="🌍">🌍 Global</option>
+                    </select>
+                </div>
             </div>
             <div class="field">
                 <label>Alias (Remark)</label>
-                <input type="text" id="remark">
+                <input type="text" id="remark" oninput="liveUpdate()">
             </div>
             <div class="field">
                 <label>Billing (Num)</label>
-                <input type="number" id="totalNumeric" oninput="updateWords(this.value)">
+                <input type="number" id="totalNumeric" oninput="updateWords(this.value); liveUpdate();">
                 <div id="wordsDisplay" style="font-size:0.7rem; color:var(--primary); font-style:italic; margin-top:3px;"></div>
             </div>
         </div>
@@ -85,11 +100,11 @@
         <div class="grid">
             <div class="field">
                 <label>Port</label>
-                <input type="number" id="port" oninput="handlePortChange(this.value)">
+                <input type="number" id="port" oninput="handlePortChange(this.value); liveUpdate();">
             </div>
             <div class="field">
                 <label>Security</label>
-                <select id="security" onchange="toggleTlsUI()">
+                <select id="security" onchange="toggleTlsUI(); liveUpdate();">
                     <option value="tls">TLS</option>
                     <option value="reality">REALITY</option>
                     <option value="none">None</option>
@@ -97,15 +112,15 @@
             </div>
             <div class="field">
                 <label>Transport</label>
-                <input type="text" id="type" value="ws">
+                <input type="text" id="type" value="ws" oninput="liveUpdate()">
             </div>
         </div>
 
         <div class="path-row">
             <label>Path (Add Bypass Preset)</label>
             <div style="display:flex; gap:10px; align-items:center;">
-                <input type="text" id="path" placeholder="/">
-                <select style="width:250px;" id="pathPreset" onchange="applyPathPreset(this.value)">
+                <input type="text" id="path" placeholder="/" oninput="liveUpdate()">
+                <select style="width:250px;" id="pathPreset" onchange="applyPathPreset(this.value); liveUpdate();">
                     <option value="">-- Choose Bypass Type --</option>
                     <option value="?ed=2560">?ed=2560 [Speed: Early Data]</option>
                     <option value="?ed=2560&browser=chrome">?ed+Chrome [Bypass: Fingerprint]</option>
@@ -120,11 +135,11 @@
         <div id="tlsUI" class="grid">
             <div class="field">
                 <label>SNI</label>
-                <input type="text" id="sni">
+                <input type="text" id="sni" oninput="liveUpdate()">
             </div>
             <div class="field">
                 <label>Fingerprint (FP)</label>
-                <select id="fp">
+                <select id="fp" onchange="liveUpdate()">
                     <option value="chrome">Chrome</option>
                     <option value="firefox">Firefox</option>
                     <option value="safari">Safari</option>
@@ -136,7 +151,7 @@
             </div>
             <div class="field">
                 <label>ALPN</label>
-                <select id="alpn">
+                <select id="alpn" onchange="liveUpdate()">
                     <option value="h3,h2,http/1.1">h3, h2, http/1.1</option>
                     <option value="h2,http/1.1">h2, http/1.1</option>
                     <option value="h3">h3 Only</option>
@@ -148,24 +163,24 @@
             </div>
             <div class="field">
                 <label>Host</label>
-                <input type="text" id="host">
+                <input type="text" id="host" oninput="liveUpdate()">
             </div>
         </div>
 
         <div class="section-header">2. IP Source</div>
         <div class="grid">
-            <button onclick="loadCDN('cf')" style="background:#f97316; color:white;">CF IPs</button>
-            <button onclick="loadCDN('gcore')" style="background:#6366f1; color:white;">Gcore IPs</button>
-            <button onclick="cleanIPList()" style="background:#0ea5e9; color:white;">Clean IPs</button>
+            <button onclick="loadCDN('cf'); liveUpdate();" style="background:#f97316; color:white;">CF IPs</button>
+            <button onclick="loadCDN('gcore'); liveUpdate();" style="background:#6366f1; color:white;">Gcore IPs</button>
+            <button onclick="cleanIPList(); liveUpdate();" style="background:#0ea5e9; color:white;">Clean IPs</button>
             <button onclick="clearAllData()" class="btn-reset">Reset</button>
         </div>
-        <textarea id="ipList" placeholder="Paste IPs..."></textarea>
+        <textarea id="ipList" placeholder="Paste IPs..." oninput="liveUpdate()"></textarea>
         
         <div class="grid" style="margin-top:10px;">
             <button onclick="runPingTest()" style="background:#7c3aed; color:white;">⚡ Ping Test</button>
             <div class="field">
                 <label>Max Ping</label>
-                <input type="number" id="pingLimit" value="2000">
+                <input type="number" id="pingLimit" value="2000" oninput="liveUpdate()">
             </div>
         </div>
         <div id="pingLog" style="display:none; max-height:150px; overflow-y:auto; background:rgba(0,0,0,0.1); padding:10px; border-radius:8px;"></div>
@@ -193,6 +208,14 @@
 <script>
     const ipReg = /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/g;
     let store = { links: [], pings: {} };
+    let hasGeneratedOnce = false;
+
+    // Helper to auto-update if the user has already clicked "Generate" once
+    function liveUpdate() {
+        if (hasGeneratedOnce) {
+            generateNodes();
+        }
+    }
 
     function toggleTheme() {
         const b = document.body;
@@ -278,14 +301,15 @@
             const color = ms === 9999 ? '#ef4444' : (ms < 500 ? '#10b981' : '#f59e0b');
             log.innerHTML += `<div class="ping-item"><span>${ip}</span><span style="color:${color}">${ms === 9999 ? 'Timeout' : ms+'ms'}</span></div>`;
         }
+        if(hasGeneratedOnce) generateNodes();
     }
 
     function generateNodes() {
         const ips = cleanIPList();
         const limit = parseInt(document.getElementById('pingLimit').value) || 9999;
         const bVal = document.getElementById('totalNumeric').value;
-        // Instruction: Fix missing totalInWords by calculating it here
         const bWord = bVal ? numberToWords(bVal).replace(/\s/g, '_') : "O";
+        const pre = document.getElementById('prefix').value.trim();
         
         store.links = [];
         let count = 1;
@@ -306,13 +330,14 @@
                 const path = document.getElementById('path').value;
                 if(path) params.set('path', path);
                 
-                // PING REMOVED FROM ALIAS PER REQUEST
-                const finalAlias = `${document.getElementById('remark').value}_${bWord}_${count++}`;
+                let finalAlias = `${document.getElementById('remark').value}_${bWord}_${count++}`;
+                if(pre) finalAlias = `${pre}_${finalAlias}`;
                 
                 store.links.push(`vless://${document.getElementById('uuid').value}@${ip}:${document.getElementById('port').value}?${params.toString()}#${finalAlias}`);
             }
         });
         document.getElementById('resultArea').style.display = 'block';
+        hasGeneratedOnce = true;
         refreshView();
     }
 
@@ -350,7 +375,6 @@
         const val = document.getElementById('ipList').value;
         const found = val.match(ipReg);
         const unique = found ? [...new Set(found)] : [];
-        document.getElementById('ipList').value = unique.join('\n');
         return unique;
     }
 
