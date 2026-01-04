@@ -6,170 +6,179 @@
     <title>VLESS Master: JeetHm & G Edition</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        :root {
-            /* Default Dark Theme Variables */
-            --primary: #3b82f6;
-            --secondary: #94a3b8;
-            --success: #10b981;
-            --danger: #ef4444;
-            --bg: #0f172a;
-            --card: #1e293b;
-            --text: #f1f5f9;
-            --border: #334155;
-            --input-bg: #0f172a;
-        }
-
-        [data-theme="light"] {
-            --primary: #2563eb;
-            --secondary: #64748b;
-            --success: #059669;
-            --danger: #dc2626;
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --text: #1e293b;
-            --border: #cbd5e1;
-            --input-bg: #ffffff;
-        }
-
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 20px 20px 80px 20px; line-height: 1.5; min-height: 100vh; position: relative; transition: background 0.3s, color 0.3s; }
-        .container { max-width: 1100px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 12px; box-shadow: 0 10px 15px rgba(0,0,0,0.3); border: 1px solid var(--border); }
+        :root { --primary: #3b82f6; --secondary: #94a3b8; --success: #10b981; --danger: #ef4444; --bg: #0f172a; --card: #1e293b; --text: #f1f5f9; --border: #334155; --input-bg: #0f172a; }
+        [data-theme="light"] { --primary: #2563eb; --secondary: #64748b; --success: #059669; --danger: #dc2626; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --border: #cbd5e1; --input-bg: #ffffff; }
         
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 20px 20px 80px 20px; line-height: 1.5; min-height: 100vh; transition: background 0.3s; }
+        .container { max-width: 1100px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 10px 15px rgba(0,0,0,0.3); }
         .header-flex { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 20px; }
-        h2 { color: var(--primary); margin: 0; }
         
-        .theme-toggle { background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
-
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
         .field { display: flex; flex-direction: column; }
-        label { font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; color: var(--secondary); text-transform: uppercase; }
+        label { font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; color: var(--secondary); text-transform: uppercase; }
         
-        input, select, textarea { padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; width: 100%; box-sizing: border-box; background: var(--input-bg); color: var(--text); }
-        textarea { height: 120px; font-family: monospace; resize: vertical; }
+        input, select, textarea { padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; background: var(--input-bg); color: var(--text); width: 100%; box-sizing: border-box; }
+        textarea { height: 100px; resize: vertical; }
         
         button { cursor: pointer; border: none; padding: 10px; border-radius: 8px; font-weight: 600; transition: 0.2s; opacity: 0.9; }
         button:hover { opacity: 1; transform: translateY(-1px); }
         
         .btn-main { background: var(--primary); color: white; width: 100%; margin-top: 10px; }
-        .btn-cdn { background: #475569; color: white; font-size: 0.75rem; padding: 8px; }
-        .btn-ping { background: #7c3aed; color: white; margin-top: 10px; flex: 2; }
-        .btn-upload { background: #f59e0b; color: white; font-size: 0.75rem; padding: 8px; }
-        .btn-clean { background: #0ea5e9; color: white; font-size: 0.75rem; padding: 8px; }
         .btn-reset { background: var(--danger); color: white; font-size: 0.75rem; padding: 8px; }
-        
         .section-header { font-weight: bold; margin: 25px 0 10px; font-size: 0.85rem; color: var(--primary); border-bottom: 2px solid var(--border); }
-        .ping-results { margin-top: 15px; max-height: 180px; overflow-y: auto; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; font-size: 0.85rem; border: 1px solid var(--border); }
-        .ping-item { display: flex; justify-content: space-between; padding: 6px 10px; border-bottom: 1px solid var(--border); }
         
-        .output-textarea { margin-top: 15px; background: #000000; color: #38bdf8; padding: 15px; border-radius: 8px; font-family: 'Consolas', monospace; font-size: 0.85rem; height: 300px; width: 100%; line-height: 1.2; border: 1px solid var(--primary); }
-        .in-words { color: var(--primary); font-style: italic; font-size: 0.75rem; margin-top: 5px; min-height: 1.2em; }
-        
-        #qrModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; flex-direction: column; color: white; }
-        #qrContainer { background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; }
-        
-        .format-selector { display: flex; gap: 15px; background: rgba(0,0,0,0.1); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--border); }
-        .format-selector label { text-transform: none; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; cursor: pointer; color: var(--text); }
-        
-        .qr-list-btn { background: var(--secondary); color: white; font-size: 0.7rem; padding: 4px 8px; margin-top: 5px; cursor: pointer; border-radius: 4px; display: inline-block; transition: 0.2s; }
-        .qr-list-btn:hover { background: var(--primary); }
-        
-        .ping-filter-box { display: flex; gap: 10px; align-items: center; margin-top: 10px; }
-        .footer-credits { position: fixed; bottom: 20px; left: 0; width: 100%; text-align: center; font-size: 0.9rem; color: var(--secondary); font-weight: 600; letter-spacing: 1px; pointer-events: none; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        #qrModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 99999; justify-content: center; align-items: center; flex-direction: column; }
+        #qrContent { background: white; padding: 30px; border-radius: 12px; text-align: center; }
+        #qrContainer { display: inline-block; padding: 10px; background: white; }
+        #qrContent p { color: #000; margin: 15px 0; font-weight: bold; }
+
+        .output-textarea { margin-top: 15px; background: #000; color: #38bdf8; padding: 15px; border-radius: 8px; font-family: 'Consolas', monospace; font-size: 0.8rem; height: 250px; border: 1px solid var(--primary); }
+        .footer-credits { position: fixed; bottom: 20px; left: 0; width: 100%; text-align: center; font-size: 0.9rem; color: var(--secondary); font-weight: 600; pointer-events: none; }
+        .ping-item { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding: 4px 0; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-<div id="qrModal" onclick="this.style.display='none'">
-    <div id="qrContainer"></div>
-    <p>Tap anywhere to close</p>
+<div id="qrModal" onclick="closeQR()">
+    <div id="qrContent" onclick="event.stopPropagation()">
+        <div id="qrContainer"></div>
+        <p>VLESS Config QR</p>
+        <button onclick="closeQR()" style="background:var(--danger); color:white; padding:10px 25px;">CLOSE</button>
+    </div>
 </div>
 
 <div class="container">
     <div class="header-flex">
-        <h2>VLESS Bulk Master</h2>
-        <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">Switch to Light Mode</button>
+        <h2 style="color:var(--primary); margin:0;">VLESS Master Bulk</h2>
+        <button id="themeBtn" onclick="toggleTheme()" style="background:var(--primary); color:white; border-radius:20px; padding:5px 15px;">Light Mode</button>
     </div>
 
     <div class="field">
-        <label>1. Input Base VLESS Link</label>
-        <textarea id="rawInput" placeholder="Paste your original VLESS link here..."></textarea>
-        <button class="btn-main" onclick="parseBase()">Parse Config</button>
+        <label>1. Initial VLESS Link</label>
+        <textarea id="rawInput" placeholder="Paste link here..."></textarea>
+        <button class="btn-main" onclick="parseBase()">Analyze & Edit</button>
     </div>
 
     <div id="editor" style="display:none;">
-        <div class="section-header">Identity & Billing</div>
+        <div class="section-header">Core Config & Billing</div>
         <div class="grid">
-            <div class="field"><label>UUID</label><input type="text" id="uuid" class="config-input"></div>
-            <div class="field"><label>Alias</label><input type="text" id="remark" class="config-input"></div>
             <div class="field">
-                <label>Billing Numeric</label>
-                <input type="number" id="totalNumeric" class="config-input" oninput="updateWords(this.value)">
-                <div id="wordsDisplay" class="in-words"></div>
+                <label>UUID</label>
+                <input type="text" id="uuid">
+            </div>
+            <div class="field">
+                <label>Alias</label>
+                <input type="text" id="remark">
+            </div>
+            <div class="field">
+                <label>Billing (Num)</label>
+                <input type="number" id="totalNumeric" oninput="updateWords(this.value)">
+                <div id="wordsDisplay" style="font-size:0.7rem; color:var(--primary); font-style:italic; margin-top:3px;"></div>
             </div>
         </div>
 
-        <div class="section-header">Transport & TLS</div>
-        <div class="grid">
-            <div class="field"><label>Port</label><input type="number" id="port" class="config-input"></div>
-            <div class="field"><label>Security</label><input type="text" id="security" class="config-input"></div>
-            <div class="field"><label>SNI</label><input type="text" id="sni" class="config-input"></div>
-            <div class="field"><label>Path</label><input type="text" id="path" class="config-input"></div>
-        </div>
-
+        <div class="section-header">Connection Details</div>
         <div class="grid">
             <div class="field">
-                <label>ALPN Choice</label>
-                <select id="alpnSelect" class="config-input" onchange="toggleCustomAlpn(this.value)">
-                    <option value="">(Default)</option>
+                <label>Port</label>
+                <input type="number" id="port" oninput="handlePortChange(this.value)">
+            </div>
+            <div class="field">
+                <label>Security</label>
+                <select id="security" onchange="toggleTlsUI()">
+                    <option value="tls">TLS</option>
+                    <option value="reality">REALITY</option>
+                    <option value="none">None</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Transport</label>
+                <input type="text" id="type" value="ws">
+            </div>
+            <div class="field">
+                <label>Path (Add Bypass Preset)</label>
+                <div style="display:flex; gap:5px;">
+                    <input type="text" id="path" placeholder="/">
+                    <select style="width:200px;" id="pathPreset" onchange="applyPathPreset(this.value)">
+                        <option value="">-- Choose Bypass Type --</option>
+                        <option value="?ed=2560">?ed=2560 [Speed: Early Data]</option>
+                        <option value="?ed=2560&browser=chrome">?ed+Chrome [Bypass: Fingerprint]</option>
+                        <option value="/api/v1/update">/api/v1/update [Mask: System Update]</option>
+                        <option value="/video/stream?buffer=true">/video/stream [Usage: Heavy Traffic]</option>
+                        <option value="/graphql">/graphql [Mask: API Request]</option>
+                        <option value="/chat/stream">/chat/stream [Mask: AI Chat]</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="tlsUI" class="grid">
+            <div class="field">
+                <label>SNI</label>
+                <input type="text" id="sni">
+            </div>
+            <div class="field">
+                <label>Fingerprint (FP)</label>
+                <select id="fp">
+                    <option value="chrome">Chrome</option>
+                    <option value="firefox">Firefox</option>
+                    <option value="safari">Safari</option>
+                    <option value="edge">Edge</option>
+                    <option value="360">360</option>
+                    <option value="qq">QQ</option>
+                    <option value="random">Random</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>ALPN</label>
+                <select id="alpn">
                     <option value="h3,h2,http/1.1">h3, h2, http/1.1</option>
-                    <option value="h3,h2">h3, h2</option>
                     <option value="h2,http/1.1">h2, http/1.1</option>
                     <option value="h3">h3 Only</option>
                     <option value="h2">h2 Only</option>
-                    <option value="CUSTOM">-- Custom --</option>
+                    <option value="http/1.1">http/1.1 Only</option>
+                    <option value="h3,h2">h3, h2</option>
+                    <option value="">Auto</option>
                 </select>
-                <input type="text" id="customAlpn" class="config-input" style="display:none; margin-top:5px;" placeholder="e.g. h3">
             </div>
-            <div class="field"><label>FP</label><input type="text" id="fp" class="config-input"></div>
-            <div class="field"><label>Type</label><input type="text" id="type" class="config-input"></div>
-            <div class="field"><label>Host</label><input type="text" id="host" class="config-input"></div>
+            <div class="field">
+                <label>Host</label>
+                <input type="text" id="host">
+            </div>
         </div>
 
-        <div class="section-header">2. IP Management & Speed Filter</div>
+        <div class="section-header">2. IP Source</div>
         <div class="grid">
-            <button class="btn-cdn" onclick="loadCDN('cf')">Cloudflare IPs</button>
-            <button class="btn-cdn" onclick="loadCDN('gcore')">Gcore IPs</button>
-            <button class="btn-upload" onclick="document.getElementById('fileInput').click()">Upload .txt</button>
-            <button class="btn-clean" onclick="cleanIPList()">Clean & Extract IPs</button>
-            <button class="btn-reset" onclick="clearAllData()">Reset Form</button>
-            <input type="file" id="fileInput" style="display:none" accept=".txt" onchange="handleFileUpload(this)">
+            <button onclick="loadCDN('cf')" style="background:#f97316; color:white;">CF IPs</button>
+            <button onclick="loadCDN('gcore')" style="background:#6366f1; color:white;">Gcore IPs</button>
+            <button onclick="cleanIPList()" style="background:#0ea5e9; color:white;">Clean IPs</button>
+            <button onclick="clearAllData()" class="btn-reset">Reset</button>
         </div>
-        <textarea id="ipList" placeholder="Paste dirty IP list... System will automatically extract valid IPs."></textarea>
+        <textarea id="ipList" placeholder="Paste IPs..."></textarea>
         
-        <div class="ping-filter-box">
-            <button class="btn-ping" onclick="runPingTest()">⚡ Run Speed Test</button>
-            <div class="field" style="width:180px;">
-                <label>Max Ping (ms)</label>
-                <input type="number" id="pingLimit" value="1000">
+        <div class="grid" style="margin-top:10px;">
+            <button onclick="runPingTest()" style="background:#7c3aed; color:white;">⚡ Ping Test</button>
+            <div class="field">
+                <label>Max Ping</label>
+                <input type="number" id="pingLimit" value="2000">
             </div>
         </div>
-        <div id="pingLog" class="ping-results" style="display:none;"></div>
+        <div id="pingLog" style="display:none; max-height:150px; overflow-y:auto; background:rgba(0,0,0,0.1); padding:10px; border-radius:8px;"></div>
 
-        <div class="section-header">3. Output Format</div>
-        <div class="format-selector">
-            <label><input type="radio" name="outFormat" value="normal" checked onchange="refreshOutput()"> v2rayN (Normal)</label>
-            <label><input type="radio" name="outFormat" value="base64" onchange="refreshOutput()"> Base64 (Subscription)</label>
+        <div class="section-header">3. Export</div>
+        <div style="margin-bottom:15px; display:flex; gap:20px;">
+            <label><input type="radio" name="outMode" value="raw" checked onchange="refreshView()"> v2rayN</label>
+            <label><input type="radio" name="outMode" value="b64" onchange="refreshView()"> Base64</label>
         </div>
-        <button class="btn-main" style="background:var(--success); margin-top:15px;" onclick="generateBulk()">Generate Nodes</button>
+        <button class="btn-main" style="background:var(--success);" onclick="generateNodes()">Generate Nodes</button>
     </div>
 
-    <div id="resultSection" style="display:none;">
-        <div class="section-header">Final Export</div>
-        <textarea id="bulkOutput" class="output-textarea" readonly></textarea>
-        <div id="qrTriggerList" style="margin-top:10px; display:flex; flex-wrap:wrap; gap:5px;"></div>
-        
+    <div id="resultArea" style="display:none;">
+        <textarea id="finalOutput" class="output-textarea" readonly></textarea>
+        <div id="qrButtons" style="display:flex; flex-wrap:wrap; gap:5px; margin-top:10px;"></div>
         <div class="grid" style="margin-top:15px;">
-            <button class="btn-main" onclick="copyAll()">Copy Everything</button>
-            <button class="btn-main" onclick="downloadTxt()" style="background:#475569;">Download .txt</button>
+            <button class="btn-main" onclick="copyResult()">Copy All</button>
+            <button class="btn-main" onclick="saveFile()" style="background:#475569;">Save .txt</button>
         </div>
     </div>
 </div>
@@ -177,35 +186,175 @@
 <div class="footer-credits">Created by JeetHm & G</div>
 
 <script>
-    const cdnRanges = { cf: ["104.16.0.1", "172.67.0.1"], gcore: ["92.38.186.1", "5.188.36.1"] };
-    let pingResults = {};
-    let generatedLinks = [];
-    const ipRegex = /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/g;
+    const ipReg = /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/g;
+    let store = { links: [], pings: {} };
 
     function toggleTheme() {
-        const body = document.body;
+        const b = document.body;
         const btn = document.getElementById('themeBtn');
-        if (body.getAttribute('data-theme') === 'light') {
-            body.removeAttribute('data-theme');
-            btn.innerText = "Switch to Light Mode";
+        if (b.hasAttribute('data-theme')) {
+            b.removeAttribute('data-theme');
+            btn.innerText = "Light Mode";
         } else {
-            body.setAttribute('data-theme', 'light');
-            btn.innerText = "Switch to Dark Mode";
+            b.setAttribute('data-theme', 'light');
+            btn.innerText = "Dark Mode";
         }
+    }
+
+    function applyPathPreset(val) {
+        if (!val) return;
+        const pathInput = document.getElementById('path');
+        let current = pathInput.value.trim();
+        
+        // Extract only the path/query part (before the hint bracket)
+        let actualVal = val.split(' [')[0];
+        
+        if (current === "" || current === "/") {
+            pathInput.value = actualVal;
+        } else {
+            if (actualVal.startsWith('?') && current.includes('?')) {
+                pathInput.value = current + actualVal.replace('?', '&');
+            } else {
+                pathInput.value = current + actualVal;
+            }
+        }
+        document.getElementById('pathPreset').selectedIndex = 0;
+    }
+
+    function handlePortChange(v) {
+        const sec = document.getElementById('security');
+        if (["80", "8080", "8880"].includes(v)) {
+            sec.value = "none";
+        } else if (sec.value === "none") {
+            sec.value = "tls";
+        }
+        toggleTlsUI();
+    }
+
+    function toggleTlsUI() {
+        const sec = document.getElementById('security').value;
+        document.getElementById('tlsUI').style.display = (sec === 'none') ? 'none' : 'grid';
+    }
+
+    function parseBase() {
+        const raw = document.getElementById('rawInput').value.trim();
+        try {
+            const parts = raw.split('#');
+            const url = new URL(parts[0]);
+            const p = new URLSearchParams(url.search);
+            document.getElementById('uuid').value = url.username;
+            document.getElementById('port').value = url.port;
+            document.getElementById('remark').value = parts[1] ? decodeURIComponent(parts[1]) : "Node";
+            ['security', 'type', 'sni', 'host', 'fp', 'alpn'].forEach(k => { 
+                if(p.has(k)) document.getElementById(k).value = p.get(k); 
+            });
+            if(p.has('path')) document.getElementById('path').value = decodeURIComponent(p.get('path'));
+            document.getElementById('editor').style.display = 'block';
+            toggleTlsUI();
+        } catch(e) { 
+            alert("Invalid Link"); 
+        }
+    }
+
+    async function runPingTest() {
+        const ips = cleanIPList();
+        if(!ips.length) return alert("Paste IPs!");
+        const log = document.getElementById('pingLog');
+        log.style.display = 'block'; 
+        log.innerHTML = "<b>Testing...</b>";
+        store.pings = {};
+        for(let ip of ips) {
+            const start = Date.now();
+            const ms = await new Promise(r => {
+                const img = new Image();
+                img.onload = img.onerror = () => r(Date.now() - start);
+                setTimeout(() => r(9999), 2000);
+                img.src = `https://${ip}/favicon.ico?t=${start}`;
+            });
+            store.pings[ip] = ms;
+            const color = ms === 9999 ? '#ef4444' : (ms < 500 ? '#10b981' : '#f59e0b');
+            log.innerHTML += `<div class="ping-item"><span>${ip}</span><span style="color:${color}">${ms === 9999 ? 'Timeout' : ms+'ms'}</span></div>`;
+        }
+    }
+
+    function generateNodes() {
+        const ips = cleanIPList();
+        const limit = parseInt(document.getElementById('pingLimit').value) || 9999;
+        const bVal = document.getElementById('totalNumeric').value;
+        const bWord = bVal ? numberToWords(bVal).replace(/\s/g, '_') : "O";
+        
+        store.links = [];
+        let count = 1;
+
+        ips.forEach(ip => {
+            const lat = store.pings[ip] || 0;
+            if (lat <= limit) {
+                const params = new URLSearchParams();
+                const sec = document.getElementById('security').value;
+                params.set('security', sec);
+                params.set('type', document.getElementById('type').value);
+                if (sec !== 'none') {
+                    ['sni', 'fp', 'alpn', 'host'].forEach(k => {
+                        const v = document.getElementById(k).value;
+                        if(v) params.set(k, v);
+                    });
+                }
+                const path = document.getElementById('path').value;
+                if(path) params.set('path', path);
+                const lLabel = lat === 9999 || lat === 0 ? "Live" : lat + "ms";
+                store.links.push(`vless://${document.getElementById('uuid').value}@${ip}:${document.getElementById('port').value}?${params.toString()}#${document.getElementById('remark').value}_${lLabel}_${bWord}_${count++}`);
+            }
+        });
+        document.getElementById('resultArea').style.display = 'block';
+        refreshView();
+    }
+
+    function refreshView() {
+        const mode = document.querySelector('input[name="outMode"]:checked').value;
+        const out = document.getElementById('finalOutput');
+        const qrs = document.getElementById('qrButtons');
+        qrs.innerHTML = "";
+        if(mode === 'b64') {
+            out.value = btoa(store.links.join('\n'));
+            qrs.style.display = "none";
+        } else {
+            out.value = store.links.join('\n');
+            qrs.style.display = "flex";
+            store.links.forEach((l, i) => {
+                const btn = document.createElement('button');
+                btn.innerText = `QR ${i+1}`;
+                btn.style = "background:var(--secondary); color:white; font-size:0.7rem; padding:4px 8px; border-radius:4px;";
+                btn.onclick = () => openQR(l);
+                qrs.appendChild(btn);
+            });
+        }
+    }
+
+    function openQR(link) {
+        const container = document.getElementById('qrContainer');
+        container.innerHTML = "";
+        document.getElementById('qrModal').style.display = "flex";
+        new QRCode(container, {
+            text: link,
+            width: 250,
+            height: 250,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.M
+        });
+    }
+
+    function closeQR() { 
+        document.getElementById('qrModal').style.display = "none"; 
     }
 
     function cleanIPList() {
-        const raw = document.getElementById('ipList').value;
-        const matches = raw.match(ipRegex);
-        if (matches) {
-            const uniqueIps = [...new Set(matches)];
-            document.getElementById('ipList').value = uniqueIps.join('\n');
-            return uniqueIps;
-        }
-        return [];
+        const val = document.getElementById('ipList').value;
+        const found = val.match(ipReg);
+        const unique = found ? [...new Set(found)] : [];
+        document.getElementById('ipList').value = unique.join('\n');
+        return unique;
     }
-
-    function toggleCustomAlpn(v) { document.getElementById('customAlpn').style.display = (v === 'CUSTOM') ? 'block' : 'none'; }
 
     function numberToWords(num) {
         if (!num || isNaN(num) || num == 0) return "Zero";
@@ -217,137 +366,32 @@
         return str.trim();
     }
 
-    function updateWords(val) { document.getElementById('wordsDisplay').innerText = val ? `Words: ${numberToWords(val)}` : ""; }
-
-    function clearAllData() {
-        if(confirm("Clear all data and start over?")) {
-            document.querySelectorAll('.config-input').forEach(el => el.value = "");
-            document.getElementById('ipList').value = "";
-            document.getElementById('rawInput').value = "";
-            document.getElementById('wordsDisplay').innerText = "";
-            document.getElementById('pingLog').style.display = "none";
-            document.getElementById('resultSection').style.display = "none";
-            document.getElementById('editor').style.display = "none";
-            pingResults = {};
-            generatedLinks = [];
-        }
+    function updateWords(v) { 
+        document.getElementById('wordsDisplay').innerText = v ? numberToWords(v) : ""; 
     }
 
-    function handleFileUpload(input) {
-        const file = input.files[0];
-        const reader = new FileReader();
-        reader.onload = (e) => { document.getElementById('ipList').value = e.target.result; };
-        reader.readAsText(file);
+    function loadCDN(t) { 
+        const c = { cf: ["104.16.0.1", "172.67.0.1"], gcore: ["92.38.186.1", "5.188.36.1"] }; 
+        document.getElementById('ipList').value = c[t].join('\n'); 
     }
 
-    function parseBase() {
-        const raw = document.getElementById('rawInput').value.trim();
-        try {
-            const parts = raw.split('#');
-            const url = new URL(parts[0]);
-            const params = new URLSearchParams(url.search);
-            document.getElementById('uuid').value = url.username;
-            document.getElementById('port').value = url.port;
-            document.getElementById('remark').value = parts[1] ? decodeURIComponent(parts[1]) : "Node";
-            ['security', 'type', 'sni', 'host', 'fp'].forEach(f => { if(params.has(f)) document.getElementById(f).value = params.get(f); });
-            if(params.has('path')) document.getElementById('path').value = decodeURIComponent(params.get('path'));
-            document.getElementById('editor').style.display = 'block';
-        } catch (e) { alert("Invalid Link."); }
+    function copyResult() { 
+        const o = document.getElementById('finalOutput'); 
+        o.select(); 
+        document.execCommand('copy'); 
+        alert("Copied!"); 
     }
 
-    async function runPingTest() {
-        const ips = cleanIPList();
-        if (ips.length === 0) return alert("No valid IPs found!");
-        const log = document.getElementById('pingLog');
-        log.style.display = 'block'; log.innerHTML = "<b>Testing Performance...</b><br>";
-        pingResults = {};
-        for (let ip of ips) {
-            const cleanIp = ip.trim();
-            const start = Date.now();
-            const img = new Image();
-            img.src = `https://${cleanIp}/favicon.ico?t=${Math.random()}`;
-            const p = new Promise(r => {
-                img.onload = img.onerror = () => r(Date.now() - start);
-                setTimeout(() => r(9999), 2000);
-            });
-            const res = await p;
-            pingResults[cleanIp] = res;
-            const color = res === 9999 ? '#ef4444' : (res < 500 ? '#10b981' : '#f59e0b');
-            log.innerHTML += `<div class="ping-item"><span>${cleanIp}</span><b style="color:${color}">${res === 9999 ? 'Timeout' : res + 'ms'}</b></div>`;
-            log.scrollTop = log.scrollHeight;
-        }
+    function saveFile() { 
+        const b = new Blob([document.getElementById('finalOutput').value], {type:'text/plain'}); 
+        const a = document.createElement('a'); 
+        a.href = URL.createObjectURL(b); 
+        a.download = "vless_export.txt"; 
+        a.click(); 
     }
 
-    function showQR(link) {
-        document.getElementById('qrContainer').innerHTML = "";
-        new QRCode(document.getElementById('qrContainer'), { text: link, width: 250, height: 250 });
-        document.getElementById('qrModal').style.display = "flex";
-    }
-
-    function generateBulk() {
-        const ips = cleanIPList();
-        const limit = parseInt(document.getElementById('pingLimit').value) || 9999;
-        if (ips.length === 0) return alert("Input IPs first!");
-        
-        const uuid = document.getElementById('uuid').value;
-        const port = document.getElementById('port').value;
-        const alias = document.getElementById('remark').value;
-        const limitStr = numberToWords(document.getElementById('totalNumeric').value).replace(/\s/g, '_');
-        const params = new URLSearchParams();
-        ['security', 'type', 'sni', 'host', 'fp'].forEach(f => { const v = document.getElementById(f).value; if(v) params.set(f, v); });
-        const pth = document.getElementById('path').value; if(pth) params.set('path', pth);
-        let alpn = document.getElementById('alpnSelect').value;
-        if(alpn === 'CUSTOM') alpn = document.getElementById('customAlpn').value;
-        if(alpn) params.set('alpn', alpn);
-
-        generatedLinks = [];
-        let counter = 1;
-        ips.forEach((ip) => {
-            const cleanIp = ip.trim();
-            const ping = pingResults[cleanIp] || 0;
-            if (ping <= limit && ping !== 9999) {
-                const lat = ping > 0 ? ping + 'ms' : 'Live';
-                generatedLinks.push(`vless://${uuid}@${cleanIp}:${port}?${params.toString()}#${alias}_${lat}_${limitStr}_${counter++}`);
-            }
-        });
-
-        if (generatedLinks.length === 0) alert("No IPs pass your ping filter.");
-        refreshOutput();
-        document.getElementById('resultSection').style.display = 'block';
-    }
-
-    function refreshOutput() {
-        const mode = document.querySelector('input[name="outFormat"]:checked').value;
-        const outTextarea = document.getElementById('bulkOutput');
-        const qrBtnList = document.getElementById('qrTriggerList');
-        qrBtnList.innerHTML = "";
-        if (mode === 'base64') {
-            outTextarea.value = btoa(generatedLinks.join('\n'));
-            qrBtnList.style.display = "none";
-        } else {
-            outTextarea.value = generatedLinks.join('\n');
-            qrBtnList.style.display = "flex";
-            generatedLinks.forEach((link, idx) => {
-                const btn = document.createElement('div');
-                btn.className = "qr-list-btn";
-                btn.innerText = `QR ${idx+1}`;
-                btn.onclick = () => showQR(link);
-                qrBtnList.appendChild(btn);
-            });
-        }
-    }
-
-    function loadCDN(type) { document.getElementById('ipList').value = cdnRanges[type].join('\n'); }
-    function copyAll() {
-        const out = document.getElementById('bulkOutput');
-        out.select(); document.execCommand('copy');
-        alert("Copied successfully!");
-    }
-    function downloadTxt() {
-        const text = document.getElementById('bulkOutput').value;
-        const blob = new Blob([text], { type: 'text/plain' });
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-        a.download = "vless_nodes.txt"; a.click();
+    function clearAllData() { 
+        if(confirm("Reset everything?")) location.reload(); 
     }
 </script>
 </body>
