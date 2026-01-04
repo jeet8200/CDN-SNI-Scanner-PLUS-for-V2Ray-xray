@@ -14,11 +14,15 @@
         .header-flex { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 20px; }
         
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .path-row { grid-column: 1 / -1; display: flex; flex-direction: column; margin-bottom: 20px; }
+        
         .field { display: flex; flex-direction: column; }
         label { font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; color: var(--secondary); text-transform: uppercase; }
         
         input, select, textarea { padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; background: var(--input-bg); color: var(--text); width: 100%; box-sizing: border-box; }
         textarea { height: 100px; resize: vertical; }
+        
+        #path { flex: 1; font-family: 'Consolas', monospace; font-size: 0.85rem; }
         
         button { cursor: pointer; border: none; padding: 10px; border-radius: 8px; font-weight: 600; transition: 0.2s; opacity: 0.9; }
         button:hover { opacity: 1; transform: translateY(-1px); }
@@ -67,7 +71,7 @@
                 <input type="text" id="uuid">
             </div>
             <div class="field">
-                <label>Alias</label>
+                <label>Alias (Remark)</label>
                 <input type="text" id="remark">
             </div>
             <div class="field">
@@ -95,20 +99,21 @@
                 <label>Transport</label>
                 <input type="text" id="type" value="ws">
             </div>
-            <div class="field">
-                <label>Path (Add Bypass Preset)</label>
-                <div style="display:flex; gap:5px;">
-                    <input type="text" id="path" placeholder="/">
-                    <select style="width:200px;" id="pathPreset" onchange="applyPathPreset(this.value)">
-                        <option value="">-- Choose Bypass Type --</option>
-                        <option value="?ed=2560">?ed=2560 [Speed: Early Data]</option>
-                        <option value="?ed=2560&browser=chrome">?ed+Chrome [Bypass: Fingerprint]</option>
-                        <option value="/api/v1/update">/api/v1/update [Mask: System Update]</option>
-                        <option value="/video/stream?buffer=true">/video/stream [Usage: Heavy Traffic]</option>
-                        <option value="/graphql">/graphql [Mask: API Request]</option>
-                        <option value="/chat/stream">/chat/stream [Mask: AI Chat]</option>
-                    </select>
-                </div>
+        </div>
+
+        <div class="path-row">
+            <label>Path (Add Bypass Preset)</label>
+            <div style="display:flex; gap:10px; align-items:center;">
+                <input type="text" id="path" placeholder="/">
+                <select style="width:250px;" id="pathPreset" onchange="applyPathPreset(this.value)">
+                    <option value="">-- Choose Bypass Type --</option>
+                    <option value="?ed=2560">?ed=2560 [Speed: Early Data]</option>
+                    <option value="?ed=2560&browser=chrome">?ed+Chrome [Bypass: Fingerprint]</option>
+                    <option value="/api/v1/update">/api/v1/update [Mask: System Update]</option>
+                    <option value="/video/stream?buffer=true">/video/stream [Usage: Heavy Traffic]</option>
+                    <option value="/graphql">/graphql [Mask: API Request]</option>
+                    <option value="/chat/stream">/chat/stream [Mask: AI Chat]</option>
+                </select>
             </div>
         </div>
 
@@ -205,8 +210,6 @@
         if (!val) return;
         const pathInput = document.getElementById('path');
         let current = pathInput.value.trim();
-        
-        // Extract only the path/query part (before the hint bracket)
         let actualVal = val.split(' [')[0];
         
         if (current === "" || current === "/") {
@@ -281,6 +284,7 @@
         const ips = cleanIPList();
         const limit = parseInt(document.getElementById('pingLimit').value) || 9999;
         const bVal = document.getElementById('totalNumeric').value;
+        // Instruction: Fix missing totalInWords by calculating it here
         const bWord = bVal ? numberToWords(bVal).replace(/\s/g, '_') : "O";
         
         store.links = [];
@@ -301,8 +305,11 @@
                 }
                 const path = document.getElementById('path').value;
                 if(path) params.set('path', path);
-                const lLabel = lat === 9999 || lat === 0 ? "Live" : lat + "ms";
-                store.links.push(`vless://${document.getElementById('uuid').value}@${ip}:${document.getElementById('port').value}?${params.toString()}#${document.getElementById('remark').value}_${lLabel}_${bWord}_${count++}`);
+                
+                // PING REMOVED FROM ALIAS PER REQUEST
+                const finalAlias = `${document.getElementById('remark').value}_${bWord}_${count++}`;
+                
+                store.links.push(`vless://${document.getElementById('uuid').value}@${ip}:${document.getElementById('port').value}?${params.toString()}#${finalAlias}`);
             }
         });
         document.getElementById('resultArea').style.display = 'block';
@@ -334,19 +341,10 @@
         const container = document.getElementById('qrContainer');
         container.innerHTML = "";
         document.getElementById('qrModal').style.display = "flex";
-        new QRCode(container, {
-            text: link,
-            width: 250,
-            height: 250,
-            colorDark: "#000000",
-            colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.M
-        });
+        new QRCode(container, { text: link, width: 250, height: 250, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
     }
 
-    function closeQR() { 
-        document.getElementById('qrModal').style.display = "none"; 
-    }
+    function closeQR() { document.getElementById('qrModal').style.display = "none"; }
 
     function cleanIPList() {
         const val = document.getElementById('ipList').value;
@@ -366,33 +364,17 @@
         return str.trim();
     }
 
-    function updateWords(v) { 
-        document.getElementById('wordsDisplay').innerText = v ? numberToWords(v) : ""; 
-    }
-
+    function updateWords(v) { document.getElementById('wordsDisplay').innerText = v ? numberToWords(v) : ""; }
     function loadCDN(t) { 
         const c = { cf: ["104.16.0.1", "172.67.0.1"], gcore: ["92.38.186.1", "5.188.36.1"] }; 
         document.getElementById('ipList').value = c[t].join('\n'); 
     }
-
-    function copyResult() { 
-        const o = document.getElementById('finalOutput'); 
-        o.select(); 
-        document.execCommand('copy'); 
-        alert("Copied!"); 
-    }
-
+    function copyResult() { const o = document.getElementById('finalOutput'); o.select(); document.execCommand('copy'); alert("Copied!"); }
     function saveFile() { 
         const b = new Blob([document.getElementById('finalOutput').value], {type:'text/plain'}); 
-        const a = document.createElement('a'); 
-        a.href = URL.createObjectURL(b); 
-        a.download = "vless_export.txt"; 
-        a.click(); 
+        const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = "vless_export.txt"; a.click(); 
     }
-
-    function clearAllData() { 
-        if(confirm("Reset everything?")) location.reload(); 
-    }
+    function clearAllData() { if(confirm("Reset everything?")) location.reload(); }
 </script>
 </body>
 </html>
