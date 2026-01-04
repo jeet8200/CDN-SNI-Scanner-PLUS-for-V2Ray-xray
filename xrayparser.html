@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VLESS Master: JeetHm & G Edition</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root { --primary: #3b82f6; --secondary: #94a3b8; --success: #10b981; --danger: #ef4444; --bg: #0f172a; --card: #1e293b; --text: #f1f5f9; --border: #334155; --input-bg: #0f172a; }
         [data-theme="light"] { --primary: #2563eb; --secondary: #64748b; --success: #059669; --danger: #dc2626; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --border: #cbd5e1; --input-bg: #ffffff; }
@@ -31,25 +30,12 @@
         .btn-reset { background: var(--danger); color: white; font-size: 0.75rem; padding: 8px; }
         .section-header { font-weight: bold; margin: 25px 0 10px; font-size: 0.85rem; color: var(--primary); border-bottom: 2px solid var(--border); }
         
-        #qrModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 99999; justify-content: center; align-items: center; flex-direction: column; }
-        #qrContent { background: white; padding: 30px; border-radius: 12px; text-align: center; }
-        #qrContainer { display: inline-block; padding: 10px; background: white; }
-        #qrContent p { color: #000; margin: 15px 0; font-weight: bold; }
-
         .output-textarea { margin-top: 15px; background: #000; color: #38bdf8; padding: 15px; border-radius: 8px; font-family: 'Consolas', monospace; font-size: 0.8rem; height: 250px; border: 1px solid var(--primary); }
         .footer-credits { position: fixed; bottom: 20px; left: 0; width: 100%; text-align: center; font-size: 0.9rem; color: var(--secondary); font-weight: 600; pointer-events: none; }
         .ping-item { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding: 4px 0; font-size: 0.8rem; }
     </style>
 </head>
 <body>
-
-<div id="qrModal" onclick="closeQR()">
-    <div id="qrContent" onclick="event.stopPropagation()">
-        <div id="qrContainer"></div>
-        <p>VLESS Config QR</p>
-        <button onclick="closeQR()" style="background:var(--danger); color:white; padding:10px 25px;">CLOSE</button>
-    </div>
-</div>
 
 <div class="container">
     <div class="header-flex">
@@ -195,7 +181,6 @@
 
     <div id="resultArea" style="display:none;">
         <textarea id="finalOutput" class="output-textarea" readonly></textarea>
-        <div id="qrButtons" style="display:flex; flex-wrap:wrap; gap:5px; margin-top:10px;"></div>
         <div class="grid" style="margin-top:15px;">
             <button class="btn-main" onclick="copyResult()">Copy All</button>
             <button class="btn-main" onclick="saveFile()" style="background:#475569;">Save .txt</button>
@@ -210,7 +195,6 @@
     let store = { links: [], pings: {} };
     let hasGeneratedOnce = false;
 
-    // Helper to auto-update if the user has already clicked "Generate" once
     function liveUpdate() {
         if (hasGeneratedOnce) {
             generateNodes();
@@ -344,32 +328,12 @@
     function refreshView() {
         const mode = document.querySelector('input[name="outMode"]:checked').value;
         const out = document.getElementById('finalOutput');
-        const qrs = document.getElementById('qrButtons');
-        qrs.innerHTML = "";
         if(mode === 'b64') {
             out.value = btoa(store.links.join('\n'));
-            qrs.style.display = "none";
         } else {
             out.value = store.links.join('\n');
-            qrs.style.display = "flex";
-            store.links.forEach((l, i) => {
-                const btn = document.createElement('button');
-                btn.innerText = `QR ${i+1}`;
-                btn.style = "background:var(--secondary); color:white; font-size:0.7rem; padding:4px 8px; border-radius:4px;";
-                btn.onclick = () => openQR(l);
-                qrs.appendChild(btn);
-            });
         }
     }
-
-    function openQR(link) {
-        const container = document.getElementById('qrContainer');
-        container.innerHTML = "";
-        document.getElementById('qrModal').style.display = "flex";
-        new QRCode(container, { text: link, width: 250, height: 250, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
-    }
-
-    function closeQR() { document.getElementById('qrModal').style.display = "none"; }
 
     function cleanIPList() {
         const val = document.getElementById('ipList').value;
