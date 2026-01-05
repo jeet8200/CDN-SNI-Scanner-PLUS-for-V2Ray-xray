@@ -1,112 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>VLESS Master: JeetHm & G Edition</title>
     <style>
         :root { --primary: #3b82f6; --secondary: #94a3b8; --success: #10b981; --danger: #ef4444; --bg: #0f172a; --card: #1e293b; --text: #f1f5f9; --border: #334155; --input-bg: #0f172a; }
         [data-theme="light"] { --primary: #2563eb; --secondary: #64748b; --success: #059669; --danger: #dc2626; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --border: #cbd5e1; --input-bg: #ffffff; }
-        
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 20px 20px 80px 20px; line-height: 1.5; min-height: 100vh; transition: background 0.3s; }
-        .container { max-width: 1100px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 10px 15px rgba(0,0,0,0.3); }
-        .header-flex { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 20px; }
-        
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .path-row { grid-column: 1 / -1; display: flex; flex-direction: column; margin-bottom: 20px; }
-        
-        .field { display: flex; flex-direction: column; }
-        label { font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; color: var(--secondary); text-transform: uppercase; }
-        
-        input, select, textarea { padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; background: var(--input-bg); color: var(--text); width: 100%; box-sizing: border-box; }
-        textarea { height: 100px; resize: vertical; }
-        
-        #path { flex: 1; font-family: 'Consolas', monospace; font-size: 0.85rem; }
-        
-        button { cursor: pointer; border: none; padding: 10px; border-radius: 8px; font-weight: 600; transition: 0.2s; opacity: 0.9; }
-        button:hover { opacity: 1; transform: translateY(-1px); }
-        
-        .btn-main { background: var(--primary); color: white; width: 100%; margin-top: 10px; }
-        .btn-reset { background: var(--danger); color: white; font-size: 0.75rem; padding: 8px; }
-        .section-header { font-weight: bold; margin: 25px 0 10px; font-size: 0.85rem; color: var(--primary); border-bottom: 2px solid var(--border); }
-        
-        .output-textarea { margin-top: 15px; background: #000; color: #38bdf8; padding: 15px; border-radius: 8px; font-family: 'Consolas', monospace; font-size: 0.8rem; height: 250px; border: 1px solid var(--primary); }
-        .footer-credits { position: fixed; bottom: 20px; left: 0; width: 100%; text-align: center; font-size: 0.9rem; color: var(--secondary); font-weight: 600; pointer-events: none; }
-        .ping-item { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding: 4px 0; font-size: 0.8rem; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 20px 20px 120px 20px; line-height: 1.5; min-height: 100vh; transition: background 0.25s; }
+        .container { max-width: 1100px; margin: 0 auto; background: var(--card); padding: 24px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 8px 18px rgba(0,0,0,0.3); }
+        .header-flex { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; border-bottom:2px solid var(--border); padding-bottom:12px; }
+        .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:12px; margin-bottom:14px; }
+        .path-row { grid-column: 1 / -1; display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
+        .field { display:flex; flex-direction:column; }
+        label { font-size:0.75rem; font-weight:700; margin-bottom:6px; color:var(--secondary); text-transform:uppercase; }
+        input, select, textarea { padding:10px; border:1px solid var(--border); border-radius:6px; font-size:0.95rem; background:var(--input-bg); color:var(--text); width:100%; box-sizing:border-box; }
+        textarea { height:100px; resize:vertical; font-family:inherit; }
+        #path { font-family:'Consolas', monospace; font-size:0.9rem; }
+        button { cursor:pointer; border:none; padding:10px; border-radius:8px; font-weight:600; opacity:0.95; transition: transform .12s, opacity .12s; }
+        button:hover { transform: translateY(-2px); opacity:1; }
+        .btn-main { background:var(--primary); color:white; width:100%; }
+        .btn-reset { background:var(--danger); color:white; font-size:0.85rem; padding:8px; width:auto; }
+        .section-header { font-weight:800; margin:18px 0 8px; font-size:0.9rem; color:var(--primary); border-bottom:2px solid var(--border); padding-bottom:6px; }
+        .output-textarea { margin-top:12px; background:#000; color:#38bdf8; padding:12px; border-radius:8px; font-family:'Consolas', monospace; font-size:0.85rem; height:220px; border:1px solid var(--primary); width:100%; box-sizing:border-box; }
+        .footer-credits { position:fixed; bottom:18px; left:0; width:100%; text-align:center; font-size:0.9rem; color:var(--secondary); font-weight:600; pointer-events:none; }
+        .ping-item { display:flex; justify-content:space-between; border-bottom:1px solid var(--border); padding:6px 0; font-size:0.85rem; }
+        .nodes-list { max-height:260px; overflow:auto; border:1px solid var(--border); border-radius:8px; padding:8px; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); }
+        .node-row { display:flex; gap:8px; align-items:center; padding:6px; border-radius:6px; }
+        .node-label { flex:1; font-family:Consolas, monospace; font-size:0.85rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text); }
+        .tiny { padding:6px 8px; font-size:0.8rem; border-radius:6px; }
+        #statusBar { margin:10px 0; padding:8px 12px; border-radius:8px; display:none; align-items:center; gap:10px; }
+        #statusBar.ok { background: rgba(16,185,129,0.12); color:var(--success); border:1px solid rgba(16,185,129,0.18); display:flex; }
+        #statusBar.warn { background: rgba(250,204,21,0.07); color:#f59e0b; border:1px solid rgba(250,204,21,0.12); display:flex; }
+        #statusBar.err { background: rgba(239,68,68,0.07); color:var(--danger); border:1px solid rgba(239,68,68,0.12); display:flex; }
+        .toast { position:fixed; right:20px; bottom:24px; background:rgba(0,0,0,0.9); color:#fff; padding:10px 14px; border-radius:8px; display:none; z-index:40; }
+        .qr-wrap { display:flex; gap:12px; align-items:center; margin-top:12px; }
+        #qrImg { width:160px; height:160px; background:white; padding:8px; border-radius:8px; display:none; }
+        #qrCanvas { display:none; }
+        .progress { height:8px; background:rgba(255,255,255,0.06); border-radius:6px; overflow:hidden; width:100%; margin-top:6px; }
+        .progress > i { display:block; height:100%; background:linear-gradient(90deg,var(--primary),#06b6d4); width:0%; transition:width .15s linear; }
+        .controls-row { display:flex; gap:8px; align-items:center; }
     </style>
 </head>
 <body>
-
 <div class="container">
     <div class="header-flex">
         <h2 style="color:var(--primary); margin:0;">VLESS Master Bulk</h2>
-        <button id="themeBtn" onclick="toggleTheme()" style="background:var(--primary); color:white; border-radius:20px; padding:5px 15px;">Light Mode</button>
+        <div style="display:flex; gap:10px; align-items:center;">
+            <button id="themeBtn" onclick="toggleTheme()" style="background:var(--primary); color:white; border-radius:20px; padding:6px 14px;">Toggle Theme</button>
+            <button class="btn-reset" onclick="clearAllData()">Reset</button>
+        </div>
     </div>
+
+    <div id="statusBar" role="status"></div>
 
     <div class="field">
         <label>1. Initial VLESS Link</label>
         <textarea id="rawInput" placeholder="Paste link here..."></textarea>
-        <button class="btn-main" onclick="parseBase()">Analyze & Edit</button>
+        <div style="display:flex; gap:8px; margin-top:8px;">
+            <button class="btn-main" onclick="parseBase()">Analyze & Edit</button>
+            <button style="background:#06b6d4; color:#042024;" onclick="restoreSample()" class="tiny">Load Sample</button>
+        </div>
     </div>
 
     <div id="editor" style="display:none;">
         <div class="section-header">Core Config & Billing</div>
         <div class="grid">
-            <div class="field">
-                <label>UUID</label>
-                <input type="text" id="uuid" oninput="liveUpdate()">
-            </div>
+            <div class="field"><label>UUID</label><input type="text" id="uuid" oninput="onInputChange()"></div>
             <div class="field">
                 <label>Prefix (Emoji/Text)</label>
-                <div style="display:flex; gap:5px;">
-                    <input type="text" id="prefix" placeholder="Type or Select" oninput="liveUpdate()">
-                    <select style="width:100px;" onchange="document.getElementById('prefix').value = this.value; liveUpdate();">
-                        <option value="">None</option>
-                        <option value="🚀">🚀 Fast</option>
-                        <option value="💎">💎 VIP</option>
-                        <option value="⚡">⚡ Speed</option>
-                        <option value="🛡️">🛡️ Secure</option>
-                        <option value="🔥">🔥 Hot</option>
-                        <option value="🌍">🌍 Global</option>
+                <div style="display:flex; gap:6px;">
+                    <input id="prefix" oninput="onInputChange()" placeholder="Type or select">
+                    <select onchange="document.getElementById('prefix').value=this.value; onInputChange();" style="width:110px;">
+                        <option value="">None</option><option value="🚀">🚀 Fast</option><option value="💎">💎 VIP</option><option value="⚡">⚡ Speed</option><option value="🛡️">🛡️ Secure</option><option value="🔥">🔥 Hot</option><option value="🌍">🌍 Global</option>
                     </select>
                 </div>
             </div>
-            <div class="field">
-                <label>Alias (Remark)</label>
-                <input type="text" id="remark" oninput="liveUpdate()">
-            </div>
-            <div class="field">
-                <label>Billing (Num)</label>
-                <input type="number" id="totalNumeric" oninput="updateWords(this.value); liveUpdate();">
-                <div id="wordsDisplay" style="font-size:0.7rem; color:var(--primary); font-style:italic; margin-top:3px;"></div>
-            </div>
+            <div class="field"><label>Alias (Remark)</label><input id="remark" oninput="onInputChange()"></div>
+            <div class="field"><label>Billing (Num)</label><input type="number" id="totalNumeric" oninput="updateWords(this.value); onInputChange();"><div id="wordsDisplay" style="font-size:0.8rem; color:var(--primary); margin-top:4px;"></div></div>
         </div>
 
         <div class="section-header">Connection Details</div>
         <div class="grid">
-            <div class="field">
-                <label>Port</label>
-                <input type="number" id="port" oninput="handlePortChange(this.value); liveUpdate();">
+            <div class="field"><label>Port</label><input id="port" oninput="handlePortChange(this.value); onInputChange()"></div>
+            <div class="field"><label>Security</label>
+                <select id="security" onchange="toggleTlsUI(); onInputChange();"><option value="tls">TLS</option><option value="reality">REALITY</option><option value="none">None</option></select>
             </div>
-            <div class="field">
-                <label>Security</label>
-                <select id="security" onchange="toggleTlsUI(); liveUpdate();">
-                    <option value="tls">TLS</option>
-                    <option value="reality">REALITY</option>
-                    <option value="none">None</option>
-                </select>
-            </div>
-            <div class="field">
-                <label>Transport</label>
-                <input type="text" id="type" value="ws" oninput="liveUpdate()">
-            </div>
+            <div class="field"><label>Transport</label><input id="type" value="ws" oninput="onInputChange()"></div>
         </div>
 
         <div class="path-row">
             <label>Path (Add Bypass Preset)</label>
-            <div style="display:flex; gap:10px; align-items:center;">
-                <input type="text" id="path" placeholder="/" oninput="liveUpdate()">
-                <select style="width:250px;" id="pathPreset" onchange="applyPathPreset(this.value); liveUpdate();">
+            <div style="display:flex; gap:8px; align-items:center;">
+                <input id="path" placeholder="/" oninput="onInputChange()">
+                <select id="pathPreset" style="width:260px;" onchange="applyPathPreset(this.value); onInputChange();">
                     <option value="">-- Choose Bypass Type --</option>
                     <option value="?ed=2560">?ed=2560 [Speed: Early Data]</option>
                     <option value="?ed=2560&browser=chrome">?ed+Chrome [Bypass: Fingerprint]</option>
@@ -119,250 +106,391 @@
         </div>
 
         <div id="tlsUI" class="grid">
-            <div class="field">
-                <label>SNI</label>
-                <input type="text" id="sni" oninput="liveUpdate()">
-            </div>
-            <div class="field">
-                <label>Fingerprint (FP)</label>
-                <select id="fp" onchange="liveUpdate()">
-                    <option value="chrome">Chrome</option>
-                    <option value="firefox">Firefox</option>
-                    <option value="safari">Safari</option>
-                    <option value="edge">Edge</option>
-                    <option value="360">360</option>
-                    <option value="qq">QQ</option>
-                    <option value="random">Random</option>
-                </select>
-            </div>
-            <div class="field">
-                <label>ALPN</label>
-                <select id="alpn" onchange="liveUpdate()">
-                    <option value="h3,h2,http/1.1">h3, h2, http/1.1</option>
-                    <option value="h2,http/1.1">h2, http/1.1</option>
-                    <option value="h3">h3 Only</option>
-                    <option value="h2">h2 Only</option>
-                    <option value="http/1.1">http/1.1 Only</option>
-                    <option value="h3,h2">h3, h2</option>
-                    <option value="">Auto</option>
-                </select>
-            </div>
-            <div class="field">
-                <label>Host</label>
-                <input type="text" id="host" oninput="liveUpdate()">
-            </div>
+            <div class="field"><label>SNI</label><input id="sni" oninput="onInputChange()"></div>
+            <div class="field"><label>Fingerprint (FP)</label><select id="fp" onchange="onInputChange()"><option value="chrome">Chrome</option><option value="firefox">Firefox</option><option value="safari">Safari</option><option value="edge">Edge</option><option value="360">360</option><option value="qq">QQ</option><option value="random">Random</option></select></div>
+            <div class="field"><label>ALPN</label><select id="alpn" onchange="onInputChange()"><option value="h3,h2,http/1.1">h3, h2, http/1.1</option><option value="h2,http/1.1">h2, http/1.1</option><option value="h3">h3 Only</option><option value="h2">h2 Only</option><option value="http/1.1">http/1.1 Only</option><option value="h3,h2">h3, h2</option><option value="">Auto</option></select></div>
+            <div class="field"><label>Host</label><input id="host" oninput="onInputChange()"></div>
         </div>
 
         <div class="section-header">2. IP Source</div>
         <div class="grid">
-            <button onclick="loadCDN('cf'); liveUpdate();" style="background:#f97316; color:white;">CF IPs</button>
-            <button onclick="loadCDN('gcore'); liveUpdate();" style="background:#6366f1; color:white;">Gcore IPs</button>
-            <button onclick="cleanIPList(); liveUpdate();" style="background:#0ea5e9; color:white;">Clean IPs</button>
-            <button onclick="clearAllData()" class="btn-reset">Reset</button>
+            <button onclick="loadCDN('cf'); onInputChange();" style="background:#f97316; color:white;">CF IPs</button>
+            <button onclick="loadCDN('gcore'); onInputChange();" style="background:#6366f1; color:white;">Gcore IPs</button>
+            <button onclick="cleanIPList(); onInputChange();" style="background:#0ea5e9; color:white;">Clean IPs</button>
+            <div style="display:flex; gap:8px;"><button class="btn-reset" onclick="restoreState()">Restore</button></div>
         </div>
-        <textarea id="ipList" placeholder="Paste IPs..." oninput="liveUpdate()"></textarea>
-        
+        <textarea id="ipList" placeholder="Paste IPs (one per line)..." oninput="onInputChange()"></textarea>
+
         <div class="grid" style="margin-top:10px;">
-            <button onclick="runPingTest()" style="background:#7c3aed; color:white;">⚡ Ping Test</button>
-            <div class="field">
-                <label>Max Ping</label>
-                <input type="number" id="pingLimit" value="2000" oninput="liveUpdate()">
+            <div style="display:flex; gap:8px;">
+                <button onclick="runPingTest()" style="background:#7c3aed; color:white;">⚡ Ping Test</button>
+                <div style="width:200px;"><label style="font-size:0.75rem;color:var(--secondary);margin-bottom:4px;display:block;">Max Ping (ms)</label><input id="pingLimit" type="number" value="2000" oninput="onInputChange()"></div>
+            </div>
+            <div>
+                <label style="font-size:0.75rem;color:var(--secondary);margin-bottom:4px;display:block;">Ping Progress</label>
+                <div class="progress"><i id="pingBar"></i></div>
             </div>
         </div>
-        <div id="pingLog" style="display:none; max-height:150px; overflow-y:auto; background:rgba(0,0,0,0.1); padding:10px; border-radius:8px;"></div>
+        <div id="pingLog" style="display:none; max-height:150px; overflow:auto; padding:8px; border-radius:8px; background:rgba(0,0,0,0.06); margin-top:8px;"></div>
 
         <div class="section-header">3. Export</div>
-        <div style="margin-bottom:15px; display:flex; gap:20px;">
+        <div style="display:flex; gap:12px; align-items:center; margin-bottom:8px;">
             <label><input type="radio" name="outMode" value="raw" checked onchange="refreshView()"> v2rayN</label>
             <label><input type="radio" name="outMode" value="b64" onchange="refreshView()"> Base64</label>
+            <label><input type="radio" name="outMode" value="json" onchange="refreshView()"> JSON</label>
+            <label><input type="radio" name="outMode" value="csv" onchange="refreshView()"> CSV</label>
         </div>
-        <button class="btn-main" style="background:var(--success);" onclick="generateNodes()">Generate Nodes</button>
+        <div style="display:flex; gap:10px;">
+            <button class="btn-main" style="background:var(--success);" onclick="generateNodes()">Generate Nodes</button>
+            <button class="tiny" onclick="saveFile()">Save .txt</button>
+        </div>
     </div>
 
-    <div id="resultArea" style="display:none;">
+    <div id="resultArea" style="display:none; margin-top:12px;">
         <textarea id="finalOutput" class="output-textarea" readonly></textarea>
-        <div class="grid" style="margin-top:15px;">
-            <button class="btn-main" onclick="copyResult()">Copy All</button>
-            <button class="btn-main" onclick="saveFile()" style="background:#475569;">Save .txt</button>
+        <div style="display:flex; gap:8px; margin-top:10px;">
+            <div class="controls-row" style="flex:1;">
+                <button class="btn-main" onclick="copyResult()">Copy All</button>
+                <button class="tiny" onclick="exportJSON()">Export JSON</button>
+                <button class="tiny" onclick="exportCSV()">Export CSV</button>
+            </div>
+            <div style="width:360px;">
+                <label style="font-weight:700;color:var(--secondary);display:block;margin-bottom:6px;">Nodes (select to preview QR)</label>
+                <div class="nodes-list" id="nodesList"></div>
+            </div>
+        </div>
+
+        <div class="qr-wrap">
+            <div style="flex:1;">
+                <label style="font-weight:700;color:var(--secondary);display:block;margin-bottom:6px;">Selected Node QR</label>
+                <img id="qrImg" alt="QR">
+                <canvas id="qrCanvas"></canvas>
+            </div>
+            <div style="flex:2;">
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <button class="tiny" onclick="downloadQR()" style="background:#06b6d4;color:#042024;">Download QR</button>
+                    <button class="tiny" onclick="deleteSelectedNode()" style="background:#ef4444;color:#fff;">Delete Selected</button>
+                    <button class="tiny" onclick="moveSelected(-1)">▲</button>
+                    <button class="tiny" onclick="moveSelected(1)">▼</button>
+                </div>
+                <div id="qrNote" style="color:var(--secondary); margin-top:8px;"></div>
+            </div>
         </div>
     </div>
 </div>
 
+<div id="toast" class="toast" role="status"></div>
 <div class="footer-credits">Created by JeetHm & G</div>
 
 <script>
-    const ipReg = /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/g;
-    let store = { links: [], pings: {} };
-    let hasGeneratedOnce = false;
+/* Utilities & state */
+const ipReg = /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/g;
+let store = { links: [], pings: {}, selectedIndex: -1 };
+let hasGeneratedOnce = false;
+let saveTimer = null;
+const LS_KEY = 'vless_master_state_v1';
 
-    function liveUpdate() {
-        if (hasGeneratedOnce) {
-            generateNodes();
-        }
-    }
+/* Init */
+window.addEventListener('load', () => {
+    restoreState();
+    ensureQRLib(); // start loading in background
+});
 
-    function toggleTheme() {
-        const b = document.body;
-        const btn = document.getElementById('themeBtn');
-        if (b.hasAttribute('data-theme')) {
-            b.removeAttribute('data-theme');
-            btn.innerText = "Light Mode";
-        } else {
-            b.setAttribute('data-theme', 'light');
-            btn.innerText = "Dark Mode";
-        }
-    }
+/* ----------------- status / toast ----------------- */
+function showStatus(msg, type='ok', duration=3000) {
+    const el = document.getElementById('statusBar');
+    el.className = ''; el.classList.add(type==='ok'?'ok':type==='warn'?'warn':'err');
+    el.innerText = msg;
+    el.style.display = 'flex';
+    clearTimeout(el._t);
+    el._t = setTimeout(()=> el.style.display = 'none', duration);
+}
+function showToast(msg, t=1800) {
+    const tEl = document.getElementById('toast'); tEl.innerText = msg; tEl.style.display = 'block';
+    clearTimeout(tEl._t); tEl._t = setTimeout(()=> tEl.style.display = 'none', t);
+}
 
-    function applyPathPreset(val) {
-        if (!val) return;
-        const pathInput = document.getElementById('path');
-        let current = pathInput.value.trim();
-        let actualVal = val.split(' [')[0];
-        
-        if (current === "" || current === "/") {
-            pathInput.value = actualVal;
-        } else {
-            if (actualVal.startsWith('?') && current.includes('?')) {
-                pathInput.value = current + actualVal.replace('?', '&');
-            } else {
-                pathInput.value = current + actualVal;
-            }
-        }
-        document.getElementById('pathPreset').selectedIndex = 0;
-    }
+/* ----------------- state persistence ----------------- */
+function saveState() {
+    const s = {
+        uuid: el('uuid').value,
+        prefix: el('prefix').value,
+        remark: el('remark').value,
+        totalNumeric: el('totalNumeric').value,
+        port: el('port').value,
+        security: el('security').value,
+        type: el('type').value,
+        path: el('path').value,
+        sni: el('sni').value,
+        fp: el('fp').value,
+        alpn: el('alpn').value,
+        host: el('host').value,
+        ipList: el('ipList').value,
+        pingLimit: el('pingLimit').value,
+        outMode: document.querySelector('input[name="outMode"]:checked')?.value || 'raw',
+        links: store.links
+    };
+    try { localStorage.setItem(LS_KEY, JSON.stringify(s)); showStatus('Saved state', 'ok', 900); } catch(e) { /* ignore */ }
+}
+function saveStateDebounced() { clearTimeout(saveTimer); saveTimer = setTimeout(saveState, 700); }
+function restoreState() {
+    try {
+        const raw = localStorage.getItem(LS_KEY);
+        if(!raw) return;
+        const s = JSON.parse(raw);
+        ['uuid','prefix','remark','totalNumeric','port','type','path','sni','fp','alpn','host','ipList','pingLimit'].forEach(k=>{ if(s[k]!==undefined) el(k).value = s[k]; });
+        if(s.security) el('security').value = s.security;
+        if(s.outMode) { const r = document.querySelector(`input[name="outMode"][value="${s.outMode}"]`); if(r) r.checked=true; }
+        store.links = s.links || [];
+        if(store.links.length) { document.getElementById('editor').style.display='block'; document.getElementById('resultArea').style.display='block'; populateNodesUI(); refreshView(); updateQR(); }
+        showStatus('State restored', 'ok', 900);
+    } catch(e) { /* ignore */ }
+}
 
-    function handlePortChange(v) {
-        const sec = document.getElementById('security');
-        if (["80", "8080", "8880"].includes(v)) {
-            sec.value = "none";
-        } else if (sec.value === "none") {
-            sec.value = "tls";
-        }
+/* ----------------- helpers ----------------- */
+function el(id){ return document.getElementById(id); }
+function onInputChange(){ saveStateDebounced(); if(hasGeneratedOnce) generateNodes(); }
+function restoreSample(){
+    const sample='vless://11111111-1111-1111-1111-111111111111@1.2.3.4:443?security=tls&type=ws&path=%2Fapi#SampleNode';
+    el('rawInput').value = sample; parseBase();
+}
+
+/* ----------------- theme ----------------- */
+function toggleTheme() {
+    const b=document.body, btn=el('themeBtn');
+    if(b.hasAttribute('data-theme')) { b.removeAttribute('data-theme'); btn.innerText='Toggle Theme'; }
+    else { b.setAttribute('data-theme','light'); btn.innerText='Toggle Theme'; }
+}
+
+/* ----------------- parsing ----------------- */
+function parseBase(){
+    const raw = el('rawInput').value.trim();
+    if(!raw) return showStatus('Paste a VLESS link first', 'warn');
+    try {
+        const parts = raw.split('#');
+        const url = new URL(parts[0]);
+        const p = new URLSearchParams(url.search);
+        el('uuid').value = url.username || '';
+        el('port').value = url.port || '';
+        el('remark').value = parts[1] ? decodeURIComponent(parts[1]) : '';
+        ['security','type','sni','host','fp','alpn'].forEach(k => { if(p.has(k)) el(k).value = p.get(k); });
+        if(p.has('path')) el('path').value = decodeURIComponent(p.get('path'));
+        document.getElementById('editor').style.display = 'block';
+        saveStateDebounced();
         toggleTlsUI();
+        showStatus('Link parsed', 'ok', 1200);
+    } catch(e) {
+        showStatus('Invalid link', 'err', 2400);
     }
+}
 
-    function toggleTlsUI() {
-        const sec = document.getElementById('security').value;
-        document.getElementById('tlsUI').style.display = (sec === 'none') ? 'none' : 'grid';
-    }
+/* ----------------- ip list cleaning ----------------- */
+function cleanIPList(){
+    const val = el('ipList').value;
+    const found = val.match(ipReg);
+    return found ? [...new Set(found)] : [];
+}
+function loadCDN(t){
+    const c = { cf: ["104.16.0.1","172.67.0.1"], gcore: ["92.38.186.1","5.188.36.1"] };
+    el('ipList').value = (c[t]||[]).join('\n'); onInputChange();
+}
 
-    function parseBase() {
-        const raw = document.getElementById('rawInput').value.trim();
-        try {
-            const parts = raw.split('#');
-            const url = new URL(parts[0]);
-            const p = new URLSearchParams(url.search);
-            document.getElementById('uuid').value = url.username;
-            document.getElementById('port').value = url.port;
-            document.getElementById('remark').value = parts[1] ? decodeURIComponent(parts[1]) : "Node";
-            ['security', 'type', 'sni', 'host', 'fp', 'alpn'].forEach(k => { 
-                if(p.has(k)) document.getElementById(k).value = p.get(k); 
-            });
-            if(p.has('path')) document.getElementById('path').value = decodeURIComponent(p.get('path'));
-            document.getElementById('editor').style.display = 'block';
-            toggleTlsUI();
-        } catch(e) { 
-            alert("Invalid Link"); 
-        }
-    }
-
-    async function runPingTest() {
-        const ips = cleanIPList();
-        if(!ips.length) return alert("Paste IPs!");
-        const log = document.getElementById('pingLog');
-        log.style.display = 'block'; 
-        log.innerHTML = "<b>Testing...</b>";
-        store.pings = {};
-        for(let ip of ips) {
-            const start = Date.now();
-            const ms = await new Promise(r => {
-                const img = new Image();
-                img.onload = img.onerror = () => r(Date.now() - start);
-                setTimeout(() => r(9999), 2000);
-                img.src = `https://${ip}/favicon.ico?t=${start}`;
-            });
-            store.pings[ip] = ms;
-            const color = ms === 9999 ? '#ef4444' : (ms < 500 ? '#10b981' : '#f59e0b');
-            log.innerHTML += `<div class="ping-item"><span>${ip}</span><span style="color:${color}">${ms === 9999 ? 'Timeout' : ms+'ms'}</span></div>`;
-        }
-        if(hasGeneratedOnce) generateNodes();
-    }
-
-    function generateNodes() {
-        const ips = cleanIPList();
-        const limit = parseInt(document.getElementById('pingLimit').value) || 9999;
-        const bVal = document.getElementById('totalNumeric').value;
-        const bWord = bVal ? numberToWords(bVal).replace(/\s/g, '_') : "O";
-        const pre = document.getElementById('prefix').value.trim();
-        
-        store.links = [];
-        let count = 1;
-
-        ips.forEach(ip => {
-            const lat = store.pings[ip] || 0;
-            if (lat <= limit) {
-                const params = new URLSearchParams();
-                const sec = document.getElementById('security').value;
-                params.set('security', sec);
-                params.set('type', document.getElementById('type').value);
-                if (sec !== 'none') {
-                    ['sni', 'fp', 'alpn', 'host'].forEach(k => {
-                        const v = document.getElementById(k).value;
-                        if(v) params.set(k, v);
-                    });
-                }
-                const path = document.getElementById('path').value;
-                if(path) params.set('path', path);
-                
-                let finalAlias = `${document.getElementById('remark').value}_${bWord}_${count++}`;
-                if(pre) finalAlias = `${pre}_${finalAlias}`;
-                
-                store.links.push(`vless://${document.getElementById('uuid').value}@${ip}:${document.getElementById('port').value}?${params.toString()}#${finalAlias}`);
-            }
+/* ----------------- ping test with progress bar ----------------- */
+async function runPingTest(){
+    const ips = cleanIPList();
+    if(!ips.length) return showStatus('Paste IPs first', 'warn');
+    el('pingLog').style.display='block'; el('pingLog').innerHTML = '<b>Testing...</b>';
+    store.pings = {};
+    const timeout = Math.min(parseInt(el('pingLimit').value,10) || 2000, 10000);
+    const bar = el('pingBar'); bar.style.width='0%';
+    for(let i=0;i<ips.length;i++){
+        const ip = ips[i];
+        const start = Date.now();
+        const ms = await new Promise(r=>{
+            const img = new Image();
+            let done=false;
+            img.onload=img.onerror=()=>{ if(!done){ done=true; r(Date.now()-start);} };
+            setTimeout(()=>{ if(!done){ done=true; r(timeout+1);} }, timeout);
+            img.src = `https://${ip}/favicon.ico?t=${Date.now()}`;
         });
-        document.getElementById('resultArea').style.display = 'block';
-        hasGeneratedOnce = true;
-        refreshView();
+        store.pings[ip]=ms;
+        const color = ms>timeout ? '#ef4444' : (ms<500 ? '#10b981' : '#f59e0b');
+        el('pingLog').innerHTML += `<div class="ping-item"><span>${ip}</span><span style="color:${color}">${ms>timeout?'Timeout':ms+'ms'}</span></div>`;
+        bar.style.width = Math.round(((i+1)/ips.length)*100) + '%';
     }
+    showStatus('Ping complete', 'ok', 1000);
+    if(hasGeneratedOnce) generateNodes();
+}
 
-    function refreshView() {
-        const mode = document.querySelector('input[name="outMode"]:checked').value;
-        const out = document.getElementById('finalOutput');
-        if(mode === 'b64') {
-            out.value = btoa(store.links.join('\n'));
-        } else {
-            out.value = store.links.join('\n');
+/* ----------------- generate nodes & refresh ----------------- */
+function generateNodes(){
+    const ips = cleanIPList();
+    const limit = parseInt(el('pingLimit').value,10) || 9999;
+    const bVal = el('totalNumeric').value; const bWord = bVal ? numberToWords(bVal).replace(/\s/g,'_') : 'O';
+    const pre = el('prefix').value.trim();
+    store.links = []; let count=1;
+    ips.forEach(ip=>{
+        const lat = store.pings[ip] || 0;
+        if(lat <= limit){
+            const params = new URLSearchParams();
+            const sec = el('security').value;
+            params.set('security', sec);
+            params.set('type', el('type').value);
+            const hostVal = el('host').value; if(hostVal) params.set('host', hostVal);
+            if(sec !== 'none') { ['sni','fp','alpn'].forEach(k=>{ const v=el(k).value; if(v) params.set(k,v); }); }
+            const path = el('path').value; if(path) params.set('path', path);
+            let finalAlias = `${el('remark').value || 'Node'}_${bWord}_${count++}`; if(pre) finalAlias = `${pre}_${finalAlias}`;
+            store.links.push(`vless://${el('uuid').value}@${ip}:${el('port').value}?${params.toString()}#${encodeURIComponent(finalAlias)}`);
         }
-    }
+    });
+    if(!store.links.length) showStatus('No nodes generated (check IPs/limits)', 'warn', 2200); else showStatus(`${store.links.length} nodes generated`, 'ok', 1500);
+    document.getElementById('resultArea').style.display = 'block';
+    hasGeneratedOnce = true;
+    populateNodesUI();
+    refreshView();
+    updateQR();
+    saveStateDebounced();
+}
 
-    function cleanIPList() {
-        const val = document.getElementById('ipList').value;
-        const found = val.match(ipReg);
-        const unique = found ? [...new Set(found)] : [];
-        return unique;
-    }
+/* ----------------- output formatting ----------------- */
+function encodeBase64Unicode(str){ try{ return btoa(unescape(encodeURIComponent(str))); } catch(e){ const u8=new TextEncoder().encode(str); let bin=''; for(let i=0;i<u8.length;i++) bin+=String.fromCharCode(u8[i]); return btoa(bin);} }
+function refreshView(){
+    const mode = document.querySelector('input[name="outMode"]:checked').value;
+    const out = el('finalOutput');
+    if(mode === 'b64') out.value = encodeBase64Unicode(store.links.join('\n'));
+    else if(mode === 'raw') out.value = store.links.join('\n');
+    else if(mode === 'json') out.value = JSON.stringify(store.links, null, 2);
+    else if(mode === 'csv') out.value = store.links.map(l => `"${l.replace(/"/g,'""')}"`).join('\n');
+}
 
-    function numberToWords(num) {
-        if (!num || isNaN(num) || num == 0) return "Zero";
-        const a = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
-        const b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
-        let n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
-        if (!n) return ''; 
-        let str = (n[1]!=0?(a[Number(n[1])]||b[n[1][0]]+' '+a[n[1][1]])+'crore ':'') + (n[3]!=0?(a[Number(n[3])]||b[n[3][0]]+' '+a[n[3][1]])+'thousand ':'') + (n[4]!=0?(a[Number(n[4])]||b[n[4][0]]+' '+a[n[4][1]])+'hundred ':'') + (n[5]!=0?((str!='')?'and ':'')+(a[Number(n[5])]||b[n[5][0]]+' '+a[n[5][1]]):'');
-        return str.trim();
-    }
+/* ----------------- nodes UI list ----------------- */
+function populateNodesUI(){
+    const wrap = el('nodesList'); wrap.innerHTML = '';
+    if(!store.links.length){ wrap.innerHTML = '<div style="color:var(--secondary)">No nodes</div>'; return; }
+    store.links.forEach((l,i)=>{
+        const row = document.createElement('div'); row.className='node-row';
+        const label = document.createElement('div'); label.className='node-label'; label.textContent = `${i+1}. ${decodeURIComponent((l.split('#')[1]||'').slice(0)) || l}`;
+        label.title = l;
+        label.dataset.index = i;
+        label.onclick = ()=> { selectNode(i); };
+        row.appendChild(label);
+        const btnSel = document.createElement('button'); btnSel.className='tiny'; btnSel.textContent='Select'; btnSel.onclick = ()=> selectNode(i);
+        const btnDel = document.createElement('button'); btnDel.className='tiny'; btnDel.textContent='Del'; btnDel.style.background='#ef4444'; btnDel.onclick = ()=> { store.links.splice(i,1); populateNodesUI(); refreshView(); saveStateDebounced(); updateQR(); };
+        row.appendChild(btnSel); row.appendChild(btnDel);
+        wrap.appendChild(row);
+    });
+    if(store.selectedIndex < 0 && store.links.length) store.selectedIndex = 0;
+    highlightSelected();
+}
+function selectNode(i){ store.selectedIndex = i; highlightSelected(); updateQR(); }
+function highlightSelected(){ const labels = document.querySelectorAll('.node-label'); labels.forEach(n=> n.style.background='transparent'); if(store.selectedIndex>=0){ const sel = labels[store.selectedIndex]; if(sel) sel.style.background='rgba(255,255,255,0.03)'; } }
+function deleteSelectedNode(){ if(store.selectedIndex<0) return showStatus('No node selected','warn'); store.links.splice(store.selectedIndex,1); if(store.selectedIndex >= store.links.length) store.selectedIndex = store.links.length-1; populateNodesUI(); refreshView(); updateQR(); saveStateDebounced(); }
+function moveSelected(dir){ if(store.selectedIndex<0) return; const i = store.selectedIndex; const j = i + dir; if(j<0||j>=store.links.length) return; const tmp = store.links[i]; store.links[i]=store.links[j]; store.links[j]=tmp; store.selectedIndex = j; populateNodesUI(); refreshView(); updateQR(); saveStateDebounced(); }
 
-    function updateWords(v) { document.getElementById('wordsDisplay').innerText = v ? numberToWords(v) : ""; }
-    function loadCDN(t) { 
-        const c = { cf: ["104.16.0.1", "172.67.0.1"], gcore: ["92.38.186.1", "5.188.36.1"] }; 
-        document.getElementById('ipList').value = c[t].join('\n'); 
+/* ----------------- export helpers ----------------- */
+function exportJSON(){ if(!store.links.length) return showStatus('No nodes', 'warn'); const blob=new Blob([JSON.stringify(store.links, null, 2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='vless_nodes.json'; a.click(); showToast('JSON exported'); }
+function exportCSV(){ if(!store.links.length) return showStatus('No nodes', 'warn'); const csv = store.links.map((l,i)=>`${i+1},"${l.replace(/"/g,'""')}"`).join('\n'); const blob=new Blob([csv],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='vless_nodes.csv'; a.click(); showToast('CSV exported'); }
+function saveFile(){ const blob=new Blob([el('finalOutput').value],{type:'text/plain;charset=utf-8'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='vless_export.txt'; a.click(); showToast('Saved file'); }
+
+/* ----------------- copy with modern API + fallback ----------------- */
+async function copyResult(){
+    const text = el('finalOutput').value;
+    if(!text) return showStatus('Nothing to copy', 'warn');
+    try { await navigator.clipboard.writeText(text); showToast('Copied'); }
+    catch(e){ el('finalOutput').select(); try{ document.execCommand('copy'); showToast('Copied'); } catch(_){ showStatus('Copy failed','err'); } }
+}
+
+/* ----------------- number to words ----------------- */
+function numberToWords(num){
+    num = parseInt(num,10);
+    if(!num || isNaN(num)) return 'Zero';
+    const ones=['','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+    const tens=['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+    function underThousand(n){ let s=''; if(n>=100){ s+=ones[Math.floor(n/100)]+' hundred'; n%=100; if(n) s+=' '; } if(n>=20){ s+=tens[Math.floor(n/10)]; if(n%10) s+=' '+ones[n%10]; } else if(n>0) s+=ones[n]; return s; }
+    const crore = Math.floor(num / 10000000); num %= 10000000;
+    const lakh = Math.floor(num / 100000); num %= 100000;
+    const thousand = Math.floor(num / 1000); const rest = num % 1000;
+    const parts = []; if(crore) parts.push(underThousand(crore)+' crore'); if(lakh) parts.push(underThousand(lakh)+' lakh'); if(thousand) parts.push(underThousand(thousand)+' thousand'); if(rest) parts.push(underThousand(rest));
+    return parts.join(' ').trim() || 'Zero';
+}
+function updateWords(v){ el('wordsDisplay').innerText = v ? numberToWords(v) : ''; }
+
+/* ----------------- safe base64 ----------------- */
+function encodeBase64Unicode(str){ try{ return btoa(unescape(encodeURIComponent(str))); } catch(e){ const u8=new TextEncoder().encode(str); let bin=''; for(let i=0;i<u8.length;i++) bin+=String.fromCharCode(u8[i]); return btoa(bin);} }
+
+/* ----------------- QR code: dynamic library with fallback ----------------- */
+let _qrLibLoaded = false, _qrLibLoading = null;
+function ensureQRLib(){
+    if(_qrLibLoaded) return Promise.resolve();
+    if(_qrLibLoading) return _qrLibLoading;
+    _qrLibLoading = new Promise((res)=>{
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js';
+        s.onload = ()=>{ _qrLibLoaded=true; res(true); };
+        s.onerror = ()=>{ _qrLibLoaded=false; res(false); };
+        document.head.appendChild(s);
+        setTimeout(()=> res(_qrLibLoaded), 3000);
+    });
+    return _qrLibLoading;
+}
+async function updateQR(){
+    const img = el('qrImg'), canvas = el('qrCanvas'), note = el('qrNote');
+    if(!store.links.length){ img.style.display='none'; canvas.style.display='none'; note.innerText='No nodes'; return; }
+    const idx = store.selectedIndex>=0?store.selectedIndex:0; const text = store.links[idx];
+    if(!text) return;
+    note.innerText = '';
+    await ensureQRLib();
+    if(window.QRCode && typeof QRCode.toDataURL === 'function'){
+        try{
+            const dataUrl = await QRCode.toDataURL(text, { errorCorrectionLevel: 'M', margin:1, width:320 });
+            img.src = dataUrl; img.style.display='block'; canvas.style.display='none'; return;
+        }catch(e){}
     }
-    function copyResult() { const o = document.getElementById('finalOutput'); o.select(); document.execCommand('copy'); alert("Copied!"); }
-    function saveFile() { 
-        const b = new Blob([document.getElementById('finalOutput').value], {type:'text/plain'}); 
-        const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = "vless_export.txt"; a.click(); 
-    }
-    function clearAllData() { if(confirm("Reset everything?")) location.reload(); }
+    // fallback to Google Charts
+    img.src = `https://chart.googleapis.com/chart?cht=qr&chs=320x320&chl=${encodeURIComponent(text)}&chld=M|1`;
+    img.style.display='block'; canvas.style.display='none';
+}
+function downloadQR(){
+    const img = el('qrImg'); if(!img.src) return showStatus('No QR', 'warn');
+    if(img.src.startsWith('data:')){ const a=document.createElement('a'); a.href=img.src; a.download='vless_qr.png'; a.click(); }
+    else window.open(img.src, '_blank');
+}
+
+/* ----------------- selection helpers for UI pins ----------------- */
+function deleteSelectedNode(){ if(store.selectedIndex<0) return showStatus('Select a node', 'warn'); store.links.splice(store.selectedIndex,1); if(store.selectedIndex>=store.links.length) store.selectedIndex = store.links.length-1; populateNodesUI(); refreshView(); updateQR(); saveStateDebounced(); showToast('Node deleted'); }
+
+/* ----------------- input helpers ----------------- */
+function applyPathPreset(val){
+    if(!val) return;
+    const pathInput = el('path'); let current = pathInput.value.trim(); let actualVal = val.split(' [')[0];
+    if(current === '' || current === '/') pathInput.value = actualVal;
+    else { if(actualVal.startsWith('?') && current.includes('?')) pathInput.value = current + actualVal.replace('?', '&'); else pathInput.value = current + actualVal; }
+    el('pathPreset').selectedIndex = 0;
+    onInputChange();
+}
+function handlePortChange(v){
+    const sec = el('security');
+    if(['80','8080','8880'].includes(String(v))) sec.value='none';
+    else if(String(v)==='443') sec.value='tls';
+    toggleTlsUI();
+}
+function toggleTlsUI(){
+    const sec = el('security').value; const portEl = el('port');
+    if(sec==='none' && portEl.value === '443') portEl.value = '80';
+    else if(sec!=='none' && portEl.value === '80') portEl.value = '443';
+    el('tlsUI').style.display = (sec==='none') ? 'none' : 'grid';
+}
+
+/* ----------------- restore/clear ----------------- */
+function clearAllData(){ if(confirm('Reset everything?')) { localStorage.removeItem(LS_KEY); location.reload(); } }
+
+/* ----------------- modern copy + fallback for small utilities -------------- */
+async function copyToClipboard(text){ try{ await navigator.clipboard.writeText(text); return true; }catch(e){ try{ const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return true; }catch(_) { return false; } } }
+
+/* ----------------- misc ----------------- */
+function restoreStateQuick(){ restoreState(); showToast('Restored'); }
+
+/* ----------------- end ----------------- */
 </script>
 </body>
 </html>
