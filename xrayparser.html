@@ -134,6 +134,14 @@
         <div id="pingLog" style="display:none; max-height:150px; overflow:auto; padding:8px; border-radius:8px; background:rgba(0,0,0,0.06); margin-top:8px;"></div>
 
         <div class="section-header">3. Export</div>
+
+        <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
+          <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.9rem; color:var(--secondary);">
+            <span style="white-space:nowrap;">Only include IPs that passed ping</span>
+            <input type="checkbox" id="requirePing" onchange="onInputChange()" style="flex-shrink:0; margin:0;">
+          </label>
+        </div>
+
         <div style="display:flex; gap:12px; align-items:center; margin-bottom:8px;">
             <label><input type="radio" name="outMode" value="raw" checked onchange="refreshView()"> v2rayN</label>
             <label><input type="radio" name="outMode" value="b64" onchange="refreshView()"> Base64</label>
@@ -193,13 +201,14 @@ const LS_KEY = 'vless_master_state_v1';
 /* Init */
 window.addEventListener('load', () => {
     restoreState();
-    ensureQRLib(); // start loading in background
+    ensureQRLib(); // start loading local lib in background
 });
 
 /* ----------------- status / toast ----------------- */
 function showStatus(msg, type='ok', duration=3000) {
     const el = document.getElementById('statusBar');
-    el.className = ''; el.classList.add(type==='ok'?'ok':type==='warn'?'warn':'err');
+    el.classList.remove('ok','warn','err');
+    el.classList.add(type==='ok'?'ok':type==='warn'?'warn':'err');
     el.innerText = msg;
     el.style.display = 'flex';
     clearTimeout(el._t);
@@ -213,20 +222,21 @@ function showToast(msg, t=1800) {
 /* ----------------- state persistence ----------------- */
 function saveState() {
     const s = {
-        uuid: el('uuid').value,
-        prefix: el('prefix').value,
-        remark: el('remark').value,
-        totalNumeric: el('totalNumeric').value,
-        port: el('port').value,
-        security: el('security').value,
-        type: el('type').value,
-        path: el('path').value,
-        sni: el('sni').value,
-        fp: el('fp').value,
-        alpn: el('alpn').value,
-        host: el('host').value,
-        ipList: el('ipList').value,
-        pingLimit: el('pingLimit').value,
+        uuid: el('uuid')?.value || '',
+        prefix: el('prefix')?.value || '',
+        remark: el('remark')?.value || '',
+        totalNumeric: el('totalNumeric')?.value || '',
+        port: el('port')?.value || '',
+        security: el('security')?.value || '',
+        type: el('type')?.value || '',
+        path: el('path')?.value || '',
+        sni: el('sni')?.value || '',
+        fp: el('fp')?.value || '',
+        alpn: el('alpn')?.value || '',
+        host: el('host')?.value || '',
+        ipList: el('ipList')?.value || '',
+        pingLimit: el('pingLimit')?.value || '',
+        requirePing: document.getElementById('requirePing')?.checked || false,
         outMode: document.querySelector('input[name="outMode"]:checked')?.value || 'raw',
         links: store.links
     };
@@ -238,8 +248,9 @@ function restoreState() {
         const raw = localStorage.getItem(LS_KEY);
         if(!raw) return;
         const s = JSON.parse(raw);
-        ['uuid','prefix','remark','totalNumeric','port','type','path','sni','fp','alpn','host','ipList','pingLimit'].forEach(k=>{ if(s[k]!==undefined) el(k).value = s[k]; });
-        if(s.security) el('security').value = s.security;
+        ['uuid','prefix','remark','totalNumeric','port','type','path','sni','fp','alpn','host','ipList','pingLimit'].forEach(k=>{ if(s[k]!==undefined && el(k)) el(k).value = s[k]; });
+        if(s.security && el('security')) el('security').value = s.security;
+        if(typeof s.requirePing !== 'undefined' && document.getElementById('requirePing')) document.getElementById('requirePing').checked = !!s.requirePing;
         if(s.outMode) { const r = document.querySelector(`input[name="outMode"][value="${s.outMode}"]`); if(r) r.checked=true; }
         store.links = s.links || [];
         if(store.links.length) { document.getElementById('editor').style.display='block'; document.getElementById('resultArea').style.display='block'; populateNodesUI(); refreshView(); updateQR(); }
@@ -267,14 +278,20 @@ function parseBase(){
     const raw = el('rawInput').value.trim();
     if(!raw) return showStatus('Paste a VLESS link first', 'warn');
     try {
-        const parts = raw.split('#');
+        const lines = raw.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+        if(!lines.length) return showStatus('Paste a VLESS link first', 'warn');
+        let first = lines[0];
+        if(!/^[a-z]+:\/\//i.test(first)) {
+            first = 'vless://' + first;
+        }
+        const parts = first.split('#');
         const url = new URL(parts[0]);
         const p = new URLSearchParams(url.search);
         el('uuid').value = url.username || '';
         el('port').value = url.port || '';
         el('remark').value = parts[1] ? decodeURIComponent(parts[1]) : '';
-        ['security','type','sni','host','fp','alpn'].forEach(k => { if(p.has(k)) el(k).value = p.get(k); });
-        if(p.has('path')) el('path').value = decodeURIComponent(p.get('path'));
+        ['security','type','sni','host','fp','alpn'].forEach(k => { if(p.has(k) && el(k)) el(k).value = p.get(k); });
+        if(p.has('path') && el('path')) el('path').value = decodeURIComponent(p.get('path'));
         document.getElementById('editor').style.display = 'block';
         saveStateDebounced();
         toggleTlsUI();
@@ -286,7 +303,7 @@ function parseBase(){
 
 /* ----------------- ip list cleaning ----------------- */
 function cleanIPList(){
-    const val = el('ipList').value;
+    const val = el('ipList')?.value || '';
     const found = val.match(ipReg);
     return found ? [...new Set(found)] : [];
 }
@@ -299,7 +316,11 @@ function loadCDN(t){
 async function runPingTest(){
     const ips = cleanIPList();
     if(!ips.length) return showStatus('Paste IPs first', 'warn');
-    el('pingLog').style.display='block'; el('pingLog').innerHTML = '<b>Testing...</b>';
+    const logEl = el('pingLog');
+    logEl.style.display='block';
+    logEl.innerHTML = '';
+    const header = document.createElement('div'); header.style.fontWeight='700'; header.textContent = 'Testing...'; logEl.appendChild(header);
+
     store.pings = {};
     const timeout = Math.min(parseInt(el('pingLimit').value,10) || 2000, 10000);
     const bar = el('pingBar'); bar.style.width='0%';
@@ -315,7 +336,15 @@ async function runPingTest(){
         });
         store.pings[ip]=ms;
         const color = ms>timeout ? '#ef4444' : (ms<500 ? '#10b981' : '#f59e0b');
-        el('pingLog').innerHTML += `<div class="ping-item"><span>${ip}</span><span style="color:${color}">${ms>timeout?'Timeout':ms+'ms'}</span></div>`;
+
+        const row = document.createElement('div');
+        row.className = 'ping-item';
+        const left = document.createElement('span'); left.textContent = ip;
+        const right = document.createElement('span'); right.style.color = color;
+        right.textContent = ms>timeout ? 'Timeout' : ms + 'ms';
+        row.appendChild(left); row.appendChild(right);
+        logEl.appendChild(row);
+
         bar.style.width = Math.round(((i+1)/ips.length)*100) + '%';
     }
     showStatus('Ping complete', 'ok', 1000);
@@ -326,21 +355,28 @@ async function runPingTest(){
 function generateNodes(){
     const ips = cleanIPList();
     const limit = parseInt(el('pingLimit').value,10) || 9999;
-    const bVal = el('totalNumeric').value; const bWord = bVal ? numberToWords(bVal).replace(/\s/g,'_') : 'O';
-    const pre = el('prefix').value.trim();
+    const requirePing = document.getElementById('requirePing')?.checked || false;
+    const bVal = el('totalNumeric')?.value; const bWord = bVal ? numberToWords(bVal).replace(/\s/g,'_') : 'O';
+    const pre = el('prefix')?.value.trim() || '';
     store.links = []; let count=1;
     ips.forEach(ip=>{
-        const lat = store.pings[ip] || 0;
-        if(lat <= limit){
+        const lat = store.pings[ip];
+        const include = requirePing ? (typeof lat === 'number' && lat <= limit) : true;
+        if(include){
             const params = new URLSearchParams();
-            const sec = el('security').value;
+            const sec = el('security')?.value || 'tls';
             params.set('security', sec);
-            params.set('type', el('type').value);
-            const hostVal = el('host').value; if(hostVal) params.set('host', hostVal);
-            if(sec !== 'none') { ['sni','fp','alpn'].forEach(k=>{ const v=el(k).value; if(v) params.set(k,v); }); }
-            const path = el('path').value; if(path) params.set('path', path);
-            let finalAlias = `${el('remark').value || 'Node'}_${bWord}_${count++}`; if(pre) finalAlias = `${pre}_${finalAlias}`;
-            store.links.push(`vless://${el('uuid').value}@${ip}:${el('port').value}?${params.toString()}#${encodeURIComponent(finalAlias)}`);
+            params.set('type', el('type')?.value || 'ws');
+            const hostVal = el('host')?.value || ''; if(hostVal) params.set('host', hostVal);
+            if(sec !== 'none') { ['sni','fp','alpn'].forEach(k=>{ const v=el(k)?.value; if(v) params.set(k,v); }); }
+            const path = el('path')?.value; if(path) params.set('path', path);
+
+            let finalAlias = `${el('remark')?.value || 'Node'}_${bWord}_${count++}`;
+            if(pre) finalAlias = `${pre}_${finalAlias}`;
+            if(typeof lat === 'undefined') finalAlias = `${finalAlias}_untested`;
+            else if(lat > limit) finalAlias = `${finalAlias}_ping${lat}ms`;
+
+            store.links.push(`vless://${el('uuid')?.value || ''}@${ip}:${el('port')?.value || ''}?${params.toString()}#${encodeURIComponent(finalAlias)}`);
         }
     });
     if(!store.links.length) showStatus('No nodes generated (check IPs/limits)', 'warn', 2200); else showStatus(`${store.links.length} nodes generated`, 'ok', 1500);
@@ -366,10 +402,12 @@ function refreshView(){
 /* ----------------- nodes UI list ----------------- */
 function populateNodesUI(){
     const wrap = el('nodesList'); wrap.innerHTML = '';
-    if(!store.links.length){ wrap.innerHTML = '<div style="color:var(--secondary)">No nodes</div>'; return; }
+    if(!store.links.length){ const empty = document.createElement('div'); empty.style.color = 'var(--secondary)'; empty.textContent = 'No nodes'; wrap.appendChild(empty); return; }
     store.links.forEach((l,i)=>{
         const row = document.createElement('div'); row.className='node-row';
-        const label = document.createElement('div'); label.className='node-label'; label.textContent = `${i+1}. ${decodeURIComponent((l.split('#')[1]||'').slice(0)) || l}`;
+        const label = document.createElement('div'); label.className='node-label';
+        const alias = decodeURIComponent((l.split('#')[1]||'').slice(0)) || l;
+        label.textContent = `${i+1}. ${alias}`;
         label.title = l;
         label.dataset.index = i;
         label.onclick = ()=> { selectNode(i); };
@@ -415,21 +453,51 @@ function numberToWords(num){
 }
 function updateWords(v){ el('wordsDisplay').innerText = v ? numberToWords(v) : ''; }
 
-/* ----------------- safe base64 ----------------- */
-function encodeBase64Unicode(str){ try{ return btoa(unescape(encodeURIComponent(str))); } catch(e){ const u8=new TextEncoder().encode(str); let bin=''; for(let i=0;i<u8.length;i++) bin+=String.fromCharCode(u8[i]); return btoa(bin);} }
+/* ----------------- input helpers ----------------- */
+function applyPathPreset(val){
+    if(!val) return;
+    const pathInput = el('path');
+    if(!pathInput) return;
+    let current = pathInput.value.trim();
+    let actualVal = String(val).split(' [')[0];
+    if(current === '' || current === '/') pathInput.value = actualVal;
+    else {
+        if(actualVal.startsWith('?') && current.includes('?')) pathInput.value = current + actualVal.replace('?', '&');
+        else pathInput.value = current + actualVal;
+    }
+    const presetEl = el('pathPreset');
+    if(presetEl) presetEl.selectedIndex = 0;
+    onInputChange();
+}
+window.applyPathPreset = applyPathPreset;
 
-/* ----------------- QR code: dynamic library with fallback ----------------- */
+function handlePortChange(v){
+    const sec = el('security');
+    if(!sec) return;
+    if(['80','8080','8880'].includes(String(v))) sec.value='none';
+    else if(String(v)==='443') sec.value='tls';
+    toggleTlsUI();
+}
+function toggleTlsUI(){
+    const sec = el('security')?.value; const portEl = el('port');
+    if(!portEl) return;
+    if(sec==='none' && portEl.value === '443') portEl.value = '80';
+    else if(sec!=='none' && portEl.value === '80') portEl.value = '443';
+    if(el('tlsUI')) el('tlsUI').style.display = (sec==='none') ? 'none' : 'grid';
+}
+
+/* ----------------- QR code: local library (offline) ----------------- */
 let _qrLibLoaded = false, _qrLibLoading = null;
 function ensureQRLib(){
-    if(_qrLibLoaded) return Promise.resolve();
+    if(_qrLibLoaded) return Promise.resolve(true);
     if(_qrLibLoading) return _qrLibLoading;
     _qrLibLoading = new Promise((res)=>{
+        if(window.QRCode && typeof QRCode.toDataURL === 'function'){ _qrLibLoaded = true; res(true); return; }
         const s = document.createElement('script');
-        s.src = 'https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js';
+        s.src = './qrcode.min.js'; // local file in same folder
         s.onload = ()=>{ _qrLibLoaded=true; res(true); };
-        s.onerror = ()=>{ _qrLibLoaded=false; res(false); };
+        s.onerror = ()=>{ _qrLibLoaded=false; showStatus('QR library not found locally. Place qrcode.min.js next to this HTML for offline QR.', 'warn', 5000); res(false); };
         document.head.appendChild(s);
-        setTimeout(()=> res(_qrLibLoaded), 3000);
     });
     return _qrLibLoading;
 }
@@ -439,16 +507,19 @@ async function updateQR(){
     const idx = store.selectedIndex>=0?store.selectedIndex:0; const text = store.links[idx];
     if(!text) return;
     note.innerText = '';
-    await ensureQRLib();
-    if(window.QRCode && typeof QRCode.toDataURL === 'function'){
-        try{
-            const dataUrl = await QRCode.toDataURL(text, { errorCorrectionLevel: 'M', margin:1, width:320 });
-            img.src = dataUrl; img.style.display='block'; canvas.style.display='none'; return;
-        }catch(e){}
+    const ok = await ensureQRLib();
+    if(!ok || !window.QRCode || typeof QRCode.toDataURL !== 'function'){
+        note.innerText = 'QR library missing. Download qrcode.min.js to enable offline QR generation.';
+        img.style.display='none'; canvas.style.display='none';
+        return;
     }
-    // fallback to Google Charts
-    img.src = `https://chart.googleapis.com/chart?cht=qr&chs=320x320&chl=${encodeURIComponent(text)}&chld=M|1`;
-    img.style.display='block'; canvas.style.display='none';
+    try{
+        const dataUrl = await QRCode.toDataURL(text, { errorCorrectionLevel: 'M', margin:1, width:320 });
+        img.src = dataUrl; img.style.display='block'; canvas.style.display='none';
+    }catch(e){
+        note.innerText = 'QR generation failed.';
+        img.style.display='none'; canvas.style.display='none';
+    }
 }
 function downloadQR(){
     const img = el('qrImg'); if(!img.src) return showStatus('No QR', 'warn');
@@ -456,41 +527,16 @@ function downloadQR(){
     else window.open(img.src, '_blank');
 }
 
-/* ----------------- selection helpers for UI pins ----------------- */
-function deleteSelectedNode(){ if(store.selectedIndex<0) return showStatus('Select a node', 'warn'); store.links.splice(store.selectedIndex,1); if(store.selectedIndex>=store.links.length) store.selectedIndex = store.links.length-1; populateNodesUI(); refreshView(); updateQR(); saveStateDebounced(); showToast('Node deleted'); }
-
-/* ----------------- input helpers ----------------- */
-function applyPathPreset(val){
-    if(!val) return;
-    const pathInput = el('path'); let current = pathInput.value.trim(); let actualVal = val.split(' [')[0];
-    if(current === '' || current === '/') pathInput.value = actualVal;
-    else { if(actualVal.startsWith('?') && current.includes('?')) pathInput.value = current + actualVal.replace('?', '&'); else pathInput.value = current + actualVal; }
-    el('pathPreset').selectedIndex = 0;
-    onInputChange();
-}
-function handlePortChange(v){
-    const sec = el('security');
-    if(['80','8080','8880'].includes(String(v))) sec.value='none';
-    else if(String(v)==='443') sec.value='tls';
-    toggleTlsUI();
-}
-function toggleTlsUI(){
-    const sec = el('security').value; const portEl = el('port');
-    if(sec==='none' && portEl.value === '443') portEl.value = '80';
-    else if(sec!=='none' && portEl.value === '80') portEl.value = '443';
-    el('tlsUI').style.display = (sec==='none') ? 'none' : 'grid';
-}
-
-/* ----------------- restore/clear ----------------- */
-function clearAllData(){ if(confirm('Reset everything?')) { localStorage.removeItem(LS_KEY); location.reload(); } }
-
-/* ----------------- modern copy + fallback for small utilities -------------- */
-async function copyToClipboard(text){ try{ await navigator.clipboard.writeText(text); return true; }catch(e){ try{ const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return true; }catch(_) { return false; } } }
-
 /* ----------------- misc ----------------- */
+function clearAllData(){ if(confirm('Reset everything?')) { localStorage.removeItem(LS_KEY); location.reload(); } }
+function copyToClipboard(text){ try{ navigator.clipboard.writeText(text); return true; }catch(e){ try{ const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return true; }catch(_) { return false; } } }
 function restoreStateQuick(){ restoreState(); showToast('Restored'); }
 
-/* ----------------- end ----------------- */
+/* Attach a safe listener as a fallback (elements already exist since script is at end of body) */
+(function attachFallbackListeners(){
+    const p = el('pathPreset');
+    if(p) p.addEventListener('change', e => { try{ applyPathPreset(e.target.value); onInputChange(); }catch(_){} });
+})();
 </script>
 </body>
 </html>
