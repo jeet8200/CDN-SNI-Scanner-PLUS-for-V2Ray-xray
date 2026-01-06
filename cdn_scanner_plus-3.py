@@ -161,110 +161,98 @@ class CDNScannerPlus:
 
 
     def scan_cloudflare_multiport(self) -> None:
-        """Multi-Port Scanner - Optimized to handle List-style JSON (Xray Results)"""
+        """Enhanced Scanner to find Clean IPs for Xray/VLESS Nodes"""
         self.print_banner()
-        print(Fore.GREEN + "--- Multi-Port CDN Scanner ---" + Style.RESET_ALL)
+        print(Fore.GREEN + "--- Multi-Port CDN Scanner (GFW Bypass Mode) ---" + Style.RESET_ALL)
         
-        # 1. FILE DETECTION AND SELECTION
+        # 1. FILE DETECTION
         files_to_check = {
-            "1": ("valid_pairs.json", "Random Scan Results (Option 2)"),
-            "2": ("xray_working.json", "Xray Working Results (Option 9)")
+            "1": ("valid_pairs.json", "Option 2: Random Scan Results"),
+            "2": ("xray_working.json", "Option 9: Xray-Tested Results")
         }
         
         available_files = {k: v for k, v in files_to_check.items() if os.path.exists(os.path.join(self.output_dir, v[0]))}
         
         test_ips = []
-        source_name = "Default Ranges"
+        source_name = ""
 
+        # 2. USER CHOICE MENU
+        print(Fore.CYAN + "\n[?] Select source for Clean IPs:")
         if available_files:
-            print(Fore.CYAN + "\n[?] Found previous scan results. Choose a source:")
             for key, (fname, desc) in available_files.items():
                 print(f"{Fore.YELLOW}[{key}]{Style.RESET_ALL} {desc} ({fname})")
-            print(f"{Fore.YELLOW}[3]{Style.RESET_ALL} Use Default Cloudflare Ranges")
+        else:
+            print(Fore.RED + " [!] No result files found. You should run a scan first." + Style.RESET_ALL)
             
-            file_choice = input(Fore.WHITE + "\nSelect source (1-3): " + Style.RESET_ALL).strip()
-            
-            if file_choice in available_files:
-                selected_filename = available_files[file_choice][0]
-                target_path = os.path.join(self.output_dir, selected_filename)
-                
-                try:
-                    with open(target_path, 'r') as f:
-                        # Read the whole file and strip potential trailing commas/brackets
-                        raw_content = f.read().strip()
-                        
-                        if not raw_content:
-                            raise ValueError("File is empty")
+        print(f"{Fore.YELLOW}[3]{Style.RESET_ALL} Scan new random Cloudflare ranges (Fallback)")
+        
+        choice = input(Fore.WHITE + "\nEnter choice (1-3): " + Style.RESET_ALL).strip()
 
-                        # METHOD A: Try loading as one big JSON block (Best for your [ {...} ] format)
+        # 3. ROBUST PARSING (Handles standard JSON and Xray List format)
+        if choice in available_files:
+            selected_filename = available_files[choice][0]
+            target_path = os.path.join(self.output_dir, selected_filename)
+            source_name = selected_filename
+            
+            try:
+                with open(target_path, 'r') as f:
+                    content = f.read().strip()
+                    if content:
                         try:
-                            data = json.loads(raw_content)
-                            if isinstance(data, list):
-                                for entry in data:
-                                    ip_addr = entry.get('ip') or entry.get('host')
-                                    if ip_addr:
-                                        test_ips.append(ip_addr)
-                            elif isinstance(data, dict):
-                                ip_addr = data.get('ip') or data.get('host')
-                                if ip_addr:
-                                    test_ips.append(ip_addr)
-                                    
-                        # METHOD B: Fallback to line-by-line if Method A fails
+                            # Try loading as [ {...}, {...} ]
+                            data = json.loads(content)
+                            entries = data if isinstance(data, list) else [data]
+                            for entry in entries:
+                                ip = entry.get('ip') or entry.get('host')
+                                if ip: test_ips.append(ip)
                         except json.JSONDecodeError:
-                            # This handles files where objects are saved one per line without commas
+                            # Fallback to line-by-line { "ip": ... }
                             f.seek(0)
                             for line in f:
-                                line = line.strip().rstrip(',') # Remove trailing commas if present
+                                line = line.strip().rstrip(',')
                                 if not line or line in ['[', ']']: continue
                                 try:
                                     entry = json.loads(line)
-                                    ip_addr = entry.get('ip') or entry.get('host')
-                                    if ip_addr:
-                                        test_ips.append(ip_addr)
-                                except:
-                                    continue
-                    
-                    test_ips = list(set(test_ips)) # Remove duplicates
-                    source_name = selected_filename
-                except Exception as e:
-                    print(Fore.RED + f"[✘] Error reading {selected_filename}: {e}" + Style.RESET_ALL)
-        
-        # 2. SOURCE STATUS DISPLAY
-        print(Fore.CYAN + "\n┌────────────────────────────────────────────────────────────┐")
-        if test_ips:
-            print(f"│ {Fore.GREEN}SOURCE:{Style.RESET_ALL} {source_name:<20} | IPs: {len(test_ips):<10} │")
-        else:
-            # Fallback to random generation
+                                    ip = entry.get('ip') or entry.get('host')
+                                    if ip: test_ips.append(ip)
+                                except: continue
+                test_ips = list(set(test_ips)) # De-duplicate
+            except Exception as e:
+                print(Fore.RED + f"[✘] Error loading source: {e}")
+
+        # Fallback to random generation if choice 3 or loading failed
+        if choice == '3' or not test_ips:
+            source_name = "Cloudflare Random Ranges"
             if hasattr(self, 'cdn_ranges') and 'cloudflare' in self.cdn_ranges:
                 cidr = random.choice(self.cdn_ranges['cloudflare'])
                 test_ips = self.generate_random_ips(cidr, 50)
-                print(f"│ {Fore.YELLOW}SOURCE:{Style.RESET_ALL} Default Cloudflare Ranges  | IPs: 50         │")
             else:
-                print(f"│ {Fore.RED}ERROR: No results file and no default ranges found!{Style.RESET_ALL}        │")
+                print(Fore.RED + "[!] Critical: No IP ranges found.")
                 return
+
+        # 4. STATUS BOX
+        print(Fore.CYAN + "\n┌────────────────────────────────────────────────────────────┐")
+        print(f"│ {Fore.GREEN}SOURCE:{Style.RESET_ALL} {source_name:<19} | {Fore.GREEN}IPs LOADED:{Style.RESET_ALL} {len(test_ips):<6} │")
         print(Fore.CYAN + "└────────────────────────────────────────────────────────────┘" + Style.RESET_ALL)
 
-        # 3. SNI SELECTION (Speedtest, GCore, Fastly)
-        print(Fore.CYAN + "\n--- SNI Configuration ---")
-        print("1. Cloudflare (www.speedtest.net)")
-        print("2. GCore (gcore.com)")
-        print("3. Fastly (fastly.com)")
-        print("4. Fastly (fastly.net)")
-        print("5. Custom SNI")
+        # 5. SNI SELECTION (Commonly unblocked SNIs in Iran)
+        print(Fore.CYAN + "\n--- Select SNI for Scanning ---")
+        print(f"{Fore.YELLOW}[1]{Style.RESET_ALL} Cloudflare (www.speedtest.net) - High Success")
+        print(f"{Fore.YELLOW}[2]{Style.RESET_ALL} GCore (gcore.com)")
+        print(f"{Fore.YELLOW}[3]{Style.RESET_ALL} Fastly (fastly.com)")
+        print(f"{Fore.YELLOW}[4]{Style.RESET_ALL} Fastly (fastly.net)")
+        print(f"{Fore.YELLOW}[5]{Style.RESET_ALL} Custom SNI")
         
-        domain_choice = input(Fore.YELLOW + "Select SNI (1-5): " + Style.RESET_ALL).strip()
-        if domain_choice == '1': sni = "www.speedtest.net"
-        elif domain_choice == '2': sni = "gcore.com"
-        elif domain_choice == '3': sni = "fastly.com"
-        elif domain_choice == '4': sni = "fastly.net"
-        else: sni = input(Fore.YELLOW + "Enter Custom SNI: " + Style.RESET_ALL).strip() or "www.speedtest.net"
+        sni_choice = input(Fore.YELLOW + "Choice (1-5): " + Style.RESET_ALL).strip()
+        sni_map = {"1": "www.speedtest.net", "2": "gcore.com", "3": "fastly.com", "4": "fastly.net"}
+        sni = sni_map.get(sni_choice) or input(Fore.YELLOW + "Enter Custom SNI: " + Style.RESET_ALL).strip() or "www.speedtest.net"
 
-        # 4. PORT SELECTION
-        port_input = input(Fore.YELLOW + "\nEnter ports (e.g. 443,8443) or 'all': " + Style.RESET_ALL).strip().lower()
+        # 6. PORT SELECTION
+        port_input = input(Fore.YELLOW + "\nEnter ports (e.g. 443,2053,2083) or 'all': " + Style.RESET_ALL).strip().lower()
         selected_ports = [443, 2053, 2083, 2087, 2096, 8443] if port_input in ['all', ''] else [int(p.strip()) for p in port_input.split(',')]
 
-        # 5. EXECUTION
-        print(Fore.CYAN + f"\n[*] Testing {len(test_ips)} IPs on {len(selected_ports)} ports using SNI: {sni}...")
+        # 7. EXECUTION
+        print(Fore.CYAN + f"\n[*] Scanning {len(test_ips)} IPs for {sni} compatibility...")
         txt_file = os.path.join(self.output_dir, "multiport_results.txt")
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=50) as executor:
@@ -274,12 +262,13 @@ class CDNScannerPlus:
                 result = future.result()
                 if result and result.get('https_works'):
                     ip, port, ping = result['ip'], result['port'], result['ping']
-                    print(Fore.GREEN + f" [+] SUCCESS: {ip}:{port} | Ping: {ping}ms" + Style.RESET_ALL)
+                    print(Fore.GREEN + f" [+] CLEAN IP FOUND: {ip}:{port} | Ping: {ping}ms" + Style.RESET_ALL)
+                    
                     with open(txt_file, 'a') as f:
-                        f.write(f"{ip}:{port} | {sni} | {ping}ms\n")
+                        f.write(f"{ip}:{port} | SNI: {sni} | Ping: {ping}ms\n")
 
-        print(Fore.YELLOW + f"\n[*] Scan Complete! Results: multiport_results.txt")
-        input("\nPress Enter to return to menu...")
+        print(Fore.YELLOW + f"\n[*] Done! Use these IPs in your VLESS nodes. Results: multiport_results.txt")
+        input("\nPress Enter to return...")
         
     def configure_proxy(self, proxy_url: str):
         """Configure HTTP/S proxy"""
