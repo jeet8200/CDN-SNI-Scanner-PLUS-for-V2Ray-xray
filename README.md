@@ -15,6 +15,7 @@ Features
   -  Random IP Scanning: Generate and test random IPs from CDN ranges.
   -  Optimized CDN Ranges: Built-in ranges for Cloudflare, Gcore, Fastly (can be updated automatically).
   -  Multi-Protocol Checks: Tests both HTTPS and HTTP connectivity.
+  -  Cloudflare Or Any CDN Multi-Port Scanner
   -  Xray/V2Ray Compatibility Tests: Verifies found pairs for Xray/V2Ray support.
   -  Performance Metrics: SSL handshake time, ping, HTTP response time.
   -  Export Results: Save to JSON, TXT, CSV, Excel, and generate HTML reports.
