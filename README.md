@@ -92,6 +92,8 @@ REST ARE self explanatory
 ---
 
 ## Examples
+**
+for fastly scaned ips use port80 for now. for port443 it must be a domain name (in xhttp)
 
 **Scan a single domain:**
 ```text
