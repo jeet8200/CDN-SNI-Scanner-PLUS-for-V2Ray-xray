@@ -82,7 +82,7 @@ REST ARE self explanatory
 
 [9] Generate HTML report
 
-[10] Export to CSV/Excel
+[10] Export to CSV/Excel    || in ("cdn_scanner_plus-3.py")  [10] Cloudflare Or Any CDN Multi-Port Scanner  not sure about the usecase Yet.
 
 [11] Configuration
 
