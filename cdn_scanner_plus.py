@@ -41,7 +41,8 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Initialize colorama for Windows console colors
 init(autoreset=True)
-
+# Cloudflare HTTPS Ports
+CF_HTTPS_PORTS = [443, 2053, 2083, 2087, 2096, 8443]
 class CDNScannerPlus:
     def __init__(self, config_file: str = 'config.ini'):
         self.config_file = config_file
@@ -59,8 +60,8 @@ class CDNScannerPlus:
         ]
         
         self.cdn_test_domains = {
-            'cloudflare': ['www.cloudflare.com', 'cloudflare.com'],
-            'fastly': ['www.fastly.com', 'fastly.com'],
+            'cloudflare': ['www.cloudflare.com', 'www.speedtest.net'],
+            'fastly': ['fastly.net', 'fastly.com'],
             'gcore': self.gcore_test_domains
         }
 
@@ -158,6 +159,117 @@ class CDNScannerPlus:
         except Exception as e:
             print(Fore.RED + f"[!] Error applying config: {e}" + Style.RESET_ALL)
 
+
+    def scan_cloudflare_multiport(self) -> None:
+        """Enhanced Scanner to find Clean IPs for Xray/VLESS Nodes"""
+        self.print_banner()
+        print(Fore.GREEN + "--- Multi-Port CDN Scanner (GFW Bypass Mode) ---" + Style.RESET_ALL)
+        
+        # 1. FILE DETECTION
+        files_to_check = {
+            "1": ("valid_pairs.json", "Option 2: Random Scan Results"),
+            "2": ("xray_working.json", "Option 9: Xray-Tested Results")
+        }
+        
+        available_files = {k: v for k, v in files_to_check.items() if os.path.exists(os.path.join(self.output_dir, v[0]))}
+        
+        test_ips = []
+        source_name = ""
+
+        # 2. USER CHOICE MENU
+        print(Fore.CYAN + "\n[?] Select source for Clean IPs:")
+        if available_files:
+            for key, (fname, desc) in available_files.items():
+                print(f"{Fore.YELLOW}[{key}]{Style.RESET_ALL} {desc} ({fname})")
+        else:
+            print(Fore.RED + " [!] No result files found. You should run a scan first." + Style.RESET_ALL)
+            
+        print(f"{Fore.YELLOW}[3]{Style.RESET_ALL} Scan new random Cloudflare ranges (Fallback)")
+        
+        choice = input(Fore.WHITE + "\nEnter choice (1-3): " + Style.RESET_ALL).strip()
+
+        # 3. ROBUST PARSING (Handles standard JSON and Xray List format)
+        if choice in available_files:
+            selected_filename = available_files[choice][0]
+            target_path = os.path.join(self.output_dir, selected_filename)
+            source_name = selected_filename
+            
+            try:
+                with open(target_path, 'r') as f:
+                    content = f.read().strip()
+                    if content:
+                        try:
+                            # Try loading as [ {...}, {...} ]
+                            data = json.loads(content)
+                            entries = data if isinstance(data, list) else [data]
+                            for entry in entries:
+                                ip = entry.get('ip') or entry.get('host')
+                                if ip: test_ips.append(ip)
+                        except json.JSONDecodeError:
+                            # Fallback to line-by-line { "ip": ... }
+                            f.seek(0)
+                            for line in f:
+                                line = line.strip().rstrip(',')
+                                if not line or line in ['[', ']']: continue
+                                try:
+                                    entry = json.loads(line)
+                                    ip = entry.get('ip') or entry.get('host')
+                                    if ip: test_ips.append(ip)
+                                except: continue
+                test_ips = list(set(test_ips)) # De-duplicate
+            except Exception as e:
+                print(Fore.RED + f"[✘] Error loading source: {e}")
+
+        # Fallback to random generation if choice 3 or loading failed
+        if choice == '3' or not test_ips:
+            source_name = "Cloudflare Random Ranges"
+            if hasattr(self, 'cdn_ranges') and 'cloudflare' in self.cdn_ranges:
+                cidr = random.choice(self.cdn_ranges['cloudflare'])
+                test_ips = self.generate_random_ips(cidr, 50)
+            else:
+                print(Fore.RED + "[!] Critical: No IP ranges found.")
+                return
+
+        # 4. STATUS BOX
+        print(Fore.CYAN + "\n┌────────────────────────────────────────────────────────────┐")
+        print(f"│ {Fore.GREEN}SOURCE:{Style.RESET_ALL} {source_name:<19} | {Fore.GREEN}IPs LOADED:{Style.RESET_ALL} {len(test_ips):<6} │")
+        print(Fore.CYAN + "└────────────────────────────────────────────────────────────┘" + Style.RESET_ALL)
+
+        # 5. SNI SELECTION (Commonly unblocked SNIs in Iran)
+        print(Fore.CYAN + "\n--- Select SNI for Scanning ---")
+        print(f"{Fore.YELLOW}[1]{Style.RESET_ALL} Cloudflare (www.speedtest.net) - High Success")
+        print(f"{Fore.YELLOW}[2]{Style.RESET_ALL} GCore (gcore.com)")
+        print(f"{Fore.YELLOW}[3]{Style.RESET_ALL} Fastly (fastly.com)")
+        print(f"{Fore.YELLOW}[4]{Style.RESET_ALL} Fastly (fastly.net)")
+        print(f"{Fore.YELLOW}[5]{Style.RESET_ALL} Custom SNI")
+        
+        sni_choice = input(Fore.YELLOW + "Choice (1-5): " + Style.RESET_ALL).strip()
+        sni_map = {"1": "www.speedtest.net", "2": "gcore.com", "3": "fastly.com", "4": "fastly.net"}
+        sni = sni_map.get(sni_choice) or input(Fore.YELLOW + "Enter Custom SNI: " + Style.RESET_ALL).strip() or "www.speedtest.net"
+
+        # 6. PORT SELECTION
+        port_input = input(Fore.YELLOW + "\nEnter ports (e.g. 443,2053,2083) or 'all': " + Style.RESET_ALL).strip().lower()
+        selected_ports = [443, 2053, 2083, 2087, 2096, 8443] if port_input in ['all', ''] else [int(p.strip()) for p in port_input.split(',')]
+
+        # 7. EXECUTION
+        print(Fore.CYAN + f"\n[*] Scanning {len(test_ips)} IPs for {sni} compatibility...")
+        txt_file = os.path.join(self.output_dir, "multiport_results.txt")
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=50) as executor:
+            futures = {executor.submit(self.test_sni_pair, ip, sni, 10, port): (ip, port) for ip in test_ips for port in selected_ports}
+
+            for future in concurrent.futures.as_completed(futures):
+                result = future.result()
+                if result and result.get('https_works'):
+                    ip, port, ping = result['ip'], result['port'], result['ping']
+                    print(Fore.GREEN + f" [+] CLEAN IP FOUND: {ip}:{port} | Ping: {ping}ms" + Style.RESET_ALL)
+                    
+                    with open(txt_file, 'a') as f:
+                        f.write(f"{ip}:{port} | SNI: {sni} | Ping: {ping}ms\n")
+
+        print(Fore.YELLOW + f"\n[*] Done! Use these IPs in your VLESS nodes. Results: multiport_results.txt")
+        input("\nPress Enter to return...")
+        
     def configure_proxy(self, proxy_url: str):
         """Configure HTTP/S proxy"""
         self.proxies = {
@@ -212,10 +324,11 @@ class CDNScannerPlus:
         print(Fore.YELLOW + "[6]" + Style.RESET_ALL + " Test known CDNs")
         print(Fore.YELLOW + "[7]" + Style.RESET_ALL + " Deep CDN Test")
         print(Fore.YELLOW + "[8]" + Style.RESET_ALL + " Update CDN IP ranges")
-        print(Fore.YELLOW + "[9]" + Style.RESET_ALL + " Generate HTML report")
-        print(Fore.YELLOW + "[10]" + Style.RESET_ALL + " Export to CSV/Excel")
-        print(Fore.YELLOW + "[11]" + Style.RESET_ALL + " Configuration")
-        print(Fore.YELLOW + "[12]" + Style.RESET_ALL + " Test Xray/V2Ray compatibility")
+        print(Fore.YELLOW + "[9]" + Style.RESET_ALL + " Test Xray/V2Ray compatibility")
+        print(Fore.GREEN  + "[10]" + Style.RESET_ALL + " Cloudflare CDN Multi-Port Scanner")
+        print(Fore.YELLOW + "[11]" + Style.RESET_ALL + " Generate HTML report")
+        print(Fore.YELLOW + "[12]" + Style.RESET_ALL + " Configuration")
+        print(Fore.YELLOW + "[13]" + Style.RESET_ALL + " Export to CSV/Excel")
         print(Fore.YELLOW + "[0]" + Style.RESET_ALL + " Exit")
         print("\n")
 
@@ -323,20 +436,21 @@ class CDNScannerPlus:
                 pass
         return False
 
-    def test_sni_pair(self, ip: str, sni: str, timeout: int = DEFAULT_TIMEOUT) -> Optional[Dict]:
+    def test_sni_pair(self, ip: str, sni: str, timeout: int = DEFAULT_TIMEOUT, port: int = 443) -> Optional[Dict]:
         """Test if IP accepts the SNI with detailed performance metrics"""
         for attempt in range(MAX_RETRIES):
             try:
-                return self._test_sni_pair(ip, sni, timeout)
+                # FIXED: Added 'port' here so it actually passes it to the worker function
+                return self._test_sni_pair(ip, sni, timeout, port)
             except Exception as e:
                 if attempt == MAX_RETRIES - 1:
                     if self.debug_mode:
-                        print(Fore.YELLOW + f"[DEBUG] Test failed for {sni} @ {ip}: {e}" + Style.RESET_ALL)
+                        print(Fore.YELLOW + f"[DEBUG] Test failed for {sni} @ {ip}:{port}: {e}" + Style.RESET_ALL)
                     return None
                 time.sleep(random.uniform(0.5, 1.5))
         return None
 
-    def _test_sni_pair(self, ip: str, sni: str, timeout: int) -> Optional[Dict]:
+    def _test_sni_pair(self, ip: str, sni: str, timeout: int, port: int) -> Optional[Dict]:
         """Actual implementation of SNI testing"""
         self.total_tests += 1
         time.sleep(self.rate_limit_delay)
@@ -350,63 +464,121 @@ class CDNScannerPlus:
             'ssl_handshake_time': None,
             'http_response_time': None,
             'reverse_dns': self.reverse_dns_lookup(ip),
-            'server_header': None
+            'server_header': None,
+            'port': port # Correctly capture the port used
         }
         
-        # Test HTTPS with more comprehensive checks
+        # Test HTTPS
         ssl_success = False
         try:
-            # Create socket with timeout
-            sock = socket.create_connection((ip, 443), timeout=timeout)
+            # FIXED: Ensure socket is created using the passed port
+            sock = socket.create_connection((ip, port), timeout=timeout)
             sock.settimeout(timeout)
             
-            # Set up SSL context
             context = ssl.create_default_context()
             context.check_hostname = False
             context.verify_mode = ssl.CERT_NONE
             
-            # Time the SSL handshake
             start_time = timer()
             with context.wrap_socket(sock, server_hostname=sni) as ssl_sock:
-                # Verify we actually got a certificate
-                cert = ssl_sock.getpeercert()
-                result['ssl_handshake_time'] = (timer() - start_time) * 1000  # Convert to ms
+                # If handshake finishes, we consider it a success for that port
+                result['ssl_handshake_time'] = (timer() - start_time) * 1000
                 
-                # Additional verification - try to make a HEAD request
                 try:
                     request = f"HEAD / HTTP/1.1\r\nHost: {sni}\r\nConnection: close\r\n\r\n"
                     ssl_sock.sendall(request.encode())
+                    response = ssl_sock.recv(1024).decode(errors='ignore')
                     
-                    # Read response (just the headers)
-                    response = ssl_sock.recv(4096).decode()
-                    
-                    # Check for valid HTTP response
                     if "HTTP/" in response:
                         result['https_works'] = True
                         ssl_success = True
-                        
-                        # Extract server header if present
                         if 'Server:' in response:
                             result['server_header'] = response.split('Server:')[1].split('\r\n')[0].strip()
-                except Exception as e:
-                    if self.debug_mode:
-                        print(Fore.YELLOW + f"[DEBUG] HTTPS request failed for {sni} @ {ip}: {e}" + Style.RESET_ALL)
+                except:
+                    # Even if request fails, if SSL handshake worked, the port is open
+                    result['https_works'] = True
+                    ssl_success = True
+                    
         except Exception as e:
             if self.debug_mode:
-                print(Fore.YELLOW + f"[DEBUG] SSL handshake failed for {sni} @ {ip}: {e}" + Style.RESET_ALL)
-        
-        # Test HTTP
-        try:
-            start_time = timer()
-            http_success = self.test_http(ip, sni, timeout)
-            result['http_response_time'] = (timer() - start_time) * 1000
-            result['http_works'] = http_success
-        except Exception as e:
-            if self.debug_mode:
-                print(Fore.YELLOW + f"[DEBUG] HTTP test failed for {sni} @ {ip}: {e}" + Style.RESET_ALL)
+                print(Fore.RED + f"[-] {ip}:{port} failed: {e}" + Style.RESET_ALL)
         
         # Only ping if the connection was successful
-        if ssl_success or result['http_works']:
+        if ssl_success:
+            ping_time = self.get_ping(ip)
+            result['ping'] = ping_time
+            return result
+        return None
+
+    def test_sni_pair(self, ip: str, sni: str, timeout: int = DEFAULT_TIMEOUT, port: int = 443) -> Optional[Dict]:
+        """Test if IP accepts the SNI with detailed performance metrics"""
+        for attempt in range(MAX_RETRIES):
+            try:
+                # FIXED: Added 'port' here so it actually passes it to the worker function
+                return self._test_sni_pair(ip, sni, timeout, port)
+            except Exception as e:
+                if attempt == MAX_RETRIES - 1:
+                    if self.debug_mode:
+                        print(Fore.YELLOW + f"[DEBUG] Test failed for {sni} @ {ip}:{port}: {e}" + Style.RESET_ALL)
+                    return None
+                time.sleep(random.uniform(0.5, 1.5))
+        return None
+
+    def _test_sni_pair(self, ip: str, sni: str, timeout: int, port: int) -> Optional[Dict]:
+        """Actual implementation of SNI testing"""
+        self.total_tests += 1
+        time.sleep(self.rate_limit_delay)
+        
+        result = {
+            'ip': ip,
+            'sni': sni,
+            'https_works': False,
+            'http_works': False,
+            'ping': None,
+            'ssl_handshake_time': None,
+            'http_response_time': None,
+            'reverse_dns': self.reverse_dns_lookup(ip),
+            'server_header': None,
+            'port': port # Correctly capture the port used
+        }
+        
+        # Test HTTPS
+        ssl_success = False
+        try:
+            # FIXED: Ensure socket is created using the passed port
+            sock = socket.create_connection((ip, port), timeout=timeout)
+            sock.settimeout(timeout)
+            
+            context = ssl.create_default_context()
+            context.check_hostname = False
+            context.verify_mode = ssl.CERT_NONE
+            
+            start_time = timer()
+            with context.wrap_socket(sock, server_hostname=sni) as ssl_sock:
+                # If handshake finishes, we consider it a success for that port
+                result['ssl_handshake_time'] = (timer() - start_time) * 1000
+                
+                try:
+                    request = f"HEAD / HTTP/1.1\r\nHost: {sni}\r\nConnection: close\r\n\r\n"
+                    ssl_sock.sendall(request.encode())
+                    response = ssl_sock.recv(1024).decode(errors='ignore')
+                    
+                    if "HTTP/" in response:
+                        result['https_works'] = True
+                        ssl_success = True
+                        if 'Server:' in response:
+                            result['server_header'] = response.split('Server:')[1].split('\r\n')[0].strip()
+                except:
+                    # Even if request fails, if SSL handshake worked, the port is open
+                    result['https_works'] = True
+                    ssl_success = True
+                    
+        except Exception as e:
+            if self.debug_mode:
+                print(Fore.RED + f"[-] {ip}:{port} failed: {e}" + Style.RESET_ALL)
+        
+        # Only ping if the connection was successful
+        if ssl_success:
             ping_time = self.get_ping(ip)
             result['ping'] = ping_time
             return result
@@ -634,7 +806,7 @@ class CDNScannerPlus:
         
         valid_pairs = []
         with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-            futures = {executor.submit(self.test_sni_pair, ip, sni): ip for ip in test_ips}
+            futures = {executor.submit(self.test_sni_pair, ip, sni, DEFAULT_TIMEOUT, port=443 ): ip for ip in test_ips}
             
             for i, future in enumerate(concurrent.futures.as_completed(futures), 1):
                 ip = futures[future]
@@ -826,7 +998,7 @@ class CDNScannerPlus:
             print(Fore.CYAN + f"[*] Resolved IPs: {ips}" + Style.RESET_ALL)
             
             for ip in ips:
-                result = self.test_sni_pair(ip, domain)
+                result = self.test_sni_pair(ip, domain , timeout, port=443)
                 if result:
                     pair = {
                         "ip": ip,
@@ -1481,7 +1653,7 @@ class CDNScannerPlus:
         while True:
             try:
                 self.print_menu()
-                choice = input("Select an option (1-12): ").strip()
+                choice = input("Select an option (0-13): ").strip()
                 
                 if choice == '1':
                     self.single_domain_scan()
@@ -1503,6 +1675,13 @@ class CDNScannerPlus:
                 elif choice == '8':
                     self.update_cdn_ranges()
                 elif choice == '9':
+                    # Swapped: Now Xray (Original 12 logic)
+                    self.xray_test_menu()
+                elif choice == '10':
+                    # Swapped: Now Multi-Port (Original 13 logic)
+                    self.scan_cloudflare_multiport()
+                elif choice == '11':
+                    # Swapped: Now HTML (Original 9 logic)
                     results_file = os.path.join(self.output_dir, "valid_pairs.json")
                     if os.path.exists(results_file):
                         with open(results_file, 'r') as f:
@@ -1512,7 +1691,11 @@ class CDNScannerPlus:
                     else:
                         print(Fore.RED + "[!] No results file found" + Style.RESET_ALL)
                     input("\nPress Enter to return to menu...")
-                elif choice == '10':
+                elif choice == '12':
+                    # Swapped: Now Configuration (Original 11 logic)
+                    self.edit_configuration()
+                elif choice == '13':
+                    # Swapped: Now Export (Original 10 logic)
                     results_file = os.path.join(self.output_dir, "valid_pairs.json")
                     if os.path.exists(results_file):
                         with open(results_file, 'r') as f:
@@ -1541,10 +1724,6 @@ class CDNScannerPlus:
                     else:
                         print(Fore.RED + "[!] No results file found" + Style.RESET_ALL)
                     input("\nPress Enter to return to menu...")
-                elif choice == '11':
-                    self.edit_configuration()
-                elif choice == '12':
-                    self.xray_test_menu()
                 elif choice == '0':
                     print(Fore.CYAN + "\n[+] Exiting program..." + Style.RESET_ALL)
                     break
