@@ -79,7 +79,7 @@ REST ARE self explanatory
 
 [7] Deep CDN Test
 
-[8] Update CDN IP ranges
+[8] Update CDN IP ranges      # 4 better search its better be up to date    with vpn 
 
 [9] Generate HTML report
 
