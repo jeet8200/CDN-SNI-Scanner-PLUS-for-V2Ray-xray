@@ -8,7 +8,7 @@ A simple Python tool to scan and identify valid **CDN IP + SNI (Server Name Indi
 ---
 
 ## Features
-# tested in one of the most fucked up country in the world 
+# tested and its do the job under heavy fire   90%
 #            update the cdn ips always based on ur location
 Features
 
