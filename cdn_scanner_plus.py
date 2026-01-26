@@ -26,7 +26,7 @@ import signal
 
 
 
-# Constants
+# ConstantS
 DEFAULT_TIMEOUT = 5
 MAX_RETRIES = 3
 MAX_WORKERS = 20
@@ -1749,3 +1749,4 @@ if __name__ == '__main__':
     except Exception as e:
         print(Fore.RED + f"[!] Fatal error: {e}" + Style.RESET_ALL)
         input("Press Enter to exit...")
+
