@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>VLESS Master: JeetHm & V Edition</title>
+    <title>VLESS Master: JeetHm & G Edition</title>
     <style>
         :root { --primary: #3b82f6; --secondary: #94a3b8; --success: #10b981; --danger: #ef4444; --bg: #0f172a; --card: #1e293b; --text: #f1f5f9; --border: #334155; --input-bg: #0f172a; }
         [data-theme="light"] { --primary: #2563eb; --secondary: #64748b; --success: #059669; --danger: #dc2626; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --border: #cbd5e1; --input-bg: #ffffff; }
@@ -96,8 +96,9 @@
                 <select id="pathPreset" style="width:260px;" onchange="applyPathPreset(this.value); onInputChange();">
                     <option value="">-- Choose Bypass Type --</option>
                     <option value="?ed=2560">?ed=2560 [Speed: Early Data]</option>
+					<option value="?ed=2560&hl=en">?ed=2560&hl=en [Speed: Early Data++]</option>
                     <option value="?ed=2560&browser=chrome">?ed+Chrome [Bypass: Fingerprint]</option>
-                    <option value="/api/v1/update">/api/v1/update [Mask: System Update]</option>
+                    <option value="?ed=2048&ed=2560">?ed=2048&ed=2560 [ISP Optimization]</option>
                     <option value="/video/stream?buffer=true">/video/stream [Usage: Heavy Traffic]</option>
                     <option value="/graphql">/graphql [Mask: API Request]</option>
                     <option value="/chat/stream">/chat/stream [Mask: AI Chat]</option>
@@ -112,7 +113,7 @@
             <div class="field"><label>Host</label><input id="host" oninput="onInputChange()"></div>
         </div>
 
-        <div class="section-header">2. IP Source</div>
+        <div class="section-header">2. IP Source (this will find ip numbers in any string)</div>
         <div class="grid">
             <button onclick="loadCDN('cf'); onInputChange();" style="background:#f97316; color:white;">CF IPs</button>
             <button onclick="loadCDN('gcore'); onInputChange();" style="background:#6366f1; color:white;">Gcore IPs</button>
@@ -540,4 +541,3 @@ function restoreStateQuick(){ restoreState(); showToast('Restored'); }
 </script>
 </body>
 </html>
-
