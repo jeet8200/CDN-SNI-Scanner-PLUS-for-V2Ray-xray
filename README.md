@@ -8,8 +8,7 @@ A simple Python tool to scan and identify valid **CDN IP + SNI (Server Name Indi
 ---
 
 ## Features
-## FIELD–TEST    A OK     Usefull if U Want to  STick it to the MAN 
-#         make sure the cdn iplists are up to date for better resutlts  
+
 Features
 
   -  Single Domain & Batch Scanning: Scan one domain or a list of domains for valid CDN IP/SNI pairs.
