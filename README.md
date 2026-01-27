@@ -57,7 +57,7 @@ Run the scanner:
 ```bash
 python cdn_scanner_plus.py
 ```
-1: for updateing ip lists its better to use vpn but for rest of the way vpn off is smart choice
+1: for updating ip lists its better to use vpn but for rest of the way vpn off is smart choice
 
 2 ****FOR XRAY TEST FIRST SCAN SOME IPS  THAN CHECK THAT IPS ON XRAY TEST THAN GENERATE HTML****
 
