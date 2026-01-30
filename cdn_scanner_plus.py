@@ -327,7 +327,7 @@ class CDNScannerPlus:
         print(Fore.YELLOW + "[7]" + Style.RESET_ALL + " Deep CDN Test")
         print(Fore.CYAN + "[8]" + Style.RESET_ALL + " Update CDN IP ranges")
         print(Fore.GREEN + "[9]" + Style.RESET_ALL + " Test Xray/V2Ray compatibility")
-        print(Fore.WHITE  + "[10]" + Style.RESET_ALL + " Cloudflare CDN Multi-Port Scanner")
+        print(Fore.WHITE  + "[10]" + Style.RESET_ALL + " CDN Multi-Port Scanner")
         print(Fore.GREEN + "[11]" + Style.RESET_ALL + " Generate HTML report")
         print(Fore.YELLOW + "[12]" + Style.RESET_ALL + " Configuration")
         print(Fore.YELLOW + "[13]" + Style.RESET_ALL + " Export to CSV/Excel")
@@ -1749,4 +1749,5 @@ if __name__ == '__main__':
     except Exception as e:
         print(Fore.RED + f"[!] Fatal error: {e}" + Style.RESET_ALL)
         input("Press Enter to exit...")
+
 
