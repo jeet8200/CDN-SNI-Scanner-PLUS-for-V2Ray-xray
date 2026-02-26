@@ -59,8 +59,6 @@ python cdn_scanner_plus.py
 ```
 1: for updating ip lists its better to use vpn but for rest of the way vpn off is smart choice.
 
-#1.2:  u Must Have Active Cdn In Cloudflare || Gcore || Fastly For Founded Ips To Work Test With porT 80 
-
 2 ****FOR XRAY TEST FIRST SCAN SOME IPS  THAN CHECK THAT IPS ON XRAY TEST THAN GENERATE HTML****
 
 REST ARE self explanatory
