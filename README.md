@@ -21,7 +21,7 @@ Features
   -  Export Results: Save to JSON, TXT, CSV, Excel, and generate HTML reports.
   -  Configurable: Edit DNS servers, output directory, debug/verbose modes, and more.
   -  Interactive CLI Menu: Easy-to-use terminal interface.
-  -  Extra Xray Client Parser Editor in xrayparser.html
+  -  Extra Xray Client Parser Editor in xrayparser.html (for now it dont support xhttp extra params u need to add them manually)
 ---
 
 ## Installation
