@@ -64,7 +64,8 @@ class CDNScannerPlus:
         self.cdn_test_domains = {
             'cloudflare': ['www.cloudflare.com', 'www.speedtest.net'],
             'fastly': ['fastly.net', 'fastly.com'],
-            'gcore': self.gcore_test_domains
+            'gcore': self.gcore_test_domains,
+            'netlify': ['www.netlify.com', 'api.netlify.com', 'app.netlify.com', 'functions.netlify.com', 'netlify.app']
         }
 
         self.cdn_ranges = {
@@ -80,6 +81,11 @@ class CDNScannerPlus:
             'fastly': [
                 '151.101.0.0/16', '199.232.0.0/16', '2a04:4e40::/32',
                 '23.235.32.0/20', '43.249.72.0/22'
+            ],
+            'netlify': [
+                '75.2.60.0/22', '103.42.64.0/23', '104.156.20.0/22',
+                '46.137.73.0/24', '192.230.34.0/24', '185.31.160.0/22',
+                '216.160.83.0/24'
             ]
         }
 
@@ -233,9 +239,9 @@ class CDNScannerPlus:
                 return
 
         # 4. STATUS BOX
-        print(Fore.CYAN + "\n┌────────────────────────────────────────────────────────────┐")
+        print(Fore.CYAN + "\n┌───────────────────────────────────────────────────────────────────┐")
         print(f"│ {Fore.GREEN}SOURCE:{Style.RESET_ALL} {source_name:<19} | {Fore.GREEN}IPs LOADED:{Style.RESET_ALL} {len(test_ips):<6} │")
-        print(Fore.CYAN + "└────────────────────────────────────────────────────────────┘" + Style.RESET_ALL)
+        print(Fore.CYAN + "└───────────────────────────────────────────────────────────────────┘")
 
         # 5. SNI SELECTION (Commonly unblocked SNIs in Iran)
         print(Fore.CYAN + "\n--- Select SNI for Scanning ---")
@@ -243,10 +249,11 @@ class CDNScannerPlus:
         print(f"{Fore.YELLOW}[2]{Style.RESET_ALL} GCore (gcore.com)")
         print(f"{Fore.YELLOW}[3]{Style.RESET_ALL} Fastly (fastly.com)")
         print(f"{Fore.YELLOW}[4]{Style.RESET_ALL} Fastly (fastly.net)")
-        print(f"{Fore.YELLOW}[5]{Style.RESET_ALL} Custom SNI")
+        print(f"{Fore.YELLOW}[5]{Style.RESET_ALL} Netlify (www.netlify.com)")
+        print(f"{Fore.YELLOW}[6]{Style.RESET_ALL} Custom SNI")
         
-        sni_choice = input(Fore.YELLOW + "Choice (1-5): " + Style.RESET_ALL).strip()
-        sni_map = {"1": "www.speedtest.net", "2": "gcore.com", "3": "fastly.com", "4": "fastly.net"}
+        sni_choice = input(Fore.YELLOW + "Choice (1-6): " + Style.RESET_ALL).strip()
+        sni_map = {"1": "www.speedtest.net", "2": "gcore.com", "3": "fastly.com", "4": "fastly.net", "5": "www.netlify.com"}
         sni = sni_map.get(sni_choice) or input(Fore.YELLOW + "Enter Custom SNI: " + Style.RESET_ALL).strip() or "www.speedtest.net"
 
         # 6. PORT SELECTION
@@ -308,7 +315,7 @@ class CDNScannerPlus:
   \____|____/|_| \_| |____/___\____|_| \_| |_|  
         CDN SNI Scanner PLUS - IRAN OPTIMIZED By Jeet
         """ + Style.RESET_ALL)
-        print(Fore.YELLOW + "VLESS+WS/Xray Support | GFW Bypass | Enhanced Reporting" + Style.RESET_ALL)
+        print(Fore.YELLOW + "VLESS+WS/Xray Support | GFW Bypass | Enhanced Reporting | Netlify Support" + Style.RESET_ALL)
 
     def print_menu(self) -> None:
         """Display the main menu"""
@@ -437,80 +444,6 @@ class CDNScannerPlus:
             except:
                 pass
         return False
-
-    def test_sni_pair(self, ip: str, sni: str, timeout: int = DEFAULT_TIMEOUT, port: int = 443) -> Optional[Dict]:
-        """Test if IP accepts the SNI with detailed performance metrics"""
-        for attempt in range(MAX_RETRIES):
-            try:
-                # FIXED: Added 'port' here so it actually passes it to the worker function
-                return self._test_sni_pair(ip, sni, timeout, port)
-            except Exception as e:
-                if attempt == MAX_RETRIES - 1:
-                    if self.debug_mode:
-                        print(Fore.YELLOW + f"[DEBUG] Test failed for {sni} @ {ip}:{port}: {e}" + Style.RESET_ALL)
-                    return None
-                time.sleep(random.uniform(0.5, 1.5))
-        return None
-
-    def _test_sni_pair(self, ip: str, sni: str, timeout: int, port: int) -> Optional[Dict]:
-        """Actual implementation of SNI testing"""
-        self.total_tests += 1
-        time.sleep(self.rate_limit_delay)
-        
-        result = {
-            'ip': ip,
-            'sni': sni,
-            'https_works': False,
-            'http_works': False,
-            'ping': None,
-            'ssl_handshake_time': None,
-            'http_response_time': None,
-            'reverse_dns': self.reverse_dns_lookup(ip),
-            'server_header': None,
-            'port': port # Correctly capture the port used
-        }
-        
-        # Test HTTPS
-        ssl_success = False
-        try:
-            # FIXED: Ensure socket is created using the passed port
-            sock = socket.create_connection((ip, port), timeout=timeout)
-            sock.settimeout(timeout)
-            
-            context = ssl.create_default_context()
-            context.check_hostname = False
-            context.verify_mode = ssl.CERT_NONE
-            
-            start_time = timer()
-            with context.wrap_socket(sock, server_hostname=sni) as ssl_sock:
-                # If handshake finishes, we consider it a success for that port
-                result['ssl_handshake_time'] = (timer() - start_time) * 1000
-                
-                try:
-                    request = f"HEAD / HTTP/1.1\r\nHost: {sni}\r\nConnection: close\r\n\r\n"
-                    ssl_sock.sendall(request.encode())
-                    response = ssl_sock.recv(1024).decode(errors='ignore')
-                    
-                    if "HTTP/" in response:
-                        result['https_works'] = True
-                        ssl_success = True
-                        if 'Server:' in response:
-                            result['server_header'] = response.split('Server:')[1].split('\r\n')[0].strip()
-                except:
-                    # Even if request fails, if SSL handshake worked, the port is open
-                    result['https_works'] = True
-                    ssl_success = True
-                    
-        except Exception as e:
-            if self.debug_mode:
-                print(Fore.RED + f"[-] {ip}:{port} failed: {e}" + Style.RESET_ALL)
-        
-        # Only ping if the connection was successful
-        if ssl_success:
-            ping_time = self.get_ping(ip)
-            result['ping'] = ping_time
-            return result
-        return None
 
     def test_sni_pair(self, ip: str, sni: str, timeout: int = DEFAULT_TIMEOUT, port: int = 443) -> Optional[Dict]:
         """Test if IP accepts the SNI with detailed performance metrics"""
@@ -765,7 +698,7 @@ class CDNScannerPlus:
             print(f"{i}. {cdn} ({len(self.cdn_ranges[cdn])} ranges)")
         
         try:
-            choice = int(input("Enter choice (1-3): ")) - 1
+            choice = int(input(f"Enter choice (1-{len(self.cdn_ranges)}): ")) - 1
             cdn_name = list(self.cdn_ranges.keys())[choice]
         except:
             print(Fore.RED + "[!] Invalid choice" + Style.RESET_ALL)
@@ -983,7 +916,7 @@ class CDNScannerPlus:
             print(f"{i}. {cdn}")
         
         try:
-            choice = int(input("Enter choice (1-3): ")) - 1
+            choice = int(input(f"Enter choice (1-{len(self.cdn_test_domains)}): ")) - 1
             cdn_name = list(self.cdn_test_domains.keys())[choice]
             test_domains = self.cdn_test_domains[cdn_name]
         except:
@@ -1072,6 +1005,15 @@ class CDNScannerPlus:
                     '23.235.32.0/20', '43.249.72.0/22'
                 ],
                 'alternative_url': 'https://ip-ranges.fastly.com/'
+            },
+            'netlify': {
+                'url': 'https://api.netlify.com/api/v1/ip-ranges',
+                'fallback': [
+                    '75.2.60.0/22', '103.42.64.0/23', '104.156.20.0/22',
+                    '46.137.73.0/24', '192.230.34.0/24', '185.31.160.0/22',
+                    '216.160.83.0/24'
+                ],
+                'alternative_url': 'https://docs.netlify.com/platforms/integrations/netlify-ip-ranges/'
             }
         }
         
@@ -1095,6 +1037,9 @@ class CDNScannerPlus:
                 elif cdn == 'fastly':
                     data = response.json()
                     ranges = data.get('addresses', [])
+                elif cdn == 'netlify':
+                    data = response.json()
+                    ranges = data.get('ip_ranges', []) if isinstance(data, dict) else data
                 
                 success = True
                 print(Fore.GREEN + f"[+] Successfully updated {cdn} ranges from primary source" + Style.RESET_ALL)
@@ -1109,9 +1054,7 @@ class CDNScannerPlus:
                         alt_response = self.session.get(sources['alternative_url'], timeout=15)
                         alt_response.raise_for_status()
                         
-                        if cdn == 'gcore':
-                            ranges = [line.strip() for line in alt_response.text.split('\n') if line.strip() and not line.startswith('#')]
-                        elif cdn == 'fastly':
+                        if cdn in ['gcore', 'fastly', 'netlify']:
                             ranges = [line.strip() for line in alt_response.text.split('\n') if line.strip() and not line.startswith('#')]
                         
                         success = True
@@ -1749,5 +1692,4 @@ if __name__ == '__main__':
     except Exception as e:
         print(Fore.RED + f"[!] Fatal error: {e}" + Style.RESET_ALL)
         input("Press Enter to exit...")
-
 
