@@ -12,3 +12,6 @@ fastly.net
 status.fastly.com
 developer.fastly.com
 docs.fastly.com
+kubernetes.io
+figma.com
+helm.sh
