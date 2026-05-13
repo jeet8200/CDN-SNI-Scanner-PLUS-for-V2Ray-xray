@@ -1,0 +1,715 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Scan Results Dashboard</title>
+        <style>
+            body { font-family: sans-serif; background: #0d1117; color: #c9d1d9; padding: 20px; }
+            .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 15px; }
+            .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 15px; position: relative; }
+            .status { float: right; font-weight: bold; padding: 2px 8px; border-radius: 4px; }
+            .s200 { color: #3fb950; background: rgba(63, 185, 80, 0.1); }
+            .s403 { color: #d29922; background: rgba(210, 153, 34, 0.1); }
+            .val { font-family: monospace; display: block; background: #0d1117; padding: 5px; margin: 5px 0; border-radius: 4px; cursor: pointer; }
+            .val:hover { background: #21262d; }
+            .label { color: #8b949e; font-size: 0.8em; }
+            .btn { background: #238636; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-top: 5px; font-size: 12px; }
+            .btn:active { background: #1f6feb; }
+        </style>
+        <script>
+            function copy(text, el) {
+                navigator.clipboard.writeText(text);
+                const old = el.innerText;
+                el.innerText = "COPIED!";
+                setTimeout(() => el.innerText = old, 1000);
+            }
+        </script>
+    </head>
+    <body>
+        <h1>🚀 Stealth Scan Results</h1>
+        <p>Found 62 matches | Generated: Wed May 13 07:38:51 2026</p>
+        <div class="card-grid">
+    
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kops.sigs.k8s.io', this)">kops.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">197ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kops.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kubectl.docs.kubernetes.io', this)">kubectl.docs.kubernetes.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">135ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kubectl.docs.kubernetes.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kind.sigs.k8s.io', this)">kind.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">128ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kind.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('krew.sigs.k8s.io', this)">krew.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">138ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('krew.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('secrets-store-csi-driver.sigs.k8s.io', this)">secrets-store-csi-driver.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">156ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('secrets-store-csi-driver.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kustomize.sigs.k8s.io', this)">kustomize.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">131ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kustomize.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('image-builder.sigs.k8s.io', this)">image-builder.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">127ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('image-builder.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('image-builder.sigs.k8s.io', this)">image-builder.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">101ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('image-builder.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('cluster-api.sigs.k8s.io', this)">cluster-api.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">120ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('cluster-api.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('minikube.sigs.k8s.io', this)">minikube.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">119ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('minikube.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s403">HTTP 400</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('178.22.122.101', this)">178.22.122.101</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('jobset.sigs.k8s.io', this)">jobset.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">32ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('178.22.122.101', this)">Copy IP</button>
+                <button class="btn" onclick="copy('jobset.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s403">HTTP 400</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('178.22.122.101', this)">178.22.122.101</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kwok.sigs.k8s.io', this)">kwok.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">23ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('178.22.122.101', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kwok.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kind.sigs.k8s.io', this)">kind.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">122ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kind.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('cluster-api.sigs.k8s.io', this)">cluster-api.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">129ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('cluster-api.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kind.sigs.k8s.io', this)">kind.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">121ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kind.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kwok.sigs.k8s.io', this)">kwok.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">137ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kwok.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s403">HTTP 400</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('178.22.122.101', this)">178.22.122.101</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('helm.sh', this)">helm.sh</div>
+                <div class="label">Ping: <span style="color:#3fb950">44ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('178.22.122.101', this)">Copy IP</button>
+                <button class="btn" onclick="copy('helm.sh', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s403">HTTP 400</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('178.22.122.101', this)">178.22.122.101</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kops.sigs.k8s.io', this)">kops.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">38ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('178.22.122.101', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kops.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kubernetes.io', this)">kubernetes.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">127ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kubernetes.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('argo-cd.readthedocs.io', this)">argo-cd.readthedocs.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">129ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('argo-cd.readthedocs.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kustomize.sigs.k8s.io', this)">kustomize.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">145ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kustomize.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('scheduler-plugins.sigs.k8s.io', this)">scheduler-plugins.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">108ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('scheduler-plugins.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('minikube.sigs.k8s.io', this)">minikube.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">106ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('minikube.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kubectl.docs.kubernetes.io', this)">kubectl.docs.kubernetes.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">122ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kubectl.docs.kubernetes.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('krew.sigs.k8s.io', this)">krew.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">132ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('krew.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kubernetes.io', this)">kubernetes.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">117ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kubernetes.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s403">HTTP 400</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('178.22.122.101', this)">178.22.122.101</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('secrets-store-csi-driver.sigs.k8s.io', this)">secrets-store-csi-driver.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">35ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('178.22.122.101', this)">Copy IP</button>
+                <button class="btn" onclick="copy('secrets-store-csi-driver.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s403">HTTP 400</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('178.22.122.101', this)">178.22.122.101</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('openebs.io', this)">openebs.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">30ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('178.22.122.101', this)">Copy IP</button>
+                <button class="btn" onclick="copy('openebs.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('argo-cd.readthedocs.io', this)">argo-cd.readthedocs.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">127ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('argo-cd.readthedocs.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('krew.sigs.k8s.io', this)">krew.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">108ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('krew.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kueue.sigs.k8s.io', this)">kueue.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">107ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kueue.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kops.sigs.k8s.io', this)">kops.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">143ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kops.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kustomize.sigs.k8s.io', this)">kustomize.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">116ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kustomize.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('cluster-api.sigs.k8s.io', this)">cluster-api.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">112ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('cluster-api.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('letsencrypt.org', this)">letsencrypt.org</div>
+                <div class="label">Ping: <span style="color:#3fb950">116ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('letsencrypt.org', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('gateway-api.sigs.k8s.io', this)">gateway-api.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">134ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('gateway-api.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('secrets-store-csi-driver.sigs.k8s.io', this)">secrets-store-csi-driver.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">118ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('secrets-store-csi-driver.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kwok.sigs.k8s.io', this)">kwok.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">142ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kwok.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kubernetes.io', this)">kubernetes.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">108ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kubernetes.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('gateway-api.sigs.k8s.io', this)">gateway-api.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">135ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('gateway-api.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('secrets-store-csi-driver.sigs.k8s.io', this)">secrets-store-csi-driver.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">129ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('secrets-store-csi-driver.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s403">HTTP 400</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('178.22.122.101', this)">178.22.122.101</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('harbor.io', this)">harbor.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">24ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('178.22.122.101', this)">Copy IP</button>
+                <button class="btn" onclick="copy('harbor.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s403">HTTP 400</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('178.22.122.101', this)">178.22.122.101</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('gateway-api.sigs.k8s.io', this)">gateway-api.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">32ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('178.22.122.101', this)">Copy IP</button>
+                <button class="btn" onclick="copy('gateway-api.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('scheduler-plugins.sigs.k8s.io', this)">scheduler-plugins.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">135ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('scheduler-plugins.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('letsencrypt.org', this)">letsencrypt.org</div>
+                <div class="label">Ping: <span style="color:#3fb950">113ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('letsencrypt.org', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('jobset.sigs.k8s.io', this)">jobset.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">144ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('jobset.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kubectl.docs.kubernetes.io', this)">kubectl.docs.kubernetes.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">125ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kubectl.docs.kubernetes.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('letsencrypt.org', this)">letsencrypt.org</div>
+                <div class="label">Ping: <span style="color:#3fb950">110ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('letsencrypt.org', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s403">HTTP 400</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('178.22.122.101', this)">178.22.122.101</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kubebuilder.io', this)">kubebuilder.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">40ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('178.22.122.101', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kubebuilder.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('gateway-api.sigs.k8s.io', this)">gateway-api.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">145ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('gateway-api.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s403">HTTP 400</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('178.22.122.101', this)">178.22.122.101</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kaniko.sigs.k8s.io', this)">kaniko.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">40ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('178.22.122.101', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kaniko.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('argo-cd.readthedocs.io', this)">argo-cd.readthedocs.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">137ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('argo-cd.readthedocs.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('image-builder.sigs.k8s.io', this)">image-builder.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">121ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('image-builder.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.38', this)">50.7.85.38</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('jobset.sigs.k8s.io', this)">jobset.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">105ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.38', this)">Copy IP</button>
+                <button class="btn" onclick="copy('jobset.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kwok.sigs.k8s.io', this)">kwok.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">134ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kwok.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s403">HTTP 400</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('178.22.122.101', this)">178.22.122.101</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('scheduler-plugins.sigs.k8s.io', this)">scheduler-plugins.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">22ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('178.22.122.101', this)">Copy IP</button>
+                <button class="btn" onclick="copy('scheduler-plugins.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kops.sigs.k8s.io', this)">kops.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">155ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kops.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kueue.sigs.k8s.io', this)">kueue.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">118ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kueue.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('scheduler-plugins.sigs.k8s.io', this)">scheduler-plugins.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">136ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('scheduler-plugins.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('kueue.sigs.k8s.io', this)">kueue.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">130ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('kueue.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.35', this)">50.7.85.35</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('jobset.sigs.k8s.io', this)">jobset.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">127ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.35', this)">Copy IP</button>
+                <button class="btn" onclick="copy('jobset.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        
+            <div class="card">
+                <span class="status s200">HTTP 200</span>
+                <div class="label">IP Address</div>
+                <div class="val" onclick="copy('50.7.85.37', this)">50.7.85.37</div>
+                <div class="label">SNI</div>
+                <div class="val" onclick="copy('minikube.sigs.k8s.io', this)">minikube.sigs.k8s.io</div>
+                <div class="label">Ping: <span style="color:#3fb950">116ms</span> | H2: NO | Verified</div>
+                <button class="btn" onclick="copy('50.7.85.37', this)">Copy IP</button>
+                <button class="btn" onclick="copy('minikube.sigs.k8s.io', this)">Copy SNI</button>
+            </div>
+        </div></body></html>
