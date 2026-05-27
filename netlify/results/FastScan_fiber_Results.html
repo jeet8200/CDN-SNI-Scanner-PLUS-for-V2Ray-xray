@@ -1,0 +1,198 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>FastScan (fiber) Sorted Results</title>
+    <style>
+        body { font-family: sans-serif; background: #0d1117; color: #c9d1d9; padding: 20px; }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 15px; }
+        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; }
+        .status { float: right; font-weight: bold; padding: 2px 8px; border-radius: 4px; margin-left: 5px; }
+        .s200 { color: #3fb950; background: rgba(63, 185, 80, 0.1); }
+        .s403 { color: #db6d28; background: rgba(219, 109, 40, 0.1); }
+        .val { font-family: monospace; display: block; background: #0d1117; padding: 6px; margin: 5px 0; border-radius: 4px; cursor: pointer; border: 1px solid #21262d; word-break: break-all; }
+        .val:hover { border-color: #58a6ff; }
+        .sni-container { background: #21262d; padding: 8px; border-radius: 6px; margin: 8px 0; }
+        .sni-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px dashed #30363d; }
+        .sni-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .ping-tag { background: #1f6feb; color: white; padding: 1px 5px; font-size: 11px; font-weight: bold; border-radius: 3px; margin-left: auto; margin-right: 8px; font-family: monospace; }
+        .btn { background: #238636; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+        .btn:hover { background: #2ea043; }
+        .btn-main { background: #1f6feb; width: 100%; padding: 8px; margin-top: 8px; font-weight: bold; font-size: 14px; }
+        .btn-main:hover { background: #388bfd; }
+    </style>
+    <script>function copy(t, e) { navigator.clipboard.writeText(t); let o = e.innerText; e.innerText = "COPIED!"; setTimeout(() => e.innerText = o, 1000); }</script>
+    </head><body><h1>🚀 FastScan (fiber) Dashboard By JeeThM && G </h1><p>Unique Active IPs: 8 | Last Updated: 2026-05-27 04:58:25</p><div class="card-grid">
+        <div class="card">
+            <div>
+                <span class="status s403">HTTP 403</span>
+                <small style="color: #8b949e;">IP ADDRESS</small>
+                <div class="val" onclick="copy('23.227.38.74', this)">23.227.38.74</div>
+                <small style="color: #8b949e;">WORKING MASK SNIs (1)</small>
+                <div class="sni-container">
+                    <div class="sni-row">
+                        <span style="font-family: monospace; font-size: 13px; color: #58a6ff;">letsencrypt.org</span>
+                        <span class="ping-tag">17ms</span>
+                        <button class="btn" onclick="copy('letsencrypt.org', this)">Copy SNI</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div style="margin-top: 5px;">Best Card Ping: <b style="color:#3fb950">17ms</b></div>
+                <button class="btn btn-main" onclick="copy('23.227.38.74', this)">Copy IP Address</button>
+            </div>
+        </div>
+        <div class="card">
+            <div>
+                <span class="status s200">HTTP 200</span>
+                <small style="color: #8b949e;">IP ADDRESS</small>
+                <div class="val" onclick="copy('75.2.60.5', this)">75.2.60.5</div>
+                <small style="color: #8b949e;">WORKING MASK SNIs (2)</small>
+                <div class="sni-container">
+                    <div class="sni-row">
+                        <span style="font-family: monospace; font-size: 13px; color: #58a6ff;">letsencrypt.org</span>
+                        <span class="ping-tag">69ms</span>
+                        <button class="btn" onclick="copy('letsencrypt.org', this)">Copy SNI</button>
+                    </div>
+                    <div class="sni-row">
+                        <span style="font-family: monospace; font-size: 13px; color: #58a6ff;">kubernetes.io</span>
+                        <span class="ping-tag">86ms</span>
+                        <button class="btn" onclick="copy('kubernetes.io', this)">Copy SNI</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div style="margin-top: 5px;">Best Card Ping: <b style="color:#3fb950">69ms</b></div>
+                <button class="btn btn-main" onclick="copy('75.2.60.5', this)">Copy IP Address</button>
+            </div>
+        </div>
+        <div class="card">
+            <div>
+                <span class="status s200">HTTP 200</span>
+                <small style="color: #8b949e;">IP ADDRESS</small>
+                <div class="val" onclick="copy('172.65.32.248', this)">172.65.32.248</div>
+                <small style="color: #8b949e;">WORKING MASK SNIs (1)</small>
+                <div class="sni-container">
+                    <div class="sni-row">
+                        <span style="font-family: monospace; font-size: 13px; color: #58a6ff;">letsencrypt.org</span>
+                        <span class="ping-tag">86ms</span>
+                        <button class="btn" onclick="copy('letsencrypt.org', this)">Copy SNI</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div style="margin-top: 5px;">Best Card Ping: <b style="color:#3fb950">86ms</b></div>
+                <button class="btn btn-main" onclick="copy('172.65.32.248', this)">Copy IP Address</button>
+            </div>
+        </div>
+        <div class="card">
+            <div>
+                <span class="status s403">HTTP 403</span>
+                <small style="color: #8b949e;">IP ADDRESS</small>
+                <div class="val" onclick="copy('34.107.204.206', this)">34.107.204.206</div>
+                <small style="color: #8b949e;">WORKING MASK SNIs (2)</small>
+                <div class="sni-container">
+                    <div class="sni-row">
+                        <span style="font-family: monospace; font-size: 13px; color: #58a6ff;">kubernetes.io</span>
+                        <span class="ping-tag">94ms</span>
+                        <button class="btn" onclick="copy('kubernetes.io', this)">Copy SNI</button>
+                    </div>
+                    <div class="sni-row">
+                        <span style="font-family: monospace; font-size: 13px; color: #58a6ff;">letsencrypt.org</span>
+                        <span class="ping-tag">97ms</span>
+                        <button class="btn" onclick="copy('letsencrypt.org', this)">Copy SNI</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div style="margin-top: 5px;">Best Card Ping: <b style="color:#3fb950">94ms</b></div>
+                <button class="btn btn-main" onclick="copy('34.107.204.206', this)">Copy IP Address</button>
+            </div>
+        </div>
+        <div class="card">
+            <div>
+                <span class="status s200">HTTP 200</span>
+                <small style="color: #8b949e;">IP ADDRESS</small>
+                <div class="val" onclick="copy('40.114.177.246', this)">40.114.177.246</div>
+                <small style="color: #8b949e;">WORKING MASK SNIs (1)</small>
+                <div class="sni-container">
+                    <div class="sni-row">
+                        <span style="font-family: monospace; font-size: 13px; color: #58a6ff;">kubernetes.io</span>
+                        <span class="ping-tag">118ms</span>
+                        <button class="btn" onclick="copy('kubernetes.io', this)">Copy SNI</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div style="margin-top: 5px;">Best Card Ping: <b style="color:#3fb950">118ms</b></div>
+                <button class="btn btn-main" onclick="copy('40.114.177.246', this)">Copy IP Address</button>
+            </div>
+        </div>
+        <div class="card">
+            <div>
+                <span class="status s200">HTTP 200</span>
+                <small style="color: #8b949e;">IP ADDRESS</small>
+                <div class="val" onclick="copy('34.194.97.138', this)">34.194.97.138</div>
+                <small style="color: #8b949e;">WORKING MASK SNIs (2)</small>
+                <div class="sni-container">
+                    <div class="sni-row">
+                        <span style="font-family: monospace; font-size: 13px; color: #58a6ff;">kubernetes.io</span>
+                        <span class="ping-tag">177ms</span>
+                        <button class="btn" onclick="copy('kubernetes.io', this)">Copy SNI</button>
+                    </div>
+                    <div class="sni-row">
+                        <span style="font-family: monospace; font-size: 13px; color: #58a6ff;">letsencrypt.org</span>
+                        <span class="ping-tag">203ms</span>
+                        <button class="btn" onclick="copy('letsencrypt.org', this)">Copy SNI</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div style="margin-top: 5px;">Best Card Ping: <b style="color:#3fb950">177ms</b></div>
+                <button class="btn btn-main" onclick="copy('34.194.97.138', this)">Copy IP Address</button>
+            </div>
+        </div>
+        <div class="card">
+            <div>
+                <span class="status s200">HTTP 200</span>
+                <small style="color: #8b949e;">IP ADDRESS</small>
+                <div class="val" onclick="copy('52.250.41.2', this)">52.250.41.2</div>
+                <small style="color: #8b949e;">WORKING MASK SNIs (2)</small>
+                <div class="sni-container">
+                    <div class="sni-row">
+                        <span style="font-family: monospace; font-size: 13px; color: #58a6ff;">kubernetes.io</span>
+                        <span class="ping-tag">233ms</span>
+                        <button class="btn" onclick="copy('kubernetes.io', this)">Copy SNI</button>
+                    </div>
+                    <div class="sni-row">
+                        <span style="font-family: monospace; font-size: 13px; color: #58a6ff;">letsencrypt.org</span>
+                        <span class="ping-tag">241ms</span>
+                        <button class="btn" onclick="copy('letsencrypt.org', this)">Copy SNI</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div style="margin-top: 5px;">Best Card Ping: <b style="color:#3fb950">233ms</b></div>
+                <button class="btn btn-main" onclick="copy('52.250.41.2', this)">Copy IP Address</button>
+            </div>
+        </div>
+        <div class="card">
+            <div>
+                <span class="status s200">HTTP 200</span>
+                <small style="color: #8b949e;">IP ADDRESS</small>
+                <div class="val" onclick="copy('104.198.14.52', this)">104.198.14.52</div>
+                <small style="color: #8b949e;">WORKING MASK SNIs (2)</small>
+                <div class="sni-container">
+                    <div class="sni-row">
+                        <span style="font-family: monospace; font-size: 13px; color: #58a6ff;">letsencrypt.org</span>
+                        <span class="ping-tag">240ms</span>
+                        <button class="btn" onclick="copy('letsencrypt.org', this)">Copy SNI</button>
+                    </div>
+                    <div class="sni-row">
+                        <span style="font-family: monospace; font-size: 13px; color: #58a6ff;">kubernetes.io</span>
+                        <span class="ping-tag">245ms</span>
+                        <button class="btn" onclick="copy('kubernetes.io', this)">Copy SNI</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div style="margin-top: 5px;">Best Card Ping: <b style="color:#3fb950">240ms</b></div>
+                <button class="btn btn-main" onclick="copy('104.198.14.52', this)">Copy IP Address</button>
+            </div>
+        </div></div></body></html>
