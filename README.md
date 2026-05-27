@@ -1,6 +1,6 @@
 # CDN SNI Scanner PLUS
 
-A simple Python tool to scan and identify valid **CDN IP + SNI (Server Name Indication)** pairs for Cloudflare, Fastly, Gcore. && Netlify one seprate code 
+A simple Python tool to scan and identify valid **CDN IP + SNI (Server Name Indication)** pairs for Cloudflare, Fastly, Gcore. && Netlify on seprate code it dont deserv to be on same lvl as gcore....
                           
 ![Python](https://img.shields.io/badge/python-3.7%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
