@@ -1,3 +1,4 @@
+for netlify cdn
 [2026-05-14 08:38:46] IP: 50.7.85.35 | SNI: kubernetes.io | Ping: 164ms
 [2026-05-14 08:38:49] IP: 50.7.85.38 | SNI: kubernetes.io | Ping: 125ms
 [2026-05-14 08:38:52] IP: 50.7.85.37 | SNI: letsencrypt.org | Ping: 122ms
