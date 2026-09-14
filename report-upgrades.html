@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CDN Scanner Report By Jeet</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 20px;
+            background: #f5f7fa;
+            color: #222;
+        }
+        h1 {
+            color: #1a73e8;
+            margin-bottom: 4px;
+        }
+        .meta {
+            color: #555;
+            margin-bottom: 18px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #e0e0e0;
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 14px;
+        }
+        th {
+            background: #1a73e8;
+            color: white;
+            cursor: pointer;
+            position: sticky;
+            top: 0;
+            user-select: none;
+        }
+        th:hover {
+            background: #1557b0;
+        }
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        tr:hover {
+            background: #e8f0fe;
+        }
+        .good { color: #0d904f; font-weight: bold; }
+        .bad  { color: #d93025; font-weight: bold; }
+        .na   { color: #9aa0a6; }
+        .copyable {
+            cursor: pointer;
+            color: #1a73e8;
+        }
+        .copyable:hover {
+            text-decoration: underline;
+        }
+        .copy-tooltip {
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>CDN Scanner Report</h1>
+    <p class="meta">Generated: 2026-09-14 08:44:01 &nbsp;|&nbsp; Total unique: 72 &nbsp;|&nbsp; Sorted by quality score</p>
+
+    <table id="resultsTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">IP</th>
+                <th onclick="sortTable(1)">Port</th>
+                <th onclick="sortTable(2)">SNI</th>
+                <th onclick="sortTable(3)">CDN</th>
+                <th onclick="sortTable(4)">Country</th>
+                <th onclick="sortTable(5)">HTTPS</th>
+                <th onclick="sortTable(6)">HTTP</th>
+                <th onclick="sortTable(7)">WS</th>
+                <th onclick="sortTable(8)">Xray</th>
+                <th onclick="sortTable(9)">Ping (ms)</th>
+                <th onclick="sortTable(10)">HS (ms)</th>
+                <th onclick="sortTable(11)">Score</th>
+                <th onclick="sortTable(12)">Server</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td class="copyable">212.47.156.39</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Azerbaijan</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>52.0</td>
+                <td>63.7</td>
+                <td>4.7</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">213.252.220.4</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Lithuania</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>66.0</td>
+                <td>77.9</td>
+                <td>17.4</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">217.195.193.6</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Germany</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>78.0</td>
+                <td>96.2</td>
+                <td>29.8</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.124.6</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Germany</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>84.0</td>
+                <td>87.3</td>
+                <td>31.4</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">217.195.193.5</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Germany</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>76.0</td>
+                <td>108.1</td>
+                <td>31.4</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.74.20</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Czechia</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>81.0</td>
+                <td>97.0</td>
+                <td>31.9</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.40.12</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Germany</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>83.0</td>
+                <td>98.5</td>
+                <td>33.6</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">94.176.183.16</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>France</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>85.0</td>
+                <td>97.5</td>
+                <td>34.6</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">93.123.17.178</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>The Netherlands</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>80.0</td>
+                <td>110.7</td>
+                <td>34.7</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.124.11</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Germany</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>86.0</td>
+                <td>104.5</td>
+                <td>37.0</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">93.123.17.147</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>The Netherlands</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>89.0</td>
+                <td>97.2</td>
+                <td>37.2</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">93.123.38.4</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Latvia</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>86.0</td>
+                <td>106.7</td>
+                <td>37.6</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">87.120.167.43</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>The Netherlands</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="bad">✗</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>94.0</td>
+                <td>96.2</td>
+                <td>40.2</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.124.25</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Germany</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>83.0</td>
+                <td>126.7</td>
+                <td>40.6</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">94.176.183.8</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>France</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>94.0</td>
+                <td>100.4</td>
+                <td>41.2</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">93.123.17.181</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>The Netherlands</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>89.0</td>
+                <td>113.9</td>
+                <td>41.3</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.124.45</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Germany</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>80.0</td>
+                <td>139.3</td>
+                <td>41.8</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">93.123.17.190</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>The Netherlands</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>96.0</td>
+                <td>98.7</td>
+                <td>42.1</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">94.176.183.21</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>France</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>94.0</td>
+                <td>107.7</td>
+                <td>43.0</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">5.101.217.6</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Hungary</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>85.0</td>
+                <td>131.8</td>
+                <td>43.2</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">93.123.11.27</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United Kingdom</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>101.0</td>
+                <td>105.4</td>
+                <td>47.0</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">93.123.17.179</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>The Netherlands</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>95.0</td>
+                <td>130.5</td>
+                <td>49.4</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">5.101.219.7</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Bulgaria</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>57.0</td>
+                <td>236.6</td>
+                <td>51.2</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">82.158.113.13</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>France</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>103.0</td>
+                <td>119.7</td>
+                <td>51.9</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">82.158.113.11</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>France</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>112.0</td>
+                <td>111.6</td>
+                <td>55.7</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">82.158.113.7</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>France</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>113.0</td>
+                <td>115.1</td>
+                <td>57.2</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">185.158.211.186</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Ukraine</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>104.0</td>
+                <td>139.6</td>
+                <td>57.5</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">79.133.108.24</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Ukraine</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>102.0</td>
+                <td>156.1</td>
+                <td>60.3</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">5.188.126.6</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Spain</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>119.0</td>
+                <td>127.0</td>
+                <td>64.1</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">185.76.48.122</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Cyprus</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>133.0</td>
+                <td>158.4</td>
+                <td>81.1</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">93.123.17.133</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>The Netherlands</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>99.0</td>
+                <td>283.5</td>
+                <td>90.2</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.47.8</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Egypt</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>148.0</td>
+                <td>184.8</td>
+                <td>97.4</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">217.195.193.7</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Germany</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>78.0</td>
+                <td>418.5</td>
+                <td>110.3</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">94.128.12.238</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Kuwait</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>176.0</td>
+                <td>180.2</td>
+                <td>114.4</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">94.129.12.210</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Kuwait</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>173.0</td>
+                <td>211.5</td>
+                <td>120.3</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">85.234.75.5</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United States</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>178.0</td>
+                <td>224.5</td>
+                <td>126.8</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.118.8</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United States</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>187.0</td>
+                <td>205.7</td>
+                <td>128.0</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.107.149</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United States</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>189.0</td>
+                <td>200.7</td>
+                <td>128.0</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.118.27</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United States</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>185.0</td>
+                <td>242.8</td>
+                <td>135.9</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">150.107.126.5</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Nigeria</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>200.0</td>
+                <td>207.5</td>
+                <td>136.9</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.107.138</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United States</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>200.0</td>
+                <td>211.8</td>
+                <td>137.9</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.107.144</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United States</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>200.0</td>
+                <td>222.3</td>
+                <td>140.6</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">85.234.75.6</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United States</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>182.0</td>
+                <td>274.9</td>
+                <td>142.0</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.107.139</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United States</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>204.0</td>
+                <td>219.3</td>
+                <td>142.4</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.107.39</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United States</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>211.0</td>
+                <td>209.9</td>
+                <td>144.6</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">151.248.104.91</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Kuwait</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>209.0</td>
+                <td>217.6</td>
+                <td>145.2</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">185.101.136.24</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United States</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>219.0</td>
+                <td>199.9</td>
+                <td>147.3</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">93.123.38.5</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Latvia</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>98.0</td>
+                <td>526.0</td>
+                <td>150.2</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">151.248.104.69</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Kuwait</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>211.0</td>
+                <td>238.6</td>
+                <td>151.8</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.107.36</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United States</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>209.0</td>
+                <td>244.6</td>
+                <td>152.0</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">45.68.4.2</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Guatemala</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>222.0</td>
+                <td>238.8</td>
+                <td>159.0</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">85.234.77.4</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United Kingdom</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>108.0</td>
+                <td>545.3</td>
+                <td>161.5</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">5.8.92.8</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United States</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>229.0</td>
+                <td>237.5</td>
+                <td>163.2</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.124.54</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Germany</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>79.0</td>
+                <td>630.5</td>
+                <td>164.0</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">80.93.215.8</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Colombia</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>251.0</td>
+                <td>241.6</td>
+                <td>178.6</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">95.85.68.5</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Malaysia</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>238.0</td>
+                <td>285.3</td>
+                <td>181.0</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">5.188.133.11</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>South Africa</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>257.0</td>
+                <td>272.8</td>
+                <td>190.2</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">85.234.68.5</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Thailand</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>268.0</td>
+                <td>282.1</td>
+                <td>199.7</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">193.36.180.22</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Brazil</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>267.0</td>
+                <td>289.6</td>
+                <td>201.0</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">80.240.124.6</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Brazil</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>251.0</td>
+                <td>344.9</td>
+                <td>204.4</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">103.75.239.45</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Bangladesh</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>266.0</td>
+                <td>340.5</td>
+                <td>213.0</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.76.26</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Hong Kong</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>268.0</td>
+                <td>363.4</td>
+                <td>220.1</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.63.11</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Japan</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>306.0</td>
+                <td>340.0</td>
+                <td>238.9</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">62.112.223.5</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Panama</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>253.0</td>
+                <td>492.1</td>
+                <td>242.5</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">82.97.205.12</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Argentina</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>308.0</td>
+                <td>376.3</td>
+                <td>249.3</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.76.134</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Hong Kong</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>325.0</td>
+                <td>333.2</td>
+                <td>249.6</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">31.184.207.12</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Japan</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>345.0</td>
+                <td>353.8</td>
+                <td>267.7</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.78.25</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Australia</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>351.0</td>
+                <td>380.6</td>
+                <td>278.3</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.107.134</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>United States</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>208.0</td>
+                <td>766.8</td>
+                <td>281.9</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">92.223.78.27</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Australia</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td>361.0</td>
+                <td>390.8</td>
+                <td>287.4</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">93.174.165.15</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Vietnam</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="bad">✗</span></td>
+                <td><span class="good">✓</span></td>
+                <td>None</td>
+                <td>292.4</td>
+                <td>692.5</td>
+                <td>nginx</td>
+            </tr>
+            <tr>
+                <td class="copyable">93.174.165.13</td>
+                <td>443</td>
+                <td class="copyable">gcore.com</td>
+                <td>gcore</td>
+                <td>Vietnam</td>
+                <td><span class="good">✓</span></td>
+                <td><span class="good">✓</span></td>
+                <td><span class="bad">✗</span></td>
+                <td><span class="bad">✗</span></td>
+                <td>None</td>
+                <td>298.0</td>
+                <td>693.9</td>
+                <td>nginx</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        document.querySelectorAll('.copyable').forEach(td => {
+            td.title = 'Click to copy';
+            td.addEventListener('click', () => {
+                navigator.clipboard.writeText(td.textContent.trim());
+                const tip = document.createElement('div');
+                tip.className = 'copy-tooltip';
+                tip.textContent = 'Copied!';
+                td.style.position = 'relative';
+                td.appendChild(tip);
+                setTimeout(() => tip.remove(), 900);
+            });
+        });
+
+        function sortTable(column) {
+            const table = document.getElementById("resultsTable");
+            const rows = Array.from(table.rows).slice(1);
+            const header = table.rows[0].cells[column];
+            const direction = header.getAttribute("data-direction") || "asc";
+
+            rows.sort((a, b) => {
+                let aVal = a.cells[column].textContent.trim();
+                let bVal = b.cells[column].textContent.trim();
+                // strip symbols for sorting
+                aVal = aVal.replace(/[✓✗–]/g, '').trim();
+                bVal = bVal.replace(/[✓✗–]/g, '').trim();
+                if (!isNaN(aVal) && !isNaN(bVal) && aVal !== '' && bVal !== '') {
+                    return direction === "asc" ? aVal - bVal : bVal - aVal;
+                }
+                return direction === "asc" ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+            });
+
+            rows.forEach(row => table.tBodies[0].appendChild(row));
+            header.setAttribute("data-direction", direction === "asc" ? "desc" : "asc");
+        }
+    </script>
+</body>
+</html>
