@@ -9,7 +9,7 @@ Features:
 - Optional WebSocket upgrade probe (user chooses, slower but more realistic for WS)
 - Dual protocol reporting (http_works + https_works)
 - Quality ranking
-- VLESS snippet generator
+- VLESS snippet generator Custom(uuid path host) creating vless_snippets.txt 
 - Colorful user-friendly HTML report (closer to original style)
 """
 
