@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 CDN SNI Scanner PLUS - Improved Version
-Iran / GFW optimized for VLESS + WS / VLESS + XHTTP / Xray
+GFW optimized for VLESS + WS / VLESS + XHTTP / Xray
 
 Features:
 - Random scan = port 443 only (HTTPS) + always checks port 80 (HTTP)
@@ -207,7 +207,7 @@ class CDNScannerPlus:
         CDN SNI Scanner PLUS - Improved
         Dual HTTP/HTTPS + Optional WS Probe
         """ + Style.RESET_ALL)
-        print(Fore.YELLOW + "VLESS+WS / VLESS+XHTTP / Xray | Iran Optimized" + Style.RESET_ALL)
+        print(Fore.YELLOW + "VLESS+WS / VLESS+XHTTP / Xray | Harsh Envirment Optimized" + Style.RESET_ALL)
 
     def print_menu(self) -> None:
         self.print_banner()
@@ -597,7 +597,7 @@ class CDNScannerPlus:
         except Exception:
             ip_count = 100
 
-        sni = input("SNI hostname (e.g. www.speedtest.net / gcore.com / fastly.com): ").strip()
+        sni = input("SNI hostname (e.g. www.speedtest.net / gcore.com / fastly.com OR fastly.net): ").strip()
         if not sni:
             print(Fore.RED + "[!] SNI required" + Style.RESET_ALL)
             time.sleep(1.5)
