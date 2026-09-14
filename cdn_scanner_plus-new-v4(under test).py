@@ -207,7 +207,7 @@ class CDNScannerPlus:
         CDN SNI Scanner PLUS - Improved
         Dual HTTP/HTTPS + Optional WS Probe
         """ + Style.RESET_ALL)
-        print(Fore.YELLOW + "VLESS+WS / VLESS+XHTTP / Xray | Harsh Envirment Optimized" + Style.RESET_ALL)
+        print(Fore.YELLOW + "VLESS+WS / VLESS+XHTTP / Xray | Optimized" + Style.RESET_ALL)
 
     def print_menu(self) -> None:
         self.print_banner()
